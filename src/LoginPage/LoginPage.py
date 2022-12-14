@@ -1,4 +1,4 @@
-from tkinter import Canvas, Button, Frame, PhotoImage, Entry, StringVar, Label
+from tkinter import Canvas, Button, Frame, PhotoImage, Entry, StringVar
 from pathlib import Path
 
 # Login page frame
@@ -43,24 +43,17 @@ class LoginPage(Frame):
         canvas.create_text( 784.0, 247.0, anchor="nw", text="Username", fill="#FFFFFF", font=("RobotoRoman Regular", 14 * -1))
         
         # username box field
-        self.username_box = PhotoImage(file=self.relative_to_assets("username_box.png"))
+        self.username_box = PhotoImage(file=self.relative_to_assets("input_box.png"))
         canvas.create_image(943.0, 290.0, image=self.username_box)
         
         # username field input
-        self.username_field = PhotoImage(
-            file=self.relative_to_assets("username_field.png"))
-        canvas.create_image(
-            943.5,
-            290.0,
-            image=self.username_field
-        )
-        username_field = Entry(
+        self.username_field = Entry(
             bd=0,
             bg="#53534A",
             fg="#FFFFFF",
             highlightthickness=0
         )
-        username_field.place(
+        self.username_field.place(
             x=794.0,
             y=277.0,
             width=299.0,
@@ -74,12 +67,10 @@ class LoginPage(Frame):
         canvas.create_text(784.0, 345.0, anchor="nw", text="Password", fill="#FFFFFF", font=("RobotoRoman Regular", 14 * -1))
         
         # password box field
-        self.password_box = PhotoImage(file=self.relative_to_assets("password_box.png"))
+        self.password_box = PhotoImage(file=self.relative_to_assets("input_box.png"))
         canvas.create_image(943.0, 388.0, image=self.password_box)
         
         # create password input field
-        self.password_field_img = PhotoImage(file=self.relative_to_assets("password_field.png"))
-        self.create_image = Label(self, image=self.password_field_img)
         self.password_field = Entry(self, textvariable=self.passwd, show="*",  bd=0, bg="#53534A", fg="#FFFFFF", highlightthickness=0)
         self.password_field.place(x=794.0, y=375.0, width=268.0, height=24.0)
         
@@ -109,7 +100,7 @@ class LoginPage(Frame):
             image=self.login_now,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
+            command=lambda: self.inventory_login(controller),
             relief="flat"
         )
         button_login.place(
@@ -139,7 +130,6 @@ class LoginPage(Frame):
         )
         
     ############################## FUNCTIONS ###############################
-
     # show or hide password
     def show_hide_pass(self):
         if self.count % 2 == 0:
@@ -148,8 +138,28 @@ class LoginPage(Frame):
         else:
             self.button_reveal["image"] = self.show_eye
             self.password_field.config(show="*")
-
         self.count = 1 if self.count == 0 else 0
+
+    # clearing entry inputs
+    def clear_text(self):
+        self.username_field.delete(0, 'end')
+        self.password_field.delete(0, 'end')
+
+    # reset entry background 1 border
+    def reset_bg1_border(self):
+        self.entryBg1.configure(image=self.imgEntry1)
+        self.emailResponse.configure(text="")
+
+    # reset entry background 2 border
+    def reset_bg2_border(self):
+        self.entryBg2.configure(image=self.imgEntry1)
+        self.pwdResponse.configure(text="")
+
+    # reset the entry backgrounds and entry responses
+    def reset_all(self):
+        self.clear_text()
+        self.reset_bg1_border()
+        self.reset_bg2_border()
     
     # access PATH to ASSETS_PATH
     def relative_to_assets(self, path: str) -> Path:

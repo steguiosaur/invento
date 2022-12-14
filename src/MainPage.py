@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import PhotoImage, Tk, Frame
 from LoginPage import LoginPage
 
 class MainPage(Tk):
@@ -40,6 +40,6 @@ window.geometry("1280x720")
 window.resizable(False, False)
 window.title("Invento")
 
-icon = PhotoImage(file='Assets/logo.png')
+icon = PhotoImage(file='assets/logo.png')
 window.iconphoto(True, icon)
 window.mainloop()

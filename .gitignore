@@ -3,3 +3,4 @@ venv/
 target/
 __init__.py
 build/
+*.db
