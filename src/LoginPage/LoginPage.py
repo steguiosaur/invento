@@ -1,4 +1,4 @@
-from tkinter import Canvas, Button, Frame, PhotoImage, Entry
+from tkinter import Canvas, Button, Frame, PhotoImage, Entry, StringVar, Label
 from pathlib import Path
 
 # Login page frame
@@ -68,6 +68,8 @@ class LoginPage(Frame):
         )
 
         ############################# PASSWORD #############################
+        self.count = 0
+        self.passwd = StringVar()
         # password field label
         canvas.create_text(784.0, 345.0, anchor="nw", text="Password", fill="#FFFFFF", font=("RobotoRoman Regular", 14 * -1))
         
@@ -76,22 +78,41 @@ class LoginPage(Frame):
         canvas.create_image(943.0, 388.0, image=self.password_box)
         
         # create password input field
-        self.password_field = PhotoImage(file=self.relative_to_assets("password_field.png"))
-        canvas.create_image(928.0, 388.0, image=self.password_field)
-        password_field = Entry(bd=0, bg="#53534A", fg="#FFFFFF", highlightthickness=0)
-        password_field.place(x=794.0, y=375.0, width=268.0, height=24.0)
+        self.password_field_img = PhotoImage(file=self.relative_to_assets("password_field.png"))
+        self.create_image = Label(self, image=self.password_field_img)
+        self.password_field = Entry(self, textvariable=self.passwd, show="*",  bd=0, bg="#53534A", fg="#FFFFFF", highlightthickness=0)
+        self.password_field.place(x=794.0, y=375.0, width=268.0, height=24.0)
+        
+        # hide password
+        self.hide_eye = PhotoImage(
+            file=self.relative_to_assets("hide_eye.png"))
+        self.show_eye = PhotoImage(
+            file=self.relative_to_assets("show_eye.png"))
+        self.button_reveal = Button(
+            image=self.show_eye,
+            borderwidth=0,
+            highlightthickness=0,
+            command=self.show_hide_pass,
+            relief="flat"
+        )
+        self.button_reveal.place(
+            x=1064.0,
+            y=378.0,
+            width=22.0,
+            height=22.0
+        )
 
         ############################# ACCOUNTS #############################
         # login button
         self.login_now = PhotoImage(file=self.relative_to_assets("login.png"))
-        login_now = Button(
+        button_login = Button(
             image=self.login_now,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: print("button_1 clicked"),
             relief="flat"
         )
-        login_now.place(
+        button_login.place(
             x=784.0,
             y=458.0,
             width=318.0,
@@ -103,14 +124,14 @@ class LoginPage(Frame):
         
         # create account button
         self.create_acc = PhotoImage(file=self.relative_to_assets("create_acc.png"))
-        create_acc = Button(
+        button_acc = Button(
             image=self.create_acc,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: print("button_2 clicked"),
             relief="flat"
         )
-        create_acc.place(
+        button_acc.place(
             x=889.0,
             y=514.0,
             width=103.0,
@@ -118,6 +139,17 @@ class LoginPage(Frame):
         )
         
     ############################## FUNCTIONS ###############################
+
+    # show or hide password
+    def show_hide_pass(self):
+        if self.count % 2 == 0:
+            self.button_reveal["image"] = self.hide_eye
+            self.password_field.config(show="")
+        else:
+            self.button_reveal["image"] = self.show_eye
+            self.password_field.config(show="*")
+
+        self.count = 1 if self.count == 0 else 0
     
     # access PATH to ASSETS_PATH
     def relative_to_assets(self, path: str) -> Path:
