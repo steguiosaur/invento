@@ -1,18 +1,26 @@
 
 <p align="center">
   <img width="200" src="./src/Assets/logo.svg" alt="logo">
-  <img width="200" src="./src/Assets/invento.svg" alt="logo">
-  <h1 align="center" style="margin: 0 auto 0 auto;">Invento</h1>
-  <h5 align="center" style="margin: 0 auto 0 auto;">An inventory management system with Python</h5>
-  </p>
+  <h1 align="center" style="margin: 0 auto 0 auto;">INVENTO</h1>
+  <h5 align="center" style="margin: 0 auto 0 auto;">An inventory management system using Python</h5>
+</p>
 
 <br>
 
 -----------------------------------------------------------------
-## Features
+
+## :abacus: Features
+
+- [ ] Login system
+- [ ] Create user account
+- [ ] Add, modify, delete inventory items
+- [ ] Evaluate and modify current stock
+- [ ] Calculate incoming expenses for resupplying stock
+- [ ] Export to Excel functionality
+
 -----------------------------------------------------------------
 
-## Guidelines
+## :page_facing_up: Guidelines
 
 ### Requirements
 
@@ -31,7 +39,7 @@
 
 -----------------------------------------------------------------
 
-## Constraints
+## :hourglass_flowing_sand: Constraints
 
 ### Time
 
@@ -42,6 +50,8 @@
 - Create simple application using lessons in Data Structures.
 - Use Graphical User Interface (GUI)
 
-### Performance
-
 -----------------------------------------------------------------
+## Contributors
+  <a href="https://github.com/steguiosaur/invento/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=steguiosaur/invento">
+  </a>
