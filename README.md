@@ -1,27 +1,37 @@
-# INVENTORY MANAGEMENT SYSTEM
+
+<p align="center">
+  <img width="200" src="./src/Assets/logo.svg" alt="logo">
+  <img width="200" src="./src/Assets/invento.svg" alt="logo">
+  <h1 align="center" style="margin: 0 auto 0 auto;">Invento</h1>
+  <h5 align="center" style="margin: 0 auto 0 auto;">An inventory management system with Python</h5>
+  </p>
+
+<br>
 
 -----------------------------------------------------------------
+## Features
+-----------------------------------------------------------------
 
-## GUIDELINES
+## Guidelines
 
-**App**
+### Requirements
 
 - Use DISCRETE STRUCTURES lesson
 - GUI
 
-**Documentation**
+### Documentation
 
 - Flowchart
 - Instruction Manual
 - Reference (Code Explanation)
 
-**Research**
+### Research
 
 - Paper Work
 
 -----------------------------------------------------------------
 
-## CONSTRAINTS
+## Constraints
 
 ### Time
 

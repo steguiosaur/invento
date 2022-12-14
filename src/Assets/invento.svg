@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="209mm"
+   height="70mm"
+   viewBox="0 0 209 70"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+   sodipodi:docname="invento.svg"
+   inkscape:export-filename="invento.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.59263396"
+     inkscape:cx="430.28246"
+     inkscape:cy="169.58191"
+     inkscape:window-width="1344"
+     inkscape:window-height="706"
+     inkscape:window-x="9"
+     inkscape:window-y="49"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="185.62423 : -52.325899 : 1"
+       inkscape:vp_y="275.53147 : -961.29194 : 0"
+       inkscape:vp_z="-16.247098 : -110.18735 : 1"
+       inkscape:persp3d-origin="71.049761 : -33.67279 : 1"
+       id="perspective352" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g9438"
+       transform="translate(1.1934939,-116.88268)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:39.4936px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#545454;fill-opacity:1;stroke-width:0.296201"
+         x="31.058796"
+         y="169.8365"
+         id="text3760-9"
+         transform="scale(1.0898583,0.91755048)"><tspan
+           sodipodi:role="line"
+           id="tspan3758-8"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#545454;fill-opacity:1;stroke-width:0.296201"
+           x="31.058796"
+           y="169.8365">invento</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.4223px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#545454;fill-opacity:1;stroke-width:0.0856668"
+         x="31.336222"
+         y="185.55632"
+         id="text3760-9-4"
+         transform="scale(1.1128615,0.89858441)"><tspan
+           sodipodi:role="line"
+           id="tspan3758-8-8"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#545454;fill-opacity:1;stroke-width:0.0856668"
+           x="31.336222"
+           y="185.55632">MANAGEMENT SYSTEM</tspan></text>
+    </g>
+  </g>
+</svg>

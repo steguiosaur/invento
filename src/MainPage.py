@@ -38,7 +38,7 @@ class MainPage(Tk):
 window = MainPage()
 window.geometry("1280x720")
 window.resizable(False, False)
-window.title("Inventory Management System")
+window.title("Invento")
 
 icon = PhotoImage(file='Assets/logo.png')
 window.iconphoto(True, icon)
