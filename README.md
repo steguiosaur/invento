@@ -11,8 +11,8 @@
 
 ## :abacus: Features
 
-- [ ] Login system
-- [ ] Create user account
+- [x] Login system
+- [x] Create user account
 - [ ] Add, modify, delete inventory items
 - [ ] Evaluate and modify current stock
 - [ ] Calculate incoming expenses for resupplying stock
