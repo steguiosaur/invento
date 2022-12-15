@@ -1,4 +1,4 @@
-from tkinter import CENTER, Canvas, Button, Frame, PhotoImage, Entry, StringVar, Label
+from tkinter import Canvas, Button, Frame, PhotoImage, Entry, StringVar, Label
 from pathlib import Path
 import accounts
 
@@ -185,6 +185,7 @@ class LoginPage(Frame):
 
         match login_status:
             case 0:
+                #inventorydb.Database()
                 controller.show_frame("ShowInventory")
             case 1:
                 self.pass_field_reply["text"]="Incorrect password"
