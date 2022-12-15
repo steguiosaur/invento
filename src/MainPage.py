@@ -14,12 +14,10 @@ class MainPage(Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        # creating a dictionary for page objects
+        # object frames dictionary 
         self.frames = {}
 
-        # looping in every page/class and creating an object of it
-        # then storing the class name as the key
-        # and the object of it as the value
+        # change frame
         for f in {LoginPage.LoginPage, RegisterPage.RegisterPage}:
             page_name = f.__name__
             frame = f(container, self)
@@ -28,19 +26,19 @@ class MainPage(Tk):
 
         self.show_frame("LoginPage")
 
-    # showing the current frame above everything
+    # hold selected frame
     def show_frame(self, page_name, id=None):
         self.id = id
         frame = self.frames[page_name]
         frame.tkraise()
 
 
-# initialize main window app
-window = MainPage()
-window.geometry("1280x720")
-window.resizable(False, False)
-window.title("Invento")
+# create main window
+main = MainPage()
+main.geometry("1280x720")
+main.resizable(False, False)
+main.title("Invento")
 
 icon = PhotoImage(file='assets/logo.png')
-window.iconphoto(True, icon)
-window.mainloop()
+main.iconphoto(True, icon)
+main.mainloop()

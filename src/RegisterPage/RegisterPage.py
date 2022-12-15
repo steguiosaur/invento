@@ -11,7 +11,7 @@ class RegisterPage(Frame):
         Frame.__init__(self, parent)
 
         ############################ PRIMARY UI ############################
-        canvas = Canvas(self, bg = "#FFFFFF", height = 720, width = 1280, bd=0, highlightthickness = 0, relief = "ridge")
+        canvas = Canvas(self, bg = "#D6D6D6", height = 720, width = 1280, bd=0, highlightthickness = 0, relief = "ridge")
         canvas.place(x=0, y=0)
 
         # backgound image

@@ -1,22 +1,17 @@
 import hashlib
 import sqlite3
-import os.path
 
 
 def register(username, passwd, confirm_passwd):
-    conn = sqlite3.connect("account.db")
-    cursor = conn.cursor()
+    con = sqlite3.connect("account.db")
+    cur = con.cursor()
 
-    if os.path.exists("./account.db") == False:
-        cursor.execute("DROP TABLE IF EXISTS login")
-        conn.commit()
-        
-        cursor.execute("CREATE TABLE login(Username VARCHAR UNIQUE, Password VARCHAR)")
-        conn.commit()
+    cur.execute("CREATE TABLE IF NOT EXISTS 'login' (Username VARCHAR, Password VARCHAR)")
+    con.commit()
     
-    sql = 'SELECT EXISTS (SELECT 1 FROM login WHERE Username = ?)'
-    cursor.execute(sql, (username,))
-    if cursor.fetchone()[0]:
+    user_exist = f"SELECT Username from login WHERE Username='{username}'"
+    cur.execute(user_exist)
+    if cur.fetchone():
         return 1
     
     if passwd != confirm_passwd:
@@ -26,40 +21,33 @@ def register(username, passwd, confirm_passwd):
     hexformat = hashlib.md5(hashing).hexdigest()
 
     query = "INSERT INTO login (Username, Password) VALUES (?, ?)"
-    cursor.execute(query, (username, hexformat))
-    conn.commit()
+    cur.execute(query, (username, hexformat))
+    con.commit()
 
-    cursor.close()
-    conn.close()
+    cur.close()
+    con.close()
     return 0
 
-def check(username, passwd):
-    conn = sqlite3.connect("account.db")
-    cursor = conn.cursor()
-
-    sql = 'SELECT EXISTS (SELECT 1 FROM login WHERE Username = ?)'
-    cursor.execute(sql, (username,))
-    if cursor.fetchone()[0]:
-        hashing = passwd.encode()
-        hexformat = hashlib.md5(hashing).hexdigest()
-    
-        query = 'SELECT * FROM login WHERE Username = ? AND Password = ?'
-        cursor.execute(query, (username, hexformat))
-        result = cursor.fetchone()
-        conn.commit()
-        print('[DEBUG][check] result:', result)
-    
-        cursor.close()
-        conn.close()
-        return result
-    else:
-        cursor.close()
-        conn.close()
-        return 2
-
 def login(username, passwd):
-    if check(username, passwd):
-        return 0
-    else:
-        return 1
+    con = sqlite3.connect("account.db")
+    cur = con.cursor()
 
+    hashing = passwd.encode()
+    hexformat = hashlib.md5(hashing).hexdigest()
+    
+    user_exist = f"SELECT Username from login WHERE Username='{username}'"
+    verify = f"SELECT Username from login WHERE Username='{username}' AND Password = '{hexformat}';"
+
+    cur.execute(user_exist)
+    if cur.fetchone():
+        cur.execute(verify)
+        if cur.fetchone():
+            cur.close()
+            con.close()
+            return 0
+        else:
+            cur.close()
+            con.close()
+            return 1
+    else:
+        return 2
