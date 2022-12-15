@@ -149,11 +149,8 @@ class ShowInventory(Frame):
         self.deleteButton.place(x=23.0, y=403.0, width=244.0, height=36.0)
         
         ####################################################################
-        
         self.image_image_3 = PhotoImage(file=self.relative_to_assets("image_3.png"))
         canvas.create_image(159.0, 97.0, image=self.image_image_3)
-        
-        canvas.create_text(23.0, 159.0, anchor="nw", text="Product Name", fill="#2B2B2B", font=("RobotoRoman Medium", 12 * -1))
         
         self.image_image_4 = PhotoImage(file=self.relative_to_assets("image_4.png"))
         canvas.create_image(80.0, 254.0, image=self.image_image_4)
@@ -161,15 +158,17 @@ class ShowInventory(Frame):
         self.image_image_5 = PhotoImage(file=self.relative_to_assets("image_5.png"))
         canvas.create_image(208.0, 255.0, image=self.image_image_5)
         
-        canvas.create_text(23.0, 218.0, anchor="nw", text="Required Stock", fill="#2B2B2B", font=("RobotoRoman Medium", 12 * -1))
-        
-        canvas.create_text(150.0, 218.0, anchor="nw", text="Current Stock", fill="#2B2B2B", font=("RobotoRoman Medium", 12 * -1))
-        
         self.image_image_6 = PhotoImage(file=self.relative_to_assets("image_6.png"))
         canvas.create_image(80.0, 314.0, image=self.image_image_6)
         
         self.image_image_7 = PhotoImage(file=self.relative_to_assets("image_7.png"))
         canvas.create_image(208.0, 315.0, image=self.image_image_7)
+        
+        canvas.create_text(23.0, 159.0, anchor="nw", text="Product Name", fill="#2B2B2B", font=("RobotoRoman Medium", 12 * -1))
+        
+        canvas.create_text(23.0, 218.0, anchor="nw", text="Required Stock", fill="#2B2B2B", font=("RobotoRoman Medium", 12 * -1))
+        
+        canvas.create_text(150.0, 218.0, anchor="nw", text="Current Stock", fill="#2B2B2B", font=("RobotoRoman Medium", 12 * -1))
         
         canvas.create_text(23.0, 278.0, anchor="nw", text="Market Price", fill="#2B2B2B", font=("RobotoRoman Medium", 12 * -1))
         
