@@ -49,9 +49,3 @@
 
 - Create simple application using lessons in Data Structures.
 - Use Graphical User Interface (GUI)
-
------------------------------------------------------------------
-## Contributors
-  <a href="https://github.com/steguiosaur/invento/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=steguiosaur/invento">
-  </a>

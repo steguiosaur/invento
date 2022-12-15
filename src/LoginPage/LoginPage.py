@@ -185,14 +185,11 @@ class LoginPage(Frame):
 
         match login_status:
             case 0:
-                print(login_status)
-                #controller.show_frame("ShowInventory")
+                controller.show_frame("ShowInventory")
             case 1:
-                print(login_status)
                 self.pass_field_reply["text"]="Incorrect password"
                 #self.password_bg['image']=self.errorBox
             case _:
-                print(login_status)
                 self.user_field_reply["text"] = "Account not registered"
                 #self.username_bg['image']=self.errorBox
 
