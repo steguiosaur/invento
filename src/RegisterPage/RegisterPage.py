@@ -1,263 +1,185 @@
-from tkinter import Frame, Canvas, Entry, Button, PhotoImage
+from tkinter import Frame, Canvas, Entry, Button, PhotoImage, StringVar
 from pathlib import Path
+import accounts
 
 
 class RegisterPage(Frame):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path("./assets")
-        
+
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
 
+        ############################ PRIMARY UI ############################
         canvas = Canvas(self, bg = "#FFFFFF", height = 720, width = 1280, bd=0, highlightthickness = 0, relief = "ridge")
         canvas.place(x=0, y=0)
 
-        self.book_bg = PhotoImage(
-            file=self.relative_to_assets("book_bg.png"))
-        canvas.create_image(
-            643.0,
-            360.0,
-            image=self.book_bg
-        )
+        # backgound image
+        self.book_bg = PhotoImage(file=self.relative_to_assets("book_bg.png"))
+        canvas.create_image(643.0, 360.0, image=self.book_bg)
         
-        image_image_2 = PhotoImage(
-            file=self.relative_to_assets("image_2.png"))
-        image_2 = canvas.create_image(
-            205.0,
-            355.0,
-            image=image_image_2
-        )
+        self.logo = PhotoImage(file=self.relative_to_assets("logo.png"))
+        canvas.create_image(205.0, 355.0, image=self.logo)
         
-        image_image_3 = PhotoImage(
-            file=self.relative_to_assets("image_3.png"))
-        image_3 = canvas.create_image(
-            398.0,
-            366.0,
-            image=image_image_3
-        )
+        self.invento = PhotoImage(file=self.relative_to_assets("invento.png"))
+        canvas.create_image(398.0, 366.0, image=self.invento)
         
-        image_image_4 = PhotoImage(
-            file=self.relative_to_assets("image_4.png"))
-        image_4 = canvas.create_image(
-            943.0,
-            360.0,
-            image=image_image_4
-        )
+        self.rectangle = PhotoImage(file=self.relative_to_assets("fill_rectangle.png"))
+        canvas.create_image(943.0, 360.0, image=self.rectangle)
+
+        self.register_title = PhotoImage(file=self.relative_to_assets("register_title.png"))
+        canvas.create_image(942.0, 161.0, image=self.register_title)
         
-        entry_image_1 = PhotoImage(
-            file=self.relative_to_assets("entry_1.png"))
-        entry_bg_1 = canvas.create_image(
-            922.5,
-            326.0,
-            image=entry_image_1
+        ############################# USERNAME #############################
+        self.username = StringVar()
+        #self.username.trace("w", self.redo_username_action)
+
+        canvas.create_text(784.0, 185.0, anchor="nw", text="Username", fill="#FFFFFF", font=("RobotoRoman Regular", 14 * -1))
+        
+        self.username_box = PhotoImage(file=self.relative_to_assets("entry_field.png"))
+        canvas.create_image(943.0, 228.0, image=self.username_box)
+        
+        self.user_entry = Entry(self, textvariable=self.username ,bd=0, bg="#53534A", fg="#FFFFFF", highlightthickness=0)
+        self.user_entry.place(x=794.0, y=215.0, width=299.0, height=24.0)
+        
+        ############################# PASSWORD #############################
+        self.count = 0
+        self.passwd = StringVar()
+        #self.passwd.trace("w", self.redo_passwd_action)
+        canvas.create_text(784.0, 283.0, anchor="nw", text="Password", fill="#FFFFFF", font=("RobotoRoman Regular", 14 * -1))
+        
+        self.password_box = PhotoImage(file=self.relative_to_assets("entry_field.png"))
+        canvas.create_image(943.0, 326.0, image=self.password_box)
+
+        self.password_entry = Entry(self, textvariable=self.passwd, show="*",bd=0, bg="#53534A", fg="#FFFFFF", highlightthickness=0)
+        self.password_entry.place(x=794.0, y=313.0, width=257.0, height=24.0)
+        
+        self.hide_eye = PhotoImage(
+            file=self.relative_to_assets("hide_eye.png"))
+        self.show_eye = PhotoImage(
+            file=self.relative_to_assets("show_eye.png"))
+        self.button_reveal = Button(
+            self,
+            image=self.show_eye,
+            borderwidth=0,
+            highlightthickness=0,
+            command=self.show_hide_pass,
+            relief="flat"
         )
-        entry_1 = Entry(
+        self.button_reveal.place(x=1064.0, y=316.0, width=22.0, height=22.0)
+
+        ############################# CONFIRMP #############################
+        self.confirmp = StringVar()
+        canvas.create_text(784.0, 383.0, anchor="nw", text="Confirm Password", fill="#FFFFFF", font=("RobotoRoman Regular", 14 * -1))
+
+        self.confirm_pass_box = PhotoImage(
+            file=self.relative_to_assets("entry_field.png"))
+        canvas.create_image(943.0, 426.0, image=self.confirm_pass_box)
+
+
+        self.confirm_pass_field = Entry(
+            self,
+            textvariable=self.confirmp,
+            show="*",
             bd=0,
             bg="#53534A",
-            fg="#000716",
+            fg="#FFFFFF",
             highlightthickness=0
         )
-        entry_1.place(
-            x=794.0,
-            y=313.0,
-            width=257.0,
-            height=24.0
-        )
+        self.confirm_pass_field.place(x=794.0, y=413.0, width=257.0, height=24.0)
         
-        image_image_5 = PhotoImage(
-            file=self.relative_to_assets("image_5.png"))
-        image_5 = canvas.create_image(
-            943.0,
-            228.0,
-            image=image_image_5
-        )
-        
-        canvas.create_text(
-            784.0,
-            185.0,
-            anchor="nw",
-            text="Username",
-            fill="#FFFFFF",
-            font=("RobotoRoman Regular", 14 * -1)
-        )
-        
-        image_image_6 = PhotoImage(
-            file=self.relative_to_assets("image_6.png"))
-        image_6 = canvas.create_image(
-            943.0,
-            326.0,
-            image=image_image_6
-        )
-        
-        button_image_1 = PhotoImage(
-            file=self.relative_to_assets("button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
+        self.button_reveal_conf = Button(
+            self,
+            image=self.show_eye,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
+            command=self.show_hide_pass,
             relief="flat"
         )
-        button_1.place(
-            x=784.0,
-            y=500.0,
-            width=318.0,
-            height=45.0
-        )
-        
-        canvas.create_text(
-            784.0,
-            283.0,
-            anchor="nw",
-            text="Password",
-            fill="#FFFFFF",
-            font=("RobotoRoman Regular", 14 * -1)
-        )
-        
-        image_image_7 = PhotoImage(
-            file=self.relative_to_assets("image_7.png"))
-        image_7 = canvas.create_image(
-            942.0,
-            161.0,
-            image=image_image_7
-        )
-        
-        entry_image_2 = PhotoImage(
-            file=self.relative_to_assets("entry_2.png"))
-        entry_bg_2 = canvas.create_image(
-            943.5,
-            228.0,
-            image=entry_image_2
-        )
-        entry_2 = Entry(
-            bd=0,
-            bg="#53534A",
-            fg="#000716",
-            highlightthickness=0
-        )
-        entry_2.place(
-            x=794.0,
-            y=215.0,
-            width=299.0,
-            height=24.0
-        )
-        
-        button_image_2 = PhotoImage(
-            file=self.relative_to_assets("button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
-            relief="flat"
-        )
-        button_2.place(
-            x=1064.0,
-            y=316.0,
-            width=22.0,
-            height=22.0
-        )
-        
-        button_image_3 = PhotoImage(
-            file=self.relative_to_assets("button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
-            relief="flat"
-        )
-        button_3.place(
-            x=1064.0,
-            y=316.0,
-            width=22.0,
-            height=22.0
-        )
-        
-        entry_image_3 = PhotoImage(
-            file=self.relative_to_assets("entry_3.png"))
-        entry_bg_3 = canvas.create_image(
-            922.5,
-            426.0,
-            image=entry_image_3
-        )
-        entry_3 = Entry(
-            bd=0,
-            bg="#53534A",
-            fg="#000716",
-            highlightthickness=0
-        )
-        entry_3.place(
-            x=794.0,
-            y=413.0,
-            width=257.0,
-            height=24.0
-        )
-        
-        image_image_8 = PhotoImage(
-            file=self.relative_to_assets("image_8.png"))
-        image_8 = canvas.create_image(
-            943.0,
-            426.0,
-            image=image_image_8
-        )
-        
-        canvas.create_text(
-            784.0,
-            383.0,
-            anchor="nw",
-            text="Confirm Password",
-            fill="#FFFFFF",
-            font=("RobotoRoman Regular", 14 * -1)
-        )
-        
-        button_image_4 = PhotoImage(
-            file=self.relative_to_assets("button_4.png"))
-        button_4 = Button(
-            image=button_image_4,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_4 clicked"),
-            relief="flat"
-        )
-        button_4.place(
+        self.button_reveal_conf.place(
             x=1064.0,
             y=416.0,
             width=22.0,
             height=22.0
         )
         
-        button_image_5 = PhotoImage(
-            file=self.relative_to_assets("button_5.png"))
-        button_5 = Button(
-            image=button_image_5,
+        ############################# ACCOUNTS #############################
+        self.register_box = PhotoImage(
+            file=self.relative_to_assets("register.png"))
+        self.register_button = Button(
+            self,
+            image=self.register_box,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_5 clicked"),
+            command=lambda: print("register"),
             relief="flat"
         )
-        button_5.place(
-            x=1064.0,
-            y=416.0,
-            width=22.0,
-            height=22.0
-        )
+        self.register_button.place(x=784.0, y=500.0, width=318.0, height=45.0)
         
-        button_image_6 = PhotoImage(
-            file=self.relative_to_assets("button_6.png"))
-        button_6 = Button(
-            image=button_image_6,
+        self.back_login = PhotoImage(
+            file=self.relative_to_assets("back_login.png"))
+        login_button = Button(
+            self,
+            image=self.back_login,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_6 clicked"),
+            command=lambda: self.go_login(controller),
             relief="flat"
         )
-        button_6.place(
-            x=728.0,
-            y=119.0,
-            width=47.0,
-            height=24.0
-        )
+        login_button.place(x=728.0, y=119.0, width=47.0, height=24.0)
+
+    ############################## FUNCTIONS ###############################
+    def go_login(self, controller):
+        self.reset_all()
+        controller.show_frame("LoginPage", controller.id)
+    # show or hide password
+    def show_hide_pass(self):
+        if self.count % 2 == 0:
+            self.button_reveal["image"] = self.hide_eye
+            self.password_entry.config(show="")
+            self.button_reveal_conf["image"] = self.hide_eye
+            self.confirm_pass_field.config(show="")
+        else:
+            self.button_reveal["image"] = self.show_eye
+            self.password_entry.config(show="*")
+            self.button_reveal_conf["image"] = self.show_eye
+            self.confirm_pass_field.config(show="*")
+        self.count = 1 if self.count == 0 else 0
+
+    # clearing entry inputs
+    def clear_text(self):
+        #self.response.place_forget()
+        self.user_entry.delete(0, "end")
+        self.password_entry.delete(0, "end")
+        self.confirm_pass_field.delete(0, "end")
+
+
+    # reset entry background 1 border
+#    def reset_bg1_border(self, *args):
+#        #self.entryBg1.configure(image=self.imgEntry1)
+#        #self.emailResponse.configure(text="")
+#
+#
+#    # reset entry background 2 border
+#    def reset_bg2_border(self, *args):
+#        #self.entryBg2.configure(image=self.imgEntry1)
+#        #self.pwdResponse.configure(text="")
+#
+#
+#    # reset entry background 3 border
+#    def reset_bg3_border(self, *args):
+#        #self.entryBg3.configure(image=self.imgEntry1)
+#        #self.confirmResponse.configure(text="")
+
+
+    # reset the entry backgrounds and entry responses
+    def reset_all(self):
+        self.clear_text()
+        #self.reset_bg1_border()
+        #self.reset_bg2_border()
+        #self.reset_bg3_border()
+
+
 
     def relative_to_assets(self, path: str) -> Path:
         return self.ASSETS_PATH / Path(path)

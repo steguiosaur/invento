@@ -1,4 +1,4 @@
-from tkinter import Canvas, Button, Frame, PhotoImage, Entry, StringVar, Label
+from tkinter import CENTER, Canvas, Button, Frame, PhotoImage, Entry, StringVar, Label
 from pathlib import Path
 import accounts
 
@@ -29,7 +29,8 @@ class LoginPage(Frame):
         canvas.create_image(398.0, 366.0, image=self.invento)
         
         # create login field background
-        canvas.create_rectangle(723.0, 115.0, 1163.0, 605.0, fill="#525249", outline="")
+        self.rectangle = PhotoImage(file=self.relative_to_assets("fill_rectangle.png"))
+        canvas.create_image(943.0, 360.0, image=self.rectangle)
         
         # welcome back message on login page
         canvas.create_text(897.0, 170.0, anchor="nw", text="WELCOME BACK", fill="#D6D6D6", font=("RobotoRoman Bold", 12 * -1))
@@ -53,6 +54,7 @@ class LoginPage(Frame):
         
         # username field input
         self.username_bg = Label(self, image=self.username_box)
+        #self.username_bg.place(x=943.0 ,y=290.0, anchor=CENTER)
         self.username_field = Entry(self, textvariable=self.username, bd=0, bg="#53534A", fg="#FFFFFF", highlightthickness=0)
         self.username_field.place(x=794.0, y=277.0, width=299.0, height=24.0)
         
@@ -72,6 +74,7 @@ class LoginPage(Frame):
         
         # create password input field
         self.password_bg = Label(self, image=self.password_box)
+        #self.password_bg.place(x=943.0, y=388.0, anchor=CENTER)
         self.password_field = Entry(self, textvariable=self.passwd, show="*",  bd=0, bg="#53534A", fg="#FFFFFF", highlightthickness=0)
         self.password_field.place(x=794.0, y=375.0, width=268.0, height=24.0)
         
@@ -81,6 +84,7 @@ class LoginPage(Frame):
         self.show_eye = PhotoImage(
             file=self.relative_to_assets("show_eye.png"))
         self.button_reveal = Button(
+            self,
             image=self.show_eye,
             borderwidth=0,
             highlightthickness=0,
@@ -100,6 +104,7 @@ class LoginPage(Frame):
         # login button
         self.login_now = PhotoImage(file=self.relative_to_assets("login.png"))
         button_login = Button(
+            self,
             image=self.login_now,
             borderwidth=0,
             highlightthickness=0,
@@ -119,6 +124,7 @@ class LoginPage(Frame):
         # create account button
         self.create_acc = PhotoImage(file=self.relative_to_assets("create_acc.png"))
         button_acc = Button(
+            self,
             image=self.create_acc,
             borderwidth=0,
             highlightthickness=0,
@@ -157,19 +163,19 @@ class LoginPage(Frame):
         # if email and password is both empty
         if username == passwd == "":
             self.user_field_reply["text"] = self.pass_field_reply["text"] = "*All fields are required*"
-            self.username_box["image"] = self.password_box["image"] = self.errorBox
+            #self.username_box["image"] = self.password_box["image"] = self.errorBox
             return 
 
         # if email is empty
         if username == "":
-            self.user_field_reply["text"] = "This field is required"
-            self.password_box["image"] = self.errorBox
+            self.user_field_reply["text"] = "Username field is required"
+            #self.password_box["image"] = self.errorBox
             return
 
         # if password is empty
         if passwd == "":
-            self.pass_field_reply["text"] = "This field is required"
-            self.username_box["image"] = self.errorBox
+            self.pass_field_reply["text"] = "Password field is required"
+            #self.username_box["image"] = self.errorBox
             return
 
         self.login(username, passwd, controller)
@@ -177,14 +183,18 @@ class LoginPage(Frame):
     def login(self, username, passwd, controller):
         login_status = accounts.login(username, passwd)
 
-        if login_status == 0:
-            controller.show_frame("ShowInventory")
-        elif login_status == 1:
-            self.pass_field_reply["text"] = "Incorrect password"
-            self.password_bg["image"] = self.errorBox
-        else:
-            self.user_field_reply["text"] = "The account does not exist"
-            self.username_bg["image"] = self.errorBox
+        match login_status:
+            case 0:
+                print(login_status)
+                #controller.show_frame("ShowInventory")
+            case 1:
+                print(login_status)
+                self.pass_field_reply["text"]="Incorrect password"
+                #self.password_bg['image']=self.errorBox
+            case _:
+                print(login_status)
+                self.user_field_reply["text"] = "Account not registered"
+                #self.username_bg['image']=self.errorBox
 
     # clearing entry inputs
     def clear_text(self):
@@ -193,12 +203,12 @@ class LoginPage(Frame):
 
     # reset entry background 1 border
     def redo_username_action(self, *args):
-        self.username_bg.configure(image=self.username_box)
+        #self.username_bg.configure(image=self.username_box)
         self.user_field_reply.configure(text="")
 
     # reset entry background 2 border
     def redo_passwd_action(self, *args):
-        self.password_bg.configure(image=self.password_box)
+        #self.password_bg.configure(image=self.password_box)
         self.pass_field_reply.configure(text="")
 
     # reset the entry backgrounds and entry responses

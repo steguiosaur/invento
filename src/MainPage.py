@@ -1,6 +1,6 @@
 from tkinter import PhotoImage, Tk, Frame
 from LoginPage import LoginPage
-#from RegisterPage import RegisterPage
+from RegisterPage import RegisterPage
 
 class MainPage(Tk):
     # init method of the class MainFrame
@@ -20,7 +20,7 @@ class MainPage(Tk):
         # looping in every page/class and creating an object of it
         # then storing the class name as the key
         # and the object of it as the value
-        for f in {LoginPage.LoginPage}:
+        for f in {LoginPage.LoginPage, RegisterPage.RegisterPage}:
             page_name = f.__name__
             frame = f(container, self)
             frame.grid(row=0, column=0, sticky="NSEW")
