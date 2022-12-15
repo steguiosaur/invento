@@ -111,7 +111,7 @@ class RegisterPage(Frame):
             image=self.register_box,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("register"),
+            command=lambda: self.read_input(controller),
             relief="flat"
         )
         self.register_button.place(x=784.0, y=500.0, width=318.0, height=45.0)
@@ -145,6 +145,28 @@ class RegisterPage(Frame):
             self.button_reveal_conf["image"] = self.show_eye
             self.confirm_pass_field.config(show="*")
         self.count = 1 if self.count == 0 else 0
+
+    # creating an account
+    def read_input(self, controller):
+        username, password, conf_pass = self.user_entry.get(), self.password_entry.get(), self.confirm_pass_field.get()
+        self.clear_text()
+
+        # if email, password, and confirm password are all empty
+        if username == password == conf_pass == "":
+            return
+
+        # if email only is empty
+        if username == "":
+            return
+
+        # both password and confirm password are empty
+        if password == conf_pass == "":
+            return
+
+        self.log_info(username, password, conf_pass)
+
+    def log_info(self, username, passwd, confirm_pass):
+        accounts.register(username, passwd, confirm_pass)
 
     # clearing entry inputs
     def clear_text(self):
