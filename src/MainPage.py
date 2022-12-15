@@ -1,6 +1,7 @@
 from tkinter import PhotoImage, Tk, Frame
 from LoginPage import LoginPage
 from RegisterPage import RegisterPage
+from ShowInventory import ShowInventory
 
 class MainPage(Tk):
     # init method of the class MainFrame
@@ -18,7 +19,7 @@ class MainPage(Tk):
         self.frames = {}
 
         # change frame
-        for f in {LoginPage.LoginPage, RegisterPage.RegisterPage}:
+        for f in {LoginPage.LoginPage, RegisterPage.RegisterPage, ShowInventory.ShowInventory}:
             page_name = f.__name__
             frame = f(container, self)
             frame.grid(row=0, column=0, sticky="NSEW")
