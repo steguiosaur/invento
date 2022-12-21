@@ -10,6 +10,7 @@ class ShowInventory(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         
+        self.display_table()
         ############################ PRIMARY UI ############################
         canvas = Canvas(self, bg = "#FFFFFF", height=720, width=1280, bd=0, highlightthickness=0, relief = "ridge")
         canvas.place(x=0, y=0)
