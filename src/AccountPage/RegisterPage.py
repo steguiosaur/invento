@@ -35,7 +35,7 @@ class RegisterPage(CTkFrame):
 
         # labels
         self.registerReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
-        self.registerReplyLabel.place(relx=0.75, y=65, anchor=CENTER)
+        self.registerReplyLabel.place(relx=0.75, y=62, anchor=CENTER)
 
         self.textLabelCreate = CTkLabel(self.registerFrame, text="Create an Account", font=('Roboto', 22))
         self.textLabelCreate.place(relx=0.75, y=35, anchor=CENTER)
@@ -69,7 +69,7 @@ class RegisterPage(CTkFrame):
         self.showPasswordCheckbox.place(x=373, y=220)
 
         # register entries to database
-        self.registerInputButton = CTkButton(self.registerFrame, width=220, text="Register now", command=lambda: self.verify_registration(controller))
+        self.registerInputButton = CTkButton(self.registerFrame, width=220, text="Register now", command=lambda: self.verify_registration())
         self.registerInputButton.place(relx=0.75, y=260, anchor=CENTER)
 
         # return to LoginPage
@@ -87,7 +87,7 @@ class RegisterPage(CTkFrame):
             self.confirmPasswordEntry.configure(show="*")
 
     # verify entry to account database
-    def verify_registration(self, controller):
+    def verify_registration(self):
         username, password, conf_pass = self.usernameEntry.get(), self.passwordEntry.get(), self.confirmPasswordEntry.get()
         self.clear_entry()
         # if email, password, and confirm password are all empty
