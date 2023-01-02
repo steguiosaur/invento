@@ -3,6 +3,7 @@ from InventoryPage import InventoryPage
 import dependencies
 dependencies.dependency_install()
 from customtkinter import CTk, CTkFrame, set_appearance_mode
+from tkinter import PhotoImage
 
 class Main(CTk):
     def __init__(self, *args, **kwargs):
@@ -43,4 +44,6 @@ app.minsize(720, 480)
 app.resizable(True, True)
 app.title("Invento")
 
+icon = PhotoImage(file='assets/logo.png')
+app.iconphoto(True, icon)
 app.mainloop()

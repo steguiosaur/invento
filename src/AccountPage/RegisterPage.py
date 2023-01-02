@@ -65,6 +65,7 @@ class RegisterPage(CTkFrame):
         self.confirmPasswordEntry.place(relx=0.75, y=190, anchor=CENTER)
 
         ############################ BUTTONS
+        # show and hide password button
         self.showPasswordCheckbox = CTkCheckBox(self.registerFrame, height=12, checkbox_width=12, checkbox_height=12, border_width=2, text="Show Password", font=('Century Gothic',10), command=lambda: self.show_hide_pass())
         self.showPasswordCheckbox.place(x=373, y=220)
 
@@ -77,6 +78,7 @@ class RegisterPage(CTkFrame):
         self.goLoginButton.place(relx=0.75, y=310, anchor=CENTER)
 
     ############################## FUNCTIONS ###############################
+    # shows and hides password
     def show_hide_pass(self):
         boxValue = self.showPasswordCheckbox.get()
         if boxValue == 1:
