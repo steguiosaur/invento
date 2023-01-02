@@ -1,19 +1,23 @@
-import customtkinter
+import dependencies
+dependencies.dependency_install()
 from AccountPage import LoginPage, RegisterPage
 from InventoryPage import InventoryPage
-from customtkinter import CTk, CTkFrame
+from customtkinter import CTk, CTkFrame, set_appearance_mode
 
 class Main(CTk):
     def __init__(self, *args, **kwargs):
         CTk.__init__(self, *args, **kwargs)
 
+        # creates container for frames
         container = CTkFrame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
+        # dictionary 
         self.frames = {}
 
+        # application pages  
         for f in {
             LoginPage.LoginPage, 
             RegisterPage.RegisterPage, 
@@ -24,6 +28,7 @@ class Main(CTk):
             frame.grid(row=0, column=0, sticky="NSEW")
             self.frames[page] = frame
 
+        # initialize starting frame
         self.show_frame("LoginPage")
 
     def show_frame(self, page, id=None):
@@ -31,7 +36,7 @@ class Main(CTk):
         frame = self.frames[page]
         frame.tkraise()
 
-customtkinter.set_appearance_mode("dark")
+set_appearance_mode("dark")
 app = Main()
 app.geometry(f"{1280}x{720}")
 app.minsize(720, 480)
