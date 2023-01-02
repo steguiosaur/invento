@@ -1,4 +1,4 @@
-from customtkinter import CENTER, CTkFrame, CTkButton, CTkEntry, CTkLabel, CTkImage
+from customtkinter import CENTER, CTkFrame, CTkButton, CTkEntry, CTkLabel, CTkImage, CTkCheckBox
 from pathlib import Path
 from PIL import Image
 import accounts
@@ -45,26 +45,29 @@ class RegisterPage(CTkFrame):
         
         ############################ USERNAME
         self.usernameReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
-        self.usernameReplyLabel.place(x=373, y=103)
+        self.usernameReplyLabel.place(x=373, y=93)
 
         self.usernameEntry = CTkEntry(self.registerFrame, width=220, placeholder_text="Username")
-        self.usernameEntry.place(relx=0.75, y=90, anchor=CENTER)
+        self.usernameEntry.place(relx=0.75, y=80, anchor=CENTER)
 
         ############################ PASSWORD
         self.passwordReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
-        self.passwordReplyLabel.place(x=373, y=158)
+        self.passwordReplyLabel.place(x=373, y=148)
 
         self.passwordEntry = CTkEntry(self.registerFrame, width=220, placeholder_text="Password", show="*")
-        self.passwordEntry.place(relx=0.75, y=145, anchor=CENTER)
+        self.passwordEntry.place(relx=0.75, y=135, anchor=CENTER)
 
         ######################## CONFIRM PASSWORD
         self.confirmPasswordReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
-        self.confirmPasswordReplyLabel.place(x=373, y=213)
+        self.confirmPasswordReplyLabel.place(x=373, y=203)
 
         self.confirmPasswordEntry = CTkEntry(self.registerFrame, width=220, placeholder_text="Confirm Password", show="*")
-        self.confirmPasswordEntry.place(relx=0.75, y=200, anchor=CENTER)
+        self.confirmPasswordEntry.place(relx=0.75, y=190, anchor=CENTER)
 
         ############################ BUTTONS
+        self.showPasswordCheckbox = CTkCheckBox(self.registerFrame, height=12, checkbox_width=12, checkbox_height=12, border_width=2, text="Show Password", font=('Century Gothic',10), command=lambda: self.show_hide_pass())
+        self.showPasswordCheckbox.place(x=373, y=220)
+
         # register entries to database
         self.registerInputButton = CTkButton(self.registerFrame, width=220, text="Register now", command=lambda: self.verify_registration(controller))
         self.registerInputButton.place(relx=0.75, y=260, anchor=CENTER)
@@ -74,6 +77,15 @@ class RegisterPage(CTkFrame):
         self.goLoginButton.place(relx=0.75, y=310, anchor=CENTER)
 
     ############################## FUNCTIONS ###############################
+    def show_hide_pass(self):
+        boxValue = self.showPasswordCheckbox.get()
+        if boxValue == 1:
+            self.passwordEntry.configure(show="")
+            self.confirmPasswordEntry.configure(show="")
+        else:
+            self.passwordEntry.configure(show="*")
+            self.confirmPasswordEntry.configure(show="*")
+
     # verify entry to account database
     def verify_registration(self, controller):
         username, password, conf_pass = self.usernameEntry.get(), self.passwordEntry.get(), self.confirmPasswordEntry.get()
@@ -136,8 +148,7 @@ class RegisterPage(CTkFrame):
         self.usernameEntry.focus_set()
         self.passwordEntry.focus_set()
         self.confirmPasswordEntry.focus_set()
-        self.passwordEntry.configure(show="*")
-        self.confirmPasswordEntry.configure(show="*")
+        self.show_hide_pass()
         self.focus_set()
 
     # remove error and confirm labels

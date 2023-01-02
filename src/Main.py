@@ -1,7 +1,7 @@
-import dependencies
-dependencies.dependency_install()
 from AccountPage import LoginPage, RegisterPage
 from InventoryPage import InventoryPage
+import dependencies
+dependencies.dependency_install()
 from customtkinter import CTk, CTkFrame, set_appearance_mode
 
 class Main(CTk):
@@ -14,7 +14,7 @@ class Main(CTk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        # dictionary 
+        # create dictionary 
         self.frames = {}
 
         # application pages  

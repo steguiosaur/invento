@@ -1,4 +1,4 @@
-from customtkinter import CENTER, CTkFrame, CTkButton, CTkEntry, CTkLabel, CTkImage
+from customtkinter import CENTER, CTkFrame, CTkButton, CTkEntry, CTkLabel, CTkImage, CTkCheckBox
 from pathlib import Path
 from PIL import Image
 import accounts
@@ -58,6 +58,9 @@ class LoginPage(CTkFrame):
         self.passwordEntry.place(relx=0.75, y=165, anchor=CENTER)
 
         ############################ BUTTONS
+        self.showPasswordCheckbox = CTkCheckBox(self.loginFrame, checkbox_width=12, checkbox_height=12, border_width=2, text="Show Password", font=('Century Gothic',10), command=lambda: self.show_hide_pass())
+        self.showPasswordCheckbox.place(x=373, y=193)
+
         # verify login and go to InventoryPage
         self.loginButton = CTkButton(self.loginFrame, width=220, text="Login now", command=lambda: self.verify_login(controller))
         self.loginButton.place(relx=0.75, y=240, anchor=CENTER)
@@ -67,6 +70,13 @@ class LoginPage(CTkFrame):
         self.registerButton.place(relx=0.75, y=290, anchor=CENTER)
 
     ############################## FUNCTIONS ###############################
+    def show_hide_pass(self):
+        boxValue = self.showPasswordCheckbox.get()
+        if boxValue == 1:
+            self.passwordEntry.configure(show="")
+        else:
+            self.passwordEntry.configure(show="*")
+
     # confirm if entry is completed
     def verify_login(self, controller):
         username = self.usernameEntry.get()
@@ -111,7 +121,7 @@ class LoginPage(CTkFrame):
     def refresh_unfocused(self):
         self.usernameEntry.focus_set()
         self.passwordEntry.focus_set()
-        self.passwordEntry.configure(show="*")
+        self.show_hide_pass()
         self.focus_set()
 
     # remove error and confirm labels
