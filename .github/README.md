@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img width="200" src="./src/assets/logo.svg" alt="logo">
+  <img width="200" src="../src/assets/logo.svg" alt="logo">
   <h1 align="center" style="margin: 0 auto 0 auto;">INVENTO</h1>
   <h5 align="center" style="margin: 0 auto 0 auto;">An inventory management system using Python</h5>
 </p>

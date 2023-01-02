@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="210mm"
-   viewBox="0 0 210 210"
+   width="185mm"
+   height="143mm"
+   viewBox="0 0 185 143"
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
@@ -27,9 +27,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.69881364"
-     inkscape:cx="356.31817"
-     inkscape:cy="394.23959"
+     inkscape:zoom="0.48477161"
+     inkscape:cx="177.40313"
+     inkscape:cy="465.16751"
      inkscape:window-width="1344"
      inkscape:window-height="706"
      inkscape:window-x="9"
@@ -40,10 +40,10 @@
      id="defs2">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 105 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="210 : 105 : 1"
-       inkscape:persp3d-origin="105 : 70 : 1"
+       inkscape:vp_x="0 : 37.999995 : 1"
+       inkscape:vp_y="0 : 1000.0001 : 0"
+       inkscape:vp_z="210.00003 : 37.999995 : 1"
+       inkscape:persp3d-origin="105.00001 : 3.0000032 : 1"
        id="perspective7257" />
   </defs>
   <g
@@ -51,32 +51,32 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       d="m 104.65142,63.305549 72.27384,-9.343667 V 157.05469 l -72.27384,-11.50762 z"
+       d="M 91.422221,27.322193 163.69601,17.978526 V 121.07113 L 91.422221,109.56351 Z"
        style="fill:#706e2e;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.04688;stroke-linejoin:round"
        id="path10783" />
     <path
-       d="m 34.886406,56.553883 v 96.906597 l 61.133136,-8.09352 V 63.12543 Z"
+       d="M 21.657231,20.570527 V 117.47692 L 82.790367,109.3834 V 27.142074 Z"
        style="fill:#706e2e;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.04688;stroke-linejoin:round"
        id="path10785" />
     <path
-       d="m 37.51344,157.99158 70.06578,16.73405 63.34119,-13.31995 -72.273848,-11.50762 z"
+       d="M 24.284265,122.00802 94.350003,138.74207 157.69116,125.42212 85.417387,113.9145 Z"
        style="fill:#706e2e;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.04688;stroke-linejoin:round"
        id="path10787" />
     <path
-       d="M 37.017064,52.23863 107.08283,38.651313 170.42402,49.46651 98.15018,58.810177 Z"
+       d="M 23.787889,16.255274 93.853616,2.6679612 157.19477,13.483154 84.921005,22.826821 Z"
        style="fill:#706e2e;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.04688;stroke-linejoin:round"
        id="path10789" />
     <path
-       d="M 130.83911,42.588568 V 169.81653 L 194.1803,156.49658 V 53.403765 Z"
+       d="M 117.60986,6.6052141 V 133.83297 l 63.34119,-13.31995 V 17.420409 Z"
        style="fill:#d1d48f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.04688;stroke-linejoin:round"
        id="path10791" />
     <path
-       d="M 17.132767,56.158389 87.198543,42.571072 V 169.79905 L 17.132767,153.065 Z"
+       d="M 3.9035956,20.175033 73.969368,6.5877181 V 133.81549 L 3.9035956,117.08144 Z"
        style="fill:#b0ac66;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.04688;stroke-linejoin:round"
        id="path10793" />
     <path
        style="fill:#706e2e;fill-opacity:1;stroke-width:0.264583"
-       d="m 54.939945,139.76764 -0.09289,14.74192 27.448615,6.00191 0.395415,-20.41785 z"
+       d="m 41.71077,103.78408 -0.09289,14.74192 27.448615,6.00191 0.395415,-20.41785 z"
        id="path11128" />
   </g>
 </svg>
