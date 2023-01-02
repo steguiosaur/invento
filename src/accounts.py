@@ -1,23 +1,33 @@
 import hashlib
 import sqlite3
 
-
-def register(username, passwd, confirm_passwd):
+def create_table():
     con = sqlite3.connect("account.db")
     cur = con.cursor()
 
     # create table for logins
     cur.execute("CREATE TABLE IF NOT EXISTS 'login' (Username VARCHAR, Password VARCHAR)")
     con.commit()
-    
+
+    cur.close()
+    con.close()
+
+def register(username, passwd, confirm_passwd):
+    con = sqlite3.connect("account.db")
+    cur = con.cursor()
+
     # verify if user exist
     user_exist = f"SELECT Username from login WHERE Username='{username}'"
     cur.execute(user_exist)
     if cur.fetchone():
+        cur.close()
+        con.close()
         return 1
     
     # compare pass and confirm pass
     if passwd != confirm_passwd:
+        cur.close()
+        con.close()
         return 2
 
     # code hashing

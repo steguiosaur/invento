@@ -1,6 +1,6 @@
 # Root ignored directories
 venv/
 target/
-__init__.py
 build/
 *.db
+__pycache__/
