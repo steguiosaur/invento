@@ -1,7 +1,7 @@
 from AccountPage import LoginPage, RegisterPage
 from InventoryPage import InventoryPage
-import dependencies
-dependencies.dependency_install()
+#import dependencies
+#dependencies.dependency_install()
 from customtkinter import CTk, CTkFrame, set_appearance_mode
 from tkinter import PhotoImage
 
