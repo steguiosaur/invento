@@ -1,7 +1,7 @@
 from AccountPage import LoginPage, RegisterPage
 from InventoryPage import InventoryPage
-#import dependencies
-#dependencies.dependency_install()
+import dependencies
+dependencies.dependency_install_window()
 from customtkinter import CTk, CTkFrame, set_appearance_mode
 from tkinter import PhotoImage
 
@@ -41,6 +41,7 @@ set_appearance_mode("dark")
 app = Main()
 app.geometry(f"{1280}x{720}")
 app.minsize(720, 480)
+app.maxsize(1920, 1080)
 app.resizable(True, True)
 app.title("Invento")
 
