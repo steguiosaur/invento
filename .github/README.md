@@ -1,11 +1,9 @@
+![Invento Logo](../src/assets/light_logo_color.svg#gh-dark-mode-only)
+![Invento Logo](../src/assets/dark_logo_color.svg#gh-light-mode-only)
 
-<p align="center">
-  <img width="200" src="../src/assets/logo.svg" alt="logo">
-  <h1 align="center" style="margin: 0 auto 0 auto;">INVENTO</h1>
-  <h5 align="center" style="margin: 0 auto 0 auto;">An inventory management system using Python</h5>
-</p>
+## :globe_with_meridians: Description
 
-<br>
+Inventory management system that tracks product performance and inventory changes.
 
 -----------------------------------------------------------------
 
@@ -20,32 +18,34 @@
 
 -----------------------------------------------------------------
 
-## :page_facing_up: Guidelines
+## :clipboard: Setup Guide
 
-### Requirements
+### Prerequisites
 
-- Use DISCRETE STRUCTURES lesson
-- GUI
+- Requires Python 3.x
+- Install `customtkinter` and `pillow` via `pip install`
 
-### Documentation
+### Execution
 
-- Flowchart
-- Instruction Manual
-- Reference (Code Explanation)
+1. Clone the repository to your machine and `cd` to source files.
+```sh
+git clone https://github.com/steguiosaur/invento.git && ./invento/src
+```
 
-### Research
+2. Execute `Main.py` to run the application.
+```
+python Main.py
+```
 
-- Paper Work
+> In case `dependencies.py` failed to execute, manually install the required dependencies.
+```sh
+pip install --upgrade customtkinter pillow 
+```
+
+### Build Compilation
+
+
 
 -----------------------------------------------------------------
 
-## :hourglass_flowing_sand: Constraints
-
-### Time
-
-**DEADLINE**: December 16, 2022 (Friday)
-
-### Scope
-
-- Create simple application using lessons in Data Structures.
-- Use Graphical User Interface (GUI)
+##
