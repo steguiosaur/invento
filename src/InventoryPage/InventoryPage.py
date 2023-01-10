@@ -1,4 +1,5 @@
 from customtkinter import CTkFrame, CTkButton, CTkLabel, CTkImage, CTkOptionMenu, CTkTabview, set_appearance_mode, set_widget_scaling, set_default_color_theme
+from Functionality import settings
 from tkinter import ttk
 from pathlib import Path
 from PIL import Image
@@ -139,13 +140,16 @@ class InventoryPage(CTkFrame):
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         set_appearance_mode(new_appearance_mode)
+        settings.appearance_save(new_appearance_mode)
 
     def set_default_color_theme_event(self, new_default_color_theme: str):
         set_default_color_theme(new_default_color_theme)
+        settings.theme_save(new_default_color_theme)
 
     def change_scaling_event(self, new_scaling: str):
         new_scaling_float = int(new_scaling.replace("%", "")) / 100
         set_widget_scaling(new_scaling_float)
+        settings.scale_save(new_scaling_float)
 
     # refresh placeholder_text and password show to *
     def refresh_unfocused(self):

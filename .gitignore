@@ -4,4 +4,4 @@ target/
 build/
 *.db
 __pycache__/
-.ini
+*.ini

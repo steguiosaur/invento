@@ -1,8 +1,9 @@
 from AccountPage import LoginPage, RegisterPage
 from InventoryPage import InventoryPage
-from Functionality import dependencies
+from Functionality import dependencies, settings
 dependencies.dependency_install_window()
-from customtkinter import CTk, CTkFrame, set_appearance_mode, set_default_color_theme
+from customtkinter import CTk, CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
+from configparser import ConfigParser
 from tkinter import PhotoImage
 
 class Main(CTk):
@@ -30,15 +31,22 @@ class Main(CTk):
             self.frames[page] = frame
 
         # initialize starting frame
-        self.show_frame("LoginPage")
+        self.show_frame("InventoryPage")
 
     def show_frame(self, page, id=None):
         self.id = id
         frame = self.frames[page]
         frame.tkraise()
 
-set_appearance_mode("dark")
-set_default_color_theme("blue")
+# initialize settings and themes
+settings.initialize_config()
+config = ConfigParser()
+config.read('config.ini')
+set_appearance_mode(str(config.get('settings', 'appearance')))
+set_default_color_theme(str(config.get('settings', 'theme')))
+set_widget_scaling(int(config.get('settings', 'scale')) /100)
+
+# start application
 app = Main()
 app.geometry(f"{1280}x{720}")
 app.minsize(720, 480)
