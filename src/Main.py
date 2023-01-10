@@ -1,6 +1,6 @@
 from AccountPage import LoginPage, RegisterPage
 from InventoryPage import InventoryPage
-from Functionality import dependencies, settings
+from Functionality import dependencies, accounts, settings
 dependencies.dependency_install_window()
 from customtkinter import CTk, CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
 from configparser import ConfigParser
@@ -31,12 +31,15 @@ class Main(CTk):
             self.frames[page] = frame
 
         # initialize starting frame
-        self.show_frame("InventoryPage")
+        self.show_frame("LoginPage")
 
     def show_frame(self, page, id=None):
         self.id = id
         frame = self.frames[page]
         frame.tkraise()
+
+# create account database if not exists
+accounts.create_table()
 
 # initialize settings and themes
 settings.initialize_config()

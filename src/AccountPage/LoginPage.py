@@ -11,18 +11,15 @@ class LoginPage(CTkFrame):
     def __init__(self, parent, controller):
         CTkFrame.__init__(self, parent)
 
-        # create account database if not exists
-        accounts.create_table()
-
         ############################ PRIMARY UI ############################
         # Background image FIX [Transparency, Size]
         self.bgImg = CTkImage(
-            light_image=Image.open(self.asset_path("./background.jpg")),
-            dark_image=Image.open(self.asset_path("./background.jpg")),
+            light_image=Image.open(self.asset_path("./light_bg.jpg")),
+            dark_image=Image.open(self.asset_path("./dark_bg.jpg")),
             size=(1920, 1080))
         
         self.bgImgLabel=CTkLabel(self, image=self.bgImg, text="")
-        self.bgImgLabel.pack()
+        self.bgImgLabel.pack(anchor="ne")
 
         ########################### LOGIN FRAME
         self.loginFrame = CTkFrame(self, width=640, height=360, corner_radius=0)

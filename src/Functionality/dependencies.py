@@ -1,5 +1,6 @@
-from tkinter import Tk, Label, PhotoImage
+from tkinter import CENTER, Tk, Label, PhotoImage
 from os.path import isfile
+from pathlib import Path
 import subprocess
 
 packages = [
@@ -8,25 +9,27 @@ packages = [
     "pandas"
 ]
 
+OUTPUT_PATH = Path(__file__).parent
+ASSETS_PATH = OUTPUT_PATH / Path("../assets")
+
+
 def dependency_install_window():
     if not isfile('./account.db'):
         window = Tk()
         window.configure(background="#1b1b1b")
-        window.geometry("700x100")
+        window.geometry("489x301")
         window.resizable(False, False)
         window.title("Invento Dependency Installer")
 
-        icon = PhotoImage(file='assets/logo.png')
+        icon = PhotoImage(file=relative_to_assets('logo.png'))
         window.iconphoto(True, icon)
 
-        logoPhotoLabel = Label(window, text="INVENTO dependency installer", fg="#DFDFDF", bg="#1b1b1b", font=("Georgia", 16))
-        logoPhotoLabel.place(x=5, y=0, anchor="nw")
+        bgInstaller = PhotoImage(file=relative_to_assets("dependency_installer.png"))
+        bgIntallerLabel = Label(window, image=bgInstaller)
+        bgIntallerLabel.pack()
 
-        textLabel = Label(window, width=600, text="Connecting...", fg="white", bg="#2b2b2b", font=("Calibri", 8))
-        textLabel.place(relx=0.5, rely=0.98, anchor="s")
-
-        textLabel2 = Label(window, width=600, text="This only happen once. Internet access required.", fg="white", bg="#1b1b1b", font=("Calibri", 8))
-        textLabel2.place(relx=0.5, rely=1, anchor="s")
+        textLabel = Label(window, width=600, text="Connecting...", fg="white", bg="#2b2b2b", font=("Calibri", 7))
+        textLabel.place(relx=0.5, rely=1, anchor="s")
         window.update()
 
         # import or install required dependencies
@@ -42,4 +45,5 @@ def dependency_install_window():
         window.after(2000, window.update())
         window.destroy()
 
-#dependency_install_window()
+def relative_to_assets(path: str) -> Path:
+    return ASSETS_PATH / Path(path)
