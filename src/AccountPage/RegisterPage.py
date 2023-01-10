@@ -14,8 +14,8 @@ class RegisterPage(CTkFrame):
         ############################ PRIMARY UI ############################
         # Background image FIX [Transparency, Size]
         self.bgImg = CTkImage(
-            light_image=Image.open(self.asset_path("./background.jpg")),
-            dark_image=Image.open(self.asset_path("./background.jpg")),
+            light_image=Image.open(self.asset_path("./light_bg.jpg")),
+            dark_image=Image.open(self.asset_path("./dark_bg.jpg")),
             size=(1920, 1080))
         
         self.bgImgLabel=CTkLabel(self, image=self.bgImg, text="")
