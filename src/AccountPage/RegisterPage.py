@@ -5,6 +5,7 @@ from Functionality import accounts
 
 class RegisterPage(CTkFrame):
 
+    # location of assets
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path("../assets")
 
@@ -12,7 +13,7 @@ class RegisterPage(CTkFrame):
         CTkFrame.__init__(self, parent)
 
         ############################ PRIMARY UI ############################
-        # Background image FIX [Transparency, Size]
+        # background image for register
         self.bgImg = CTkImage(
             light_image=Image.open(self.asset_path("./light_bg.jpg")),
             dark_image=Image.open(self.asset_path("./dark_bg.jpg")),
@@ -128,6 +129,7 @@ class RegisterPage(CTkFrame):
         # store information to account database
         self.log_info(username, password, conf_pass)
 
+    # register account status
     def log_info(self, username, passwd, confirm_pass):
         login_status = accounts.register(username, passwd, confirm_pass)
         match login_status:
@@ -140,7 +142,7 @@ class RegisterPage(CTkFrame):
             case _:
                 self.usernameReplyLabel.configure(text="*Account not registered")
 
-    # LoginPage frame
+    # change frame to LoginPage
     def go_login(self, controller):
         self.clear_entry()
         controller.show_frame("LoginPage", controller.id)

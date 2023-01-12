@@ -5,6 +5,7 @@ from Functionality import accounts
 
 class LoginPage(CTkFrame):
 
+    # location of assets
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path("../assets")
 
@@ -12,7 +13,7 @@ class LoginPage(CTkFrame):
         CTkFrame.__init__(self, parent)
 
         ############################ PRIMARY UI ############################
-        # Background image FIX [Transparency, Size]
+        # background image for login
         self.bgImg = CTkImage(
             light_image=Image.open(self.asset_path("./light_bg.jpg")),
             dark_image=Image.open(self.asset_path("./dark_bg.jpg")),
@@ -107,11 +108,11 @@ class LoginPage(CTkFrame):
             case _:
                 self.usernameReplyLabel.configure(text="*Account not registered")
 
-    # InventoryPage
+    # change frame to InventoryPage
     def go_inventory(self, controller):
         controller.show_frame("InventoryPage", controller.id)
 
-    # Register account frame
+    # change frame to RegisterPage
     def go_register(self, controller):
         self.clear_entry()
         controller.show_frame("RegisterPage", controller.id)

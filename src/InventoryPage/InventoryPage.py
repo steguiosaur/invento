@@ -6,6 +6,7 @@ from PIL import Image
 
 class InventoryPage(CTkFrame):
 
+    # location of assets
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path("../assets")
 
@@ -50,6 +51,7 @@ class InventoryPage(CTkFrame):
         self.logoImgLabel=CTkLabel(self.sidebarFrame, image=self.logoImg, text="")
         self.logoImgLabel.grid(row=0, column=0, padx=20, pady=(20, 10))
 
+        # button for tabs
         self.inventoryButton = CTkButton(self.sidebarFrame, text="Inventory", command=lambda: self.tabview.set("Inventory"))
         self.inventoryButton.grid(row=4, column=0, padx=20, pady=10)
 
@@ -85,6 +87,7 @@ class InventoryPage(CTkFrame):
         self.tableFrame.grid_columnconfigure(0, weight=1)
         self.tableFrame.rowconfigure(0, weight=1)
 
+        # create table
         self.treeViewStyle = ttk.Style()
         self.treeViewStyle.configure(
             "Treeview",
@@ -96,9 +99,11 @@ class InventoryPage(CTkFrame):
         self.treeView = ttk.Treeview(self.tableFrame, selectmode='browse')
         self.treeView.grid(row=0, column=0, rowspan=1, columnspan=1,padx=(10,10), pady=(10,10), sticky="nsew")
 
+        # create frame for adding items
         self.modifyItemFrame = CTkFrame(self.tabview.tab("Inventory"))
         self.modifyItemFrame.grid(row=3, column=0, rowspan=1, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
 
+        # create frame for updating items
         self.updateItemFrame = CTkFrame(self.tabview.tab("Inventory"))
         self.updateItemFrame.grid(row=3, column=2, rowspan=1, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
 
@@ -114,38 +119,42 @@ class InventoryPage(CTkFrame):
         self.tabview.tab("Settings").grid_rowconfigure(0, weight=0)
 
         # change to light or dark mode
-        self.appearance_mode_label = CTkLabel(self.tabview.tab("Settings"), text="Appearance Mode:", anchor="w")
-        self.appearance_mode_label.grid(row=1, column=1, padx=20, pady=(10, 0))
+        self.appearanceModeLabel = CTkLabel(self.tabview.tab("Settings"), text="Appearance Mode:", anchor="w")
+        self.appearanceModeLabel.grid(row=1, column=1, padx=20, pady=(10, 0))
 
-        self.appearance_mode_optionemenu = CTkOptionMenu(self.tabview.tab("Settings"), values=["Light", "Dark", "System"], command=self.change_appearance_mode_event)
-        self.appearance_mode_optionemenu.grid(row=2, column=1, padx=20, pady=(10, 10))
+        self.appearanceModeOptionmenu = CTkOptionMenu(self.tabview.tab("Settings"), values=["Light", "Dark", "System"], command=self.change_appearance_mode_event)
+        self.appearanceModeOptionmenu.grid(row=2, column=1, padx=20, pady=(10, 10))
 
         # change color theme
-        self.color_theme_label = CTkLabel(self.tabview.tab("Settings"), text="Color Theme:", anchor="w")
-        self.color_theme_label.grid(row=3, column=1, padx=20, pady=(10, 0))
+        self.colorThemeLabel = CTkLabel(self.tabview.tab("Settings"), text="Color Theme:", anchor="w")
+        self.colorThemeLabel.grid(row=3, column=1, padx=20, pady=(10, 0))
 
-        self.color_theme_optionmenu = CTkOptionMenu(self.tabview.tab("Settings"), values=["blue", "dark-blue", "green"], command=self.set_default_color_theme_event)
-        self.color_theme_optionmenu.grid(row=4, column=1, padx=20, pady=(10, 10))
+        self.colorThemeOptionmenu = CTkOptionMenu(self.tabview.tab("Settings"), values=["blue", "dark-blue", "green"], command=self.set_default_color_theme_event)
+        self.colorThemeOptionmenu.grid(row=4, column=1, padx=20, pady=(10, 10))
 
         # change scaling of ui
-        self.scaling_label = CTkLabel(self.tabview.tab("Settings"), text="UI Scaling:", anchor="w")
-        self.scaling_label.grid(row=5, column=1, padx=20, pady=(10, 0))
+        self.scalingLabel = CTkLabel(self.tabview.tab("Settings"), text="UI Scaling:", anchor="w")
+        self.scalingLabel.grid(row=5, column=1, padx=20, pady=(10, 0))
 
-        self.scaling_optionemenu = CTkOptionMenu(self.tabview.tab("Settings"), values=["80%", "90%", "100%", "110%", "120%"], command=self.change_scaling_event)
-        self.scaling_optionemenu.grid(row=6, column=1, padx=20, pady=(10, 20))
+        self.scalingOptionemenu = CTkOptionMenu(self.tabview.tab("Settings"), values=["80%", "90%", "100%", "110%", "120%"], command=self.change_scaling_event)
+        self.scalingOptionemenu.grid(row=6, column=1, padx=20, pady=(10, 20))
 
     ############################## FUNCTIONS ###############################
+    # change frame to LoginPage
     def logout(self, controller):
         controller.show_frame("LoginPage", controller.id)
 
+    # change appearance to light or dark
     def change_appearance_mode_event(self, new_appearance_mode: str):
         set_appearance_mode(new_appearance_mode)
         settings.appearance_save(new_appearance_mode)
 
+    # change color theme (requires restart)
     def set_default_color_theme_event(self, new_default_color_theme: str):
         set_default_color_theme(new_default_color_theme)
         settings.theme_save(new_default_color_theme)
 
+    # change scaling of application
     def change_scaling_event(self, new_scaling: str):
         new_scaling_float = int(new_scaling.replace("%", "")) / 100
         set_widget_scaling(new_scaling_float)

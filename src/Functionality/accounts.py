@@ -1,6 +1,8 @@
 import hashlib
 import sqlite3
 
+
+# initialize account database
 def create_table():
     con = sqlite3.connect("account.db")
     cur = con.cursor()
@@ -12,6 +14,8 @@ def create_table():
     cur.close()
     con.close()
 
+
+# register accoun to account.db
 def register(username, passwd, confirm_passwd):
     con = sqlite3.connect("account.db")
     cur = con.cursor()
@@ -43,6 +47,8 @@ def register(username, passwd, confirm_passwd):
     con.close()
     return 0
 
+
+# verify account login details
 def login(username, passwd):
     con = sqlite3.connect("account.db")
     cur = con.cursor()
