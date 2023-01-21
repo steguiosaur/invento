@@ -31,7 +31,7 @@ class Main(CTk):
             self.frames[page] = frame
 
         # initialize starting frame
-        self.show_frame("InventoryPage")
+        self.show_frame("LoginPage")
 
     # display selected page on top
     def show_frame(self, page, id=None):
