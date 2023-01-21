@@ -31,7 +31,7 @@ class Main(CTk):
             self.frames[page] = frame
 
         # initialize starting frame
-        self.show_frame("LoginPage")
+        self.show_frame("InventoryPage")
 
     # display selected page on top
     def show_frame(self, page, id=None):
@@ -52,8 +52,8 @@ set_widget_scaling(int(config.get('settings', 'scale')) /100)
 
 # start application
 app = Main()
-app.geometry(f"{1280}x{720}")
-app.minsize(720, 480)
+app.geometry(f"{1024}x{576}")
+app.minsize(1024, 576)
 app.resizable(True, True)
 app.title("Invento")
 icon = PhotoImage(file='assets/logo.png')

@@ -29,8 +29,8 @@ class InventoryPage(CTkFrame):
         # create tabs
         self.tabview = CTkTabview(self, width=250)
         self.tabview.grid(row=0, column=1, rowspan=4, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.tabview.add("Dashboard")
         self.tabview.add("Inventory")
-        self.tabview.add("Performance")
         self.tabview.add("Account")
         self.tabview.add("Settings")
         self.tabview.add("About")
@@ -52,11 +52,11 @@ class InventoryPage(CTkFrame):
         self.logoImgLabel.grid(row=0, column=0, padx=20, pady=(20, 10))
 
         # button for tabs
-        self.inventoryButton = CTkButton(self.sidebarFrame, text="Inventory", command=lambda: self.tabview.set("Inventory"))
-        self.inventoryButton.grid(row=4, column=0, padx=20, pady=10)
+        self.dashboardButton = CTkButton(self.sidebarFrame, text="Dashboard", command=lambda: self.tabview.set("Dashboard"))
+        self.dashboardButton.grid(row=4, column=0, padx=20, pady=10)
 
-        self.accountMenuButton = CTkButton(self.sidebarFrame, text="Performance", command=lambda: self.tabview.set("Performance"))
-        self.accountMenuButton.grid(row=5, column=0, padx=20, pady=10)
+        self.inventoryButton = CTkButton(self.sidebarFrame, text="Inventory", command=lambda: self.tabview.set("Inventory"))
+        self.inventoryButton.grid(row=5, column=0, padx=20, pady=10)
 
         self.accountMenuButton = CTkButton(self.sidebarFrame, text="Account", command=lambda: self.tabview.set("Account"))
         self.accountMenuButton.grid(row=6, column=0, padx=20, pady=10)
@@ -70,7 +70,39 @@ class InventoryPage(CTkFrame):
         self.logoutButton = CTkButton(self.sidebarFrame, text="Logout", command=lambda: self.logout(controller))
         self.logoutButton.grid(row=10, column=0, padx=20, pady=20)
 
-        ############################ INVENTORY
+        ############################ DASHBOARD
+        self.tabview.tab("Dashboard").grid_columnconfigure(0, weight=1)
+        self.tabview.tab("Dashboard").grid_columnconfigure(11, weight=1)
+        self.tabview.tab("Dashboard").grid_rowconfigure(0, weight=1)
+        self.tabview.tab("Dashboard").grid_rowconfigure(3, weight=1)
+
+        # create frame for 
+
+        # create frame for account settings
+        self.displayUserFrame = CTkFrame(self.tabview.tab("Dashboard"))
+        self.displayUserFrame.grid(row=0, column=0, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
+
+        # create frame for list accounts
+        self.displayNumcCategoryFrame = CTkFrame(self.tabview.tab("Dashboard"))
+        self.displayNumcCategoryFrame.grid(row=0, column=2, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
+
+        # create frame for list accounts
+        self.displayNumProductsFrame = CTkFrame(self.tabview.tab("Dashboard"))
+        self.displayNumProductsFrame.grid(row=0, column=2, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
+
+        # create frame for list accounts
+        self.displayNumSalesFrame = CTkFrame(self.tabview.tab("Dashboard"))
+        self.displayNumSalesFrame.grid(row=0, column=2, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
+
+        # create frame for list accounts
+        self.displaySalesGraphFrame = CTkFrame(self.tabview.tab("Dashboard"))
+        self.displaySalesGraphFrame.grid(row=0, column=2, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
+
+        # create frame for list accounts
+        self.displayAddedProductFrame = CTkFrame(self.tabview.tab("Dashboard"))
+        self.displayAddedProductFrame.grid(row=0, column=2, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
+
+        ############################ PRODUCTS
         # inventory tab grid
         self.tabview.tab("Inventory").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Inventory").grid_columnconfigure(1, weight=1)
@@ -89,15 +121,30 @@ class InventoryPage(CTkFrame):
 
         # create table
         self.treeViewStyle = ttk.Style()
+        self.treeViewStyle.theme_use("clam")
         self.treeViewStyle.configure(
             "Treeview",
-            background="#4b4b4b",
-            foreground="white",
             rowheight="20",
-            fieldbackground="#2b2b2b"
         )
         self.treeView = ttk.Treeview(self.tableFrame, selectmode='browse')
-        self.treeView.grid(row=0, column=0, rowspan=1, columnspan=1,padx=(10,10), pady=(10,10), sticky="nsew")
+        self.treeView.grid(row=0, column=0, rowspan=1, columnspan=1,padx=(0,0), pady=(0,0), sticky="nsew")
+
+        self.treeView["show"] = "headings"
+        self.treeView["columns"] = ("1", "2", "3","4","5","6")
+        
+        self.treeView.column("1", width=100)
+        self.treeView.column("2", width=40)
+        self.treeView.column("3", width=5)
+        self.treeView.column("4", width=5)
+        self.treeView.column("5", width=5)
+        self.treeView.column("6", width=5)
+
+        self.treeView.heading("1", text="Product Name")
+        self.treeView.heading("2", text="Category")
+        self.treeView.heading("3", text="In-Stock")
+        self.treeView.heading("4", text="Buying Price")
+        self.treeView.heading("5", text="Selling Price")
+        self.treeView.heading("6", text="Product Added")
 
         # create frame for adding items
         self.modifyItemFrame = CTkFrame(self.tabview.tab("Inventory"))
@@ -108,6 +155,22 @@ class InventoryPage(CTkFrame):
         self.updateItemFrame.grid(row=3, column=2, rowspan=1, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
 
         ############################# ACCOUNT
+        self.tabview.tab("Account").grid_columnconfigure(0, weight=1)
+        self.tabview.tab("Account").grid_columnconfigure(1, weight=1)
+        self.tabview.tab("Account").grid_columnconfigure(2, weight=1)
+        self.tabview.tab("Account").grid_columnconfigure(3, weight=1)
+        self.tabview.tab("Account").grid_rowconfigure(0, weight=1)
+        self.tabview.tab("Account").grid_rowconfigure(1, weight=1)
+        self.tabview.tab("Account").grid_rowconfigure(2, weight=1)
+        self.tabview.tab("Account").grid_rowconfigure(3, weight=0)
+
+        # create frame for account settings
+        self.accountSettingsFrame = CTkFrame(self.tabview.tab("Account"))
+        self.accountSettingsFrame.grid(row=0, column=0, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
+
+        # create frame for list accounts
+        self.accountListFrame = CTkFrame(self.tabview.tab("Account"))
+        self.accountListFrame.grid(row=0, column=2, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
 
         ############################ ABOUTMENU
         
