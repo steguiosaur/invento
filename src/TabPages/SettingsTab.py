@@ -1,4 +1,4 @@
-from customtkinter import CTkFrame, CTkLabel, CTkOptionMenu, set_appearance_mode, set_default_color_theme, set_widget_scaling
+from customtkinter import CTkFrame, CTkLabel, CTkOptionMenu, StringVar, set_appearance_mode, set_default_color_theme, set_widget_scaling
 from Functionality import settings
 
 class SettingsTab(CTkFrame):
@@ -15,22 +15,28 @@ class SettingsTab(CTkFrame):
         self.appearanceModeLabel = CTkLabel(self, text="Appearance Mode:", anchor="w")
         self.appearanceModeLabel.grid(row=1, column=1, padx=20, pady=(10, 0))
 
-        self.appearanceModeOptionmenu = CTkOptionMenu(self, values=["Light", "Dark", "System"], command=self.change_appearance_mode_event)
+        self.currentAppearance = StringVar(value=settings.appearance_read())
+
+        self.appearanceModeOptionmenu = CTkOptionMenu(self, values=["Light", "Dark", "System"], command=self.change_appearance_mode_event, variable=self.currentAppearance)
         self.appearanceModeOptionmenu.grid(row=2, column=1, padx=20, pady=(10, 10))
 
         # change color theme
-        self.colorThemeLabel = CTkLabel(self, text="Color Theme:", anchor="w")
+        self.colorThemeLabel = CTkLabel(self, text="Color Theme (requires restart):", anchor="w")
         self.colorThemeLabel.grid(row=3, column=1, padx=20, pady=(10, 0))
 
-        self.colorThemeOptionmenu = CTkOptionMenu(self, values=["blue", "dark-blue", "green"], command=self.set_default_color_theme_event)
+        self.currentTheme = StringVar(value=settings.theme_read())
+
+        self.colorThemeOptionmenu = CTkOptionMenu(self, values=["blue", "dark-blue", "green"], command=self.set_default_color_theme_event, variable=self.currentTheme)
         self.colorThemeOptionmenu.grid(row=4, column=1, padx=20, pady=(10, 10))
 
         # change scaling of ui
         self.scalingLabel = CTkLabel(self, text="UI Scaling:", anchor="w")
         self.scalingLabel.grid(row=5, column=1, padx=20, pady=(10, 0))
 
-        self.scalingOptionemenu = CTkOptionMenu(self, values=["80%", "90%", "100%", "110%", "120%"], command=self.change_scaling_event)
-        self.scalingOptionemenu.grid(row=6, column=1, padx=20, pady=(10, 20))
+        self.currentScaling = StringVar(value=settings.scale_read())
+
+        self.scalingOptionmenu = CTkOptionMenu(self, values=["80%", "90%", "100%", "110%", "120%"], command=self.change_scaling_event, variable=self.currentScaling)
+        self.scalingOptionmenu.grid(row=6, column=1, padx=20, pady=(10, 20))
 
     # change appearance to light or dark
     def change_appearance_mode_event(self, new_appearance_mode: str):

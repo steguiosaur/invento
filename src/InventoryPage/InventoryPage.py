@@ -1,5 +1,5 @@
-from customtkinter import CTkFrame, CTkButton, CTkLabel, CTkImage, CTkTabview 
 from TabPages import AboutTab, SettingsTab, AccountTab, DashboardTab, ProductTab
+from customtkinter import CTkFrame, CTkButton, CTkLabel, CTkImage, CTkTabview 
 from pathlib import Path
 from PIL import Image
 
@@ -12,6 +12,7 @@ class InventoryPage(CTkFrame):
     def __init__(self, parent, controller):
         CTkFrame.__init__(self, parent)
 
+        ############################ LAYOUT ############################
         # configure grid layout (4x4)
         self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure(1, weight=1)
@@ -22,7 +23,6 @@ class InventoryPage(CTkFrame):
         self.grid_rowconfigure(2, weight=1)
         self.grid_rowconfigure(3, weight=1)
 
-        ############################ CONTROL ############################
         # create tabs
         self.tabview = CTkTabview(self, width=250)
         self.tabview.grid(row=0, column=1, rowspan=4, padx=(10, 10), pady=(10, 10), sticky="nsew")
@@ -48,7 +48,7 @@ class InventoryPage(CTkFrame):
         self.logoImgLabel=CTkLabel(self.sidebarFrame, image=self.logoImg, text="")
         self.logoImgLabel.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-        # button for tabs
+        ############################ BUTTONS
         self.dashboardButton = CTkButton(self.sidebarFrame, text="Dashboard", command=lambda: self.tabview.set("Dashboard"))
         self.dashboardButton.grid(row=4, column=0, padx=20, pady=10)
 

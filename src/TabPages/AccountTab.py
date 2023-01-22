@@ -11,7 +11,7 @@ class AccountTab(CTkFrame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
         self.grid_rowconfigure(2, weight=1)
-        self.grid_rowconfigure(3, weight=0)
+        self.grid_rowconfigure(3, weight=1)
 
         # create frame for account settings
         self.accountSettingsFrame = CTkFrame(self)

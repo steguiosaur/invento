@@ -4,12 +4,10 @@ from os.path import isfile
 config = ConfigParser()
 config.read('config.ini')
 
-
 # create config at first execute
 def initialize_config():
     if not isfile('config.ini'):
         config_set()
-
 
 # default configuration
 def config_set():
@@ -19,18 +17,25 @@ def config_set():
     config.set('settings', 'scale', '100')
     config.write(open('config.ini', 'w'))
 
-
 # appearance [light, dark]
 def appearance_save(appearance):
     config.set('settings', 'appearance', appearance)
     config.write(open('config.ini', 'w'))
 
+# display current appearance configuration
+def appearance_read():
+    appearanceValue = (str(config.get('settings', 'appearance')))
+    return appearanceValue
 
 # color theme [blue, dark-blue, green]
 def theme_save(theme):
     config.set('settings', 'theme', theme)
     config.write(open('config.ini', 'w'))
 
+# display current theme configuration
+def theme_read():
+    themeValue = (str(config.get('settings', 'theme')))
+    return themeValue
 
 # zoom value [80%, 90%, 100%, 110%, 120%]
 def scale_save(scale):
@@ -38,3 +43,7 @@ def scale_save(scale):
     config.set('settings', 'scale', str_scale)
     config.write(open('config.ini', 'w'))
 
+# display current scaling configuration
+def scale_read():
+    scaleValue = (str(config.get('settings', 'scale'))+"%")
+    return scaleValue
