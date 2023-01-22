@@ -47,3 +47,9 @@ def scale_save(scale):
 def scale_read():
     scaleValue = (str(config.get('settings', 'scale'))+"%")
     return scaleValue
+
+# return integer value for scaling
+def ui_scale_read():
+    scaling = int(config.get('settings', 'scale')) /100
+    return scaling
+

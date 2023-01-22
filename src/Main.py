@@ -1,9 +1,9 @@
-from AccountPage import LoginPage, RegisterPage
-from InventoryPage import InventoryPage
+from AccountPage.LoginPage import LoginPage
+from AccountPage.RegisterPage import RegisterPage
+from InventoryPage.InventoryPage import InventoryPage
 from Functionality import dependencies, accounts, settings
 dependencies.dependency_install_window()
 from customtkinter import CTk, CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
-from configparser import ConfigParser
 from tkinter import PhotoImage
 
 class Main(CTk):
@@ -20,11 +20,7 @@ class Main(CTk):
         self.frames = {}
 
         # application pages  
-        for f in {
-            LoginPage.LoginPage, 
-            RegisterPage.RegisterPage, 
-            InventoryPage.InventoryPage
-        }:
+        for f in {LoginPage, RegisterPage, InventoryPage}:
             page = f.__name__
             frame = f(container, self)
             frame.grid(row=0, column=0, sticky="NSEW")
@@ -44,18 +40,15 @@ accounts.create_table()
 
 # initialize settings and themes
 settings.initialize_config()
-config = ConfigParser()
-config.read('config.ini')
-set_appearance_mode(str(config.get('settings', 'appearance')))
-set_default_color_theme(str(config.get('settings', 'theme')))
-set_widget_scaling(int(config.get('settings', 'scale')) /100)
+set_appearance_mode(settings.appearance_read())
+set_default_color_theme(settings.theme_read())
+set_widget_scaling(settings.ui_scale_read())
 
 # start application
 app = Main()
 app.geometry(f"{1024}x{576}")
 app.minsize(1024, 576)
 app.resizable(True, True)
+app.iconphoto(True, PhotoImage(file='assets/logo.png'))
 app.title("Invento")
-icon = PhotoImage(file='assets/logo.png')
-app.iconphoto(True, icon)
 app.mainloop()
