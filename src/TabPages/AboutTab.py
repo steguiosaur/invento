@@ -15,9 +15,5 @@ class AboutTab(CTkFrame):
 
         # create frame for account settings
         self.accountSettingsFrame = CTkFrame(self)
-        self.accountSettingsFrame.grid(row=0, column=0, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
-
-        # create frame for list accounts
-        self.accountListFrame = CTkFrame(self)
-        self.accountListFrame.grid(row=0, column=2, rowspan=4, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.accountSettingsFrame.grid(row=0, column=0, rowspan=4, columnspan=4, padx=(10, 10), pady=(10, 10), sticky="nsew")
 
