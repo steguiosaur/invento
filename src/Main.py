@@ -35,7 +35,7 @@ class Main(CTk):
         frame = self.frames[page]
         frame.tkraise()
 
-# create account database if not exists
+# create account database and admin account if not exists
 accounts.create_table()
 
 # initialize settings and themes

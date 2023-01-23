@@ -13,7 +13,7 @@ class AboutTab(CTkFrame):
         self.grid_rowconfigure(2, weight=1)
         self.grid_rowconfigure(3, weight=1)
 
-        # create frame for account settings
-        self.accountSettingsFrame = CTkFrame(self)
-        self.accountSettingsFrame.grid(row=0, column=0, rowspan=4, columnspan=4, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        # create frame for about section
+        self.aboutPageFrame = CTkFrame(self)
+        self.aboutPageFrame.grid(row=0, column=0, rowspan=4, columnspan=4, padx=(10, 10), pady=(10, 10), sticky="nsew")
 

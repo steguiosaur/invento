@@ -8,15 +8,18 @@ def create_table():
     cur = con.cursor()
 
     # create table for logins
-    cur.execute("CREATE TABLE IF NOT EXISTS 'login' (Username VARCHAR, Password VARCHAR)")
+    cur.execute("CREATE TABLE IF NOT EXISTS 'login' (Username VARCHAR, Password VARCHAR, Admin BOOLEAN)")
     con.commit()
+
+    # create admin account
+    register("admin", "admin", "admin", admin=True)
 
     cur.close()
     con.close()
 
 
 # register accoun to account.db
-def register(username, passwd, confirm_passwd):
+def register(username, passwd, confirm_passwd, admin=False):
     con = sqlite3.connect("account.db")
     cur = con.cursor()
 
@@ -39,8 +42,8 @@ def register(username, passwd, confirm_passwd):
     hexformat = hashlib.md5(hashing).hexdigest()
 
     # record data to database
-    query = "INSERT INTO login (Username, Password) VALUES (?, ?)"
-    cur.execute(query, (username, hexformat))
+    query = "INSERT INTO login (Username, Password, Admin) VALUES (?, ?, ?)"
+    cur.execute(query, (username, hexformat, admin))
     con.commit()
 
     cur.close()

@@ -14,6 +14,7 @@ def config_set():
     config.add_section('settings')
     config.set('settings', 'appearance', 'Dark')
     config.set('settings', 'theme', 'blue')
+    config.set('settings', 'tablecolor', 'dark')
     config.set('settings', 'scale', '100')
     config.write(open('config.ini', 'w'))
 
@@ -36,6 +37,16 @@ def theme_save(theme):
 def theme_read():
     themeValue = (str(config.get('settings', 'theme')))
     return themeValue
+
+# table theme [light, dark]
+def table_theme_save(table):
+    config.set('settings', 'tablecolor', table)
+    config.write(open('config.ini', 'w'))
+
+# display current theme configuration
+def table_theme_read():
+    tableThemeValue = (str(config.get('settings', 'tablecolor')))
+    return tableThemeValue
 
 # zoom value [80%, 90%, 100%, 110%, 120%]
 def scale_save(scale):
