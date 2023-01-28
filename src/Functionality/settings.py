@@ -23,30 +23,15 @@ def appearance_save(appearance):
     config.set('settings', 'appearance', appearance)
     config.write(open('config.ini', 'w'))
 
-# display current appearance configuration
-def appearance_read():
-    appearanceValue = (str(config.get('settings', 'appearance')))
-    return appearanceValue
-
 # color theme [blue, dark-blue, green]
 def theme_save(theme):
     config.set('settings', 'theme', theme)
     config.write(open('config.ini', 'w'))
 
-# display current theme configuration
-def theme_read():
-    themeValue = (str(config.get('settings', 'theme')))
-    return themeValue
-
 # table theme [light, dark]
 def table_theme_save(table):
     config.set('settings', 'tablecolor', table)
     config.write(open('config.ini', 'w'))
-
-# display current theme configuration
-def table_theme_read():
-    tableThemeValue = (str(config.get('settings', 'tablecolor')))
-    return tableThemeValue
 
 # zoom value [80%, 90%, 100%, 110%, 120%]
 def scale_save(scale):
@@ -54,13 +39,23 @@ def scale_save(scale):
     config.set('settings', 'scale', str_scale)
     config.write(open('config.ini', 'w'))
 
+
+# display current appearance configuration
+def appearance_read():
+    return (str(config.get('settings', 'appearance')))
+
+# display current theme configuration
+def theme_read():
+    return (str(config.get('settings', 'theme')))
+
+# display current theme configuration
+def table_theme_read():
+    return (str(config.get('settings', 'tablecolor')))
+
 # display current scaling configuration
 def scale_read():
-    scaleValue = (str(config.get('settings', 'scale'))+"%")
-    return scaleValue
+    return (str(config.get('settings', 'scale'))+"%")
 
 # return integer value for scaling
-def ui_scale_read():
-    scaling = int(config.get('settings', 'scale')) /100
-    return scaling
-
+def int_scale_read():
+    return int(config.get('settings', 'scale')) /100

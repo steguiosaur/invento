@@ -1,4 +1,4 @@
-from customtkinter import CTkFrame, CTkLabel, CTkOptionMenu, StringVar, set_appearance_mode, set_default_color_theme, set_widget_scaling
+from customtkinter import CTkFrame, CTkLabel, CTkOptionMenu, StringVar, set_appearance_mode, set_widget_scaling
 from Functionality import settings
 
 class SettingsTab(CTkFrame):

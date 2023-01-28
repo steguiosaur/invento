@@ -42,7 +42,7 @@ accounts.create_table()
 settings.initialize_config()
 set_appearance_mode(settings.appearance_read())
 set_default_color_theme(settings.theme_read())
-set_widget_scaling(settings.ui_scale_read())
+set_widget_scaling(settings.int_scale_read())
 
 # start application
 app = Main()
