@@ -22,25 +22,25 @@ Inventory management system that tracks product performance and inventory change
 
 ### Prerequisites
 
-- Requires Python 3.x
+- Requires Python 3.10.x
 - Install `customtkinter` and `pillow` via `pip install`
 
 ### Execution
 
 1. Clone the repository to your machine and `cd` to source files.
-```sh
-git clone https://github.com/steguiosaur/invento.git && ./invento/src
-```
+    ```sh
+    git clone https://github.com/steguiosaur/invento.git && ./invento/src
+    ```
 
 2. Execute `Main.py` to run the application.
-```
-python Main.py
-```
+    ```
+    python Main.py
+    ```
 
-> In case `dependencies.py` failed to execute, manually install the required dependencies.
-```sh
-pip install --upgrade customtkinter pillow 
-```
+    > In case `dependencies.py` failed to execute, manually install the required dependencies.
+    ```sh
+    pip install -r requirements.txt
+    ```
 
 ### Build Compilation
 
