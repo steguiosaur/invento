@@ -52,3 +52,4 @@ app.resizable(True, True)
 app.iconphoto(True, PhotoImage(file='assets/logo.png'))
 app.title("Invento")
 app.mainloop()
+

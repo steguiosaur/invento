@@ -25,7 +25,7 @@ class InventoryPage(CTkFrame):
 
         # create tabs
         self.tabview = CTkTabview(self, width=250)
-        self.tabview.grid(row=0, column=1, rowspan=4, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.tabview.grid(row=0, column=1, rowspan=4, padx=(10, 10), pady=(0, 10), sticky="nsew")
         self.tabview.add("Dashboard")
         self.tabview.add("Inventory")
         self.tabview.add("Account")
@@ -64,7 +64,7 @@ class InventoryPage(CTkFrame):
         self.aboutMenuButton = CTkButton(self.sidebarFrame, text="About", command=lambda: self.tabview.set("About"))
         self.aboutMenuButton.grid(row=8, column=0, padx=20, pady=10)
 
-        self.logoutButton = CTkButton(self.sidebarFrame, text="Logout", command=lambda: self.logout(controller))
+        self.logoutButton = CTkButton(self.sidebarFrame, text="Logout", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.logout(controller))
         self.logoutButton.grid(row=10, column=0, padx=20, pady=20)
 
         ############################ DASHBOARD
@@ -98,7 +98,7 @@ class InventoryPage(CTkFrame):
         self.settingsDisplay.grid(row=0, column=0, sticky="nsew")
         
 
-    ############################## FUNCTIONS ###############################
+    ############################## METHODS ###############################
     # change frame to LoginPage
     def logout(self, controller):
         controller.show_frame("LoginPage", controller.id)

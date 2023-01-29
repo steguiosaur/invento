@@ -15,24 +15,24 @@ class DashboardTab(CTkFrame):
 
         # create frame for account settings
         self.displayUserFrame = CTkFrame(self)
-        self.displayUserFrame.grid(row=0, column=0, rowspan=1, columnspan=1, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.displayUserFrame.grid(row=0, column=0, rowspan=1, columnspan=1, padx=(10, 5), pady=(10, 5), sticky="nsew")
 
         # create frame for list accounts
         self.displayNumcCategoryFrame = CTkFrame(self)
-        self.displayNumcCategoryFrame.grid(row=1, column=0, rowspan=1, columnspan=1, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.displayNumcCategoryFrame.grid(row=1, column=0, rowspan=1, columnspan=1, padx=(10, 5), pady=(5, 5), sticky="nsew")
 
         # create frame for list accounts
         self.displayNumProductsFrame = CTkFrame(self)
-        self.displayNumProductsFrame.grid(row=2, column=0, rowspan=1, columnspan=1, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.displayNumProductsFrame.grid(row=2, column=0, rowspan=1, columnspan=1, padx=(10, 5), pady=(5, 5), sticky="nsew")
 
         # create frame for list accounts
         self.displayNumSalesFrame = CTkFrame(self)
-        self.displayNumSalesFrame.grid(row=3, column=0, rowspan=1, columnspan=1, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.displayNumSalesFrame.grid(row=3, column=0, rowspan=1, columnspan=1, padx=(10, 5), pady=(5, 10), sticky="nsew")
 
         # create frame for list accounts
         self.displaySalesGraphFrame = CTkFrame(self)
-        self.displaySalesGraphFrame.grid(row=0, column=1, rowspan=2, columnspan=3, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.displaySalesGraphFrame.grid(row=0, column=1, rowspan=2, columnspan=3, padx=(5, 10), pady=(10, 5), sticky="nsew")
 
         # create frame for list accounts
         self.displayAddedProductFrame = CTkFrame(self)
-        self.displayAddedProductFrame.grid(row=2, column=1, rowspan=2, columnspan=3, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.displayAddedProductFrame.grid(row=2, column=1, rowspan=2, columnspan=3, padx=(5, 10), pady=(5, 10), sticky="nsew")

@@ -68,7 +68,7 @@ class LoginPage(CTkFrame):
         self.registerButton= CTkButton(self.loginFrame, width=220, text="Create an account", fg_color='gray', hover_color='#6F6F6F', command=lambda: self.go_register(controller))
         self.registerButton.place(relx=0.75, y=290, anchor=CENTER)
 
-    ############################## FUNCTIONS ###############################
+    ############################## METHODS ###############################
     # shows and hides password
     def show_hide_pass(self):
         boxValue = self.showPasswordCheckbox.get()

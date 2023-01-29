@@ -78,7 +78,7 @@ class RegisterPage(CTkFrame):
         self.goLoginButton = CTkButton(self.registerFrame, width=220, text="Back to Login Page", fg_color='gray', hover_color='#6F6F6F', command=lambda: self.go_login(controller))
         self.goLoginButton.place(relx=0.75, y=310, anchor=CENTER)
 
-    ############################## FUNCTIONS ###############################
+    ############################## METHODS ###############################
     # shows and hides password
     def show_hide_pass(self):
         boxValue = self.showPasswordCheckbox.get()
