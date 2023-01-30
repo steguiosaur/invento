@@ -1,5 +1,5 @@
-![Invento Logo](../src/assets/light_logo_color.svg#gh-dark-mode-only)
-![Invento Logo](../src/assets/dark_logo_color.svg#gh-light-mode-only)
+![Invento Logo](assets/light_logo_color.svg#gh-dark-mode-only)
+![Invento Logo](assets/dark_logo_color.svg#gh-light-mode-only)
 
 ## :globe_with_meridians: Description
 
