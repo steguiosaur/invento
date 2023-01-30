@@ -28,24 +28,21 @@ Inventory management system that tracks product performance and inventory change
 ### Execution
 
 1. Clone the repository to your machine and `cd` to source files.
+
     ```sh
-    git clone https://github.com/steguiosaur/invento.git && ./invento/src
+    git clone https://github.com/steguiosaur/invento.git && cd ./invento
     ```
 
 2. Execute `Main.py` to run the application.
-    ```
+
+    ```sh
     python Main.py
     ```
 
     > In case `dependencies.py` failed to execute, manually install the required dependencies.
+
     ```sh
     pip install -r requirements.txt
     ```
 
 ### Build Compilation
-
-
-
------------------------------------------------------------------
-
-##

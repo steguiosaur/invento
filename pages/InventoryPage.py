@@ -1,7 +1,7 @@
-from TabPages import AboutTab, SettingsTab, AccountTab, DashboardTab, ProductTab
 from customtkinter import CTkFrame, CTkButton, CTkLabel, CTkImage, CTkTabview 
 from pathlib import Path
 from PIL import Image
+from tabs import *
 
 class InventoryPage(CTkFrame):
 
@@ -70,31 +70,31 @@ class InventoryPage(CTkFrame):
         ############################ DASHBOARD
         self.tabview.tab("Dashboard").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Dashboard").grid_rowconfigure(0, weight=1)
-        self.dashboardDisplay = DashboardTab.DashboardTab(self.tabview.tab("Dashboard"))
+        self.dashboardDisplay = DashboardTab(self.tabview.tab("Dashboard"))
         self.dashboardDisplay.grid(row=0, column=0, sticky="nsew")
 
         ############################ INVENTORY
         self.tabview.tab("Inventory").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Inventory").grid_rowconfigure(0, weight=1)
-        self.inventoryDisplay = ProductTab.ProductTab(self.tabview.tab("Inventory"))
+        self.inventoryDisplay = ProductTab(self.tabview.tab("Inventory"))
         self.inventoryDisplay.grid(row=0, column=0, sticky="nsew")
 
         ############################# ACCOUNT
         self.tabview.tab("Account").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Account").grid_rowconfigure(0, weight=1)
-        self.accountDisplay = AccountTab.AccountTab(self.tabview.tab("Account"))
+        self.accountDisplay = AccountTab(self.tabview.tab("Account"))
         self.accountDisplay.grid(row=0, column=0, sticky="nsew")
 
         ############################ ABOUTMENU
         self.tabview.tab("About").grid_columnconfigure(0, weight=1)
         self.tabview.tab("About").grid_rowconfigure(0, weight=1)
-        self.aboutDisplay = AboutTab.AboutTab(self.tabview.tab("About"))
+        self.aboutDisplay = AboutTab(self.tabview.tab("About"))
         self.aboutDisplay.grid(row=0, column=0, sticky="nsew")
         
         ############################# SETTINGS
         self.tabview.tab("Settings").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Settings").grid_rowconfigure(0, weight=1)
-        self.settingsDisplay = SettingsTab.SettingsTab(self.tabview.tab("Settings"))
+        self.settingsDisplay = SettingsTab(self.tabview.tab("Settings"))
         self.settingsDisplay.grid(row=0, column=0, sticky="nsew")
         
 

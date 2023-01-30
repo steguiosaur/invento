@@ -1,14 +1,13 @@
-from AccountPage.LoginPage import LoginPage
-from AccountPage.RegisterPage import RegisterPage
-from InventoryPage.InventoryPage import InventoryPage
-from Functionality import dependencies, accounts, settings
+from pages import *
+from utils import *
 dependencies.dependency_install_window()
+
 from customtkinter import CTk, CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
 from tkinter import PhotoImage
 
 class Main(CTk):
-    def __init__(self, *args, **kwargs):
-        CTk.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super().__init__()
 
         # creates container for frames
         container = CTkFrame(self)

@@ -1,5 +1,5 @@
 from customtkinter import CTkFrame, CTkLabel, CTkOptionMenu, StringVar, set_appearance_mode, set_widget_scaling
-from Functionality import settings
+from utils import settings
 
 class SettingsTab(CTkFrame):
     def __init__(self, parent):

@@ -1,5 +1,5 @@
 from customtkinter import CTkFrame, CTkScrollbar, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu
-from Functionality import settings
+from utils import settings
 from tkinter import ttk
 
 class ProductTab(CTkFrame):

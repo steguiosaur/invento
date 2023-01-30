@@ -1,7 +1,7 @@
 from customtkinter import CENTER, CTkFrame, CTkButton, CTkEntry, CTkLabel, CTkImage, CTkCheckBox
 from pathlib import Path
 from PIL import Image
-from Functionality import accounts
+from utils import accounts
 
 class LoginPage(CTkFrame):
 

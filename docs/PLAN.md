@@ -15,13 +15,13 @@ Create an Inventory Management System using Python
 
 -[] Add, update, and delete inventory items
 -[] Sort through respective identification
--[] Register and Login functionality
+-[x] Register and Login functionality
 
 ### Optional
 
 -[] Export to Excel file
 -[] Save/restore data
--[] Theming/color schemes
+-[x] Theming/color schemes
 -[] Show daily, weekly, monthly, yearly performance report
 
 ## Focus
@@ -35,7 +35,7 @@ Create an Inventory Management System using Python
 ### Development Stage
 
 -[] Create the expected design of application
--[] Research GUI Frameworks to use (Kivy, Tkinter)
+-[x] Research GUI Frameworks to use (Kivy, Tkinter)
 -[] Build the backend of the application
 -[] Create a database to store the information (Sqlite)
 -[] Read database and show graphical performance
