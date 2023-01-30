@@ -40,22 +40,18 @@ def scale_save(scale):
     config.write(open('config.ini', 'w'))
 
 
-# display current appearance configuration
+# get current configuration
 def appearance_read():
     return (str(config.get('settings', 'appearance')))
 
-# display current theme configuration
 def theme_read():
     return (str(config.get('settings', 'theme')))
 
-# display current theme configuration
 def table_theme_read():
     return (str(config.get('settings', 'tablecolor')))
 
-# display current scaling configuration
 def scale_read():
     return (str(config.get('settings', 'scale'))+"%")
 
-# return integer value for scaling
 def int_scale_read():
     return int(config.get('settings', 'scale')) /100

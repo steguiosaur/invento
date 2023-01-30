@@ -8,7 +8,7 @@ def create_table():
     cur = con.cursor()
 
     # create table for logins
-    cur.execute("CREATE TABLE IF NOT EXISTS 'login' (Username VARCHAR, Password VARCHAR, Admin BOOLEAN)")
+    cur.execute("CREATE TABLE IF NOT EXISTS 'accounts' (Username VARCHAR, Password VARCHAR, Admin BOOLEAN)")
     con.commit()
 
     # create admin account
@@ -24,7 +24,7 @@ def register(username, passwd, confirm_passwd, admin=False):
     cur = con.cursor()
 
     # verify if user exist
-    user_exist = f"SELECT Username from login WHERE Username='{username}'"
+    user_exist = f"SELECT Username from accounts WHERE Username='{username}'"
     cur.execute(user_exist)
     if cur.fetchone():
         cur.close()
@@ -42,7 +42,7 @@ def register(username, passwd, confirm_passwd, admin=False):
     hexformat = hashlib.md5(hashing).hexdigest()
 
     # record data to database
-    query = "INSERT INTO login (Username, Password, Admin) VALUES (?, ?, ?)"
+    query = "INSERT INTO accounts (Username, Password, Admin) VALUES (?, ?, ?)"
     cur.execute(query, (username, hexformat, admin))
     con.commit()
 
@@ -60,8 +60,8 @@ def login(username, passwd):
     hashing = passwd.encode()
     hexformat = hashlib.md5(hashing).hexdigest()
     
-    user_exist = f"SELECT Username from login WHERE Username='{username}'"
-    verify = f"SELECT Username from login WHERE Username='{username}' AND Password = '{hexformat}';"
+    user_exist = f"SELECT Username from accounts WHERE Username='{username}'"
+    verify = f"SELECT Username from accounts WHERE Username='{username}' AND Password = '{hexformat}';"
 
     # check if user exist
     cur.execute(user_exist)

@@ -12,7 +12,6 @@ class InventoryPage(CTkFrame):
     def __init__(self, parent, controller):
         CTkFrame.__init__(self, parent)
 
-        ############################ LAYOUT ############################
         # configure grid layout (4x4)
         self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure(1, weight=1)
@@ -48,61 +47,55 @@ class InventoryPage(CTkFrame):
         self.logoImgLabel=CTkLabel(self.sidebarFrame, image=self.logoImg, text="")
         self.logoImgLabel.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-        ############################ BUTTONS
+        # sidebar buttons
         self.dashboardButton = CTkButton(self.sidebarFrame, text="Dashboard", command=lambda: self.tabview.set("Dashboard"))
-        self.dashboardButton.grid(row=4, column=0, padx=20, pady=10)
-
         self.inventoryButton = CTkButton(self.sidebarFrame, text="Inventory", command=lambda: self.tabview.set("Inventory"))
-        self.inventoryButton.grid(row=5, column=0, padx=20, pady=10)
-
         self.accountMenuButton = CTkButton(self.sidebarFrame, text="Account", command=lambda: self.tabview.set("Account"))
-        self.accountMenuButton.grid(row=6, column=0, padx=20, pady=10)
-
         self.settingsMenuButton = CTkButton(self.sidebarFrame, text="Settings", command=lambda: self.tabview.set("Settings"))
-        self.settingsMenuButton.grid(row=7, column=0, padx=20, pady=10)
-
         self.aboutMenuButton = CTkButton(self.sidebarFrame, text="About", command=lambda: self.tabview.set("About"))
-        self.aboutMenuButton.grid(row=8, column=0, padx=20, pady=10)
-
         self.logoutButton = CTkButton(self.sidebarFrame, text="Logout", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.logout(controller))
+
+        self.dashboardButton.grid(row=4, column=0, padx=20, pady=10)
+        self.inventoryButton.grid(row=5, column=0, padx=20, pady=10)
+        self.accountMenuButton.grid(row=6, column=0, padx=20, pady=10)
+        self.settingsMenuButton.grid(row=7, column=0, padx=20, pady=10)
+        self.aboutMenuButton.grid(row=8, column=0, padx=20, pady=10)
         self.logoutButton.grid(row=10, column=0, padx=20, pady=20)
 
-        ############################ DASHBOARD
+        # DASHBOARD
         self.tabview.tab("Dashboard").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Dashboard").grid_rowconfigure(0, weight=1)
         self.dashboardDisplay = DashboardTab(self.tabview.tab("Dashboard"))
         self.dashboardDisplay.grid(row=0, column=0, sticky="nsew")
 
-        ############################ INVENTORY
+        # INVENTORY
         self.tabview.tab("Inventory").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Inventory").grid_rowconfigure(0, weight=1)
         self.inventoryDisplay = ProductTab(self.tabview.tab("Inventory"))
         self.inventoryDisplay.grid(row=0, column=0, sticky="nsew")
 
-        ############################# ACCOUNT
+        # ACCOUNT
         self.tabview.tab("Account").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Account").grid_rowconfigure(0, weight=1)
         self.accountDisplay = AccountTab(self.tabview.tab("Account"))
         self.accountDisplay.grid(row=0, column=0, sticky="nsew")
 
-        ############################ ABOUTMENU
+        # ABOUTMENU
         self.tabview.tab("About").grid_columnconfigure(0, weight=1)
         self.tabview.tab("About").grid_rowconfigure(0, weight=1)
         self.aboutDisplay = AboutTab(self.tabview.tab("About"))
         self.aboutDisplay.grid(row=0, column=0, sticky="nsew")
         
-        ############################# SETTINGS
+        # SETTINGS
         self.tabview.tab("Settings").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Settings").grid_rowconfigure(0, weight=1)
         self.settingsDisplay = SettingsTab(self.tabview.tab("Settings"))
         self.settingsDisplay.grid(row=0, column=0, sticky="nsew")
         
 
-    ############################## METHODS ###############################
-    # change frame to LoginPage
+    # METHODS
     def logout(self, controller):
         controller.show_frame("LoginPage", controller.id)
 
-    # path of assets
     def asset_path(self, path: str) -> Path:
         return self.ASSETS_PATH / Path(path)

@@ -31,8 +31,7 @@ class Main(CTk):
     # display selected page on top
     def show_frame(self, page, id=None):
         self.id = id
-        frame = self.frames[page]
-        frame.tkraise()
+        self.frames[page].tkraise()
 
 # create account database and admin account if not exists
 accounts.create_table()
