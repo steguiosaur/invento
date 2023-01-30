@@ -47,7 +47,7 @@ app = Main()
 app.geometry(f"{1024}x{576}")
 app.minsize(1024, 576)
 app.resizable(True, True)
-app.iconphoto(True, PhotoImage(file='assets/logo.png'))
+app.wm_iconphoto(True, PhotoImage(file='assets/logo.png'))
 app.title("Invento")
 app.mainloop()
 

@@ -1,4 +1,5 @@
 from customtkinter import CTkFrame, CTkScrollbar, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu
+from customwidget import IntSpinbox
 from utils import settings
 from tkinter import ttk
 
@@ -22,6 +23,7 @@ class ProductTab(CTkFrame):
 
         # table style
         self.treeViewStyle = ttk.Style()
+
         self.treeViewStyle.configure(
             "lightAppearance.Treeview",
             highlightthickness=0,
@@ -40,6 +42,7 @@ class ProductTab(CTkFrame):
             background="#b1b1b1",
             foreground="#202020"
         )
+
         self.treeViewStyle.configure(
             "darkAppearance.Treeview",
             highlightthickness=0,
@@ -56,10 +59,11 @@ class ProductTab(CTkFrame):
             relief="flat",
             font=("Roboto", 9, "bold"),
             background="#202020",
-            foreground="#d1d1d1",
+            foreground="#d1d1d1"
         )
-        self.treeViewStyle.layout("lightAppearance.Treeview", [('lightAppearance.Treeview.treearea', {'sticky': 'nsew'})])
-        self.treeViewStyle.layout("darkAppearance.Treeview", [('lightAppearance.Treeview.treearea', {'sticky': 'nsew'})])
+
+        self.treeViewStyle.layout("lightAppearance.Treeview", [('light Appearance.Treeview.treearea', {'sticky': 'nsew'})])
+        self.treeViewStyle.layout("darkAppearance.Treeview", [('light Appearance.Treeview.treearea', {'sticky': 'nsew'})])
 
         # create product table
         self.treeView = ttk.Treeview(self.tableFrame, selectmode='extended', height=100)
@@ -91,6 +95,60 @@ class ProductTab(CTkFrame):
         # create frame for search items
         self.searchItemFrame = CTkFrame(self)
         self.searchItemFrame.grid(row=3, column=0, rowspan=1, columnspan=2, padx=(10, 5), pady=(5, 10), sticky="nsew")
+
+        self.searchItemFrame.grid_columnconfigure(0, weight=1)
+        self.searchItemFrame.grid_columnconfigure(1, weight=1)
+        self.searchItemFrame.grid_columnconfigure(2, weight=1)
+        self.searchItemFrame.grid_columnconfigure(3, weight=0)
+        self.searchItemFrame.grid_columnconfigure(4, weight=1)
+        self.searchItemFrame.grid_rowconfigure(0, weight=0)
+        self.searchItemFrame.grid_rowconfigure(1, weight=0)
+        self.searchItemFrame.grid_rowconfigure(2, weight=1)
+        self.searchItemFrame.grid_rowconfigure(3, weight=1)
+
+        # search item entry
+        self.searchItemEntry = CTkEntry(self.searchItemFrame)
+        self.searchItemEntry.grid(row=0, column=0, columnspan=4, padx=(10, 5), pady=(10, 5), sticky="ew")
+
+        self.searchItemButton = CTkButton(self.searchItemFrame, text="Search", command=lambda: print("search"))
+        self.searchItemButton.grid(row=0, column=4, padx=(5, 10), pady=(10, 5), sticky="ew")
+
+        # status frame
+        self.statusLabel = CTkLabel(self.searchItemFrame, text="")
+        self.statusLabel.grid(row=1, column=0, columnspan=5)
+
+        # frame for sales
+        self.salesFrame = CTkFrame(self.searchItemFrame)
+        self.salesFrame.grid(row=2, column=0, columnspan=5, rowspan=3, padx=(10, 10), pady=(5, 10), sticky="nsew")
+
+        self.salesFrame.grid_columnconfigure(0, weight=1)
+        self.salesFrame.grid_columnconfigure(1, weight=1)
+        self.salesFrame.grid_columnconfigure(2, weight=1)
+        self.salesFrame.grid_columnconfigure(3, weight=1)
+        self.salesFrame.grid_columnconfigure(4, weight=1)
+        self.salesFrame.grid_rowconfigure(0, weight=1)
+        self.salesFrame.grid_rowconfigure(1, weight=1)
+        self.salesFrame.grid_rowconfigure(2, weight=1)
+        self.salesFrame.grid_rowconfigure(3, weight=1)
+        self.salesFrame.grid_rowconfigure(4, weight=1)
+
+        self.salesLabel = CTkLabel(self.salesFrame, text="Add Sales")
+        self.salesLabel.grid(row=0, column=1)
+
+        self.salesSpinBox = IntSpinbox(self.salesFrame, min_value=0, max_value=100, step_size=1)
+        self.salesSpinBox.grid(row=1, column=1, sticky="ew")
+
+        self.salesButton = CTkButton(self.salesFrame, text="Add", command=lambda: print("save sales"))
+        self.salesButton.grid(row=2, column=1, sticky="ew")
+
+        self.removeSalesLabel = CTkLabel(self.salesFrame, text="Remove Sales")
+        self.removeSalesLabel.grid(row=0, column=3)
+
+        self.removeSalesSpinBox = IntSpinbox(self.salesFrame, min_value=0, step_size=1)
+        self.removeSalesSpinBox.grid(row=1, column=3, sticky="ew")
+
+        self.removeSalesButton = CTkButton(self.salesFrame, text="Remove", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: print("remove sales"))
+        self.removeSalesButton.grid(row=2, column=3, sticky="ew")
 
         # create frame for updating items
         self.modifyItemTab = CTkTabview(self)
@@ -187,11 +245,10 @@ class ProductTab(CTkFrame):
         self.modifyItemCategoryFrame.rowconfigure(2, weight=1)
         self.modifyItemCategoryFrame.rowconfigure(3, weight=1)
         self.modifyItemCategoryFrame.rowconfigure(4, weight=1)
-
+        
 
     def tableStyle(self):
-        appearance = settings.table_theme_read()
-        if appearance == "dark":
+        if settings.table_theme_read() == "dark":
             self.treeView["style"] = "darkAppearance.Treeview"
         else:
             self.treeView["style"] = "lightAppearance.Treeview"

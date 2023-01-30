@@ -72,8 +72,7 @@ class RegisterPage(CTkFrame):
 
     # METHODS
     def show_hide_pass(self):
-        boxValue = self.showPasswordCheckbox.get()
-        if boxValue == 1:
+        if self.showPasswordCheckbox.get() == 1:
             self.passwordEntry.configure(show="")
             self.confirmPasswordEntry.configure(show="")
         else:

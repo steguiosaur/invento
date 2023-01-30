@@ -1,7 +1,4 @@
-# Root ignored directories
-venv/
-target/
-build/
-*.db
 __pycache__/
+venv/
 *.ini
+*.db
