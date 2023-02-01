@@ -1,7 +1,6 @@
-from customtkinter import CTkFrame, CTkScrollbar, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu
-from customwidget import IntSpinbox
+from customtkinter import CTkFrame, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu
+from customwidget import IntSpinbox, CtmTreeView
 from utils import settings
-from tkinter import ttk
 
 class ProductTab(CTkFrame):
     def __init__(self, parent):
@@ -18,79 +17,27 @@ class ProductTab(CTkFrame):
         self.grid_rowconfigure(3, weight=0)
 
         # create frame for table
-        self.tableFrame = CTkFrame(self)
-        self.tableFrame.grid(row=0, column=0, rowspan=3, columnspan=4, padx=(10, 10), pady=(10, 5), sticky="nsew")
-
-        # table style
-        self.treeViewStyle = ttk.Style()
-
-        self.treeViewStyle.configure(
-            "lightAppearance.Treeview",
-            highlightthickness=0,
-            bd=0,
-            relief="flat",
-            rowheight="20",
-            borderwidth=0,
-            background="#e1e1e1",
-            foreground="#202020"
-        )
-        self.treeViewStyle.configure(
-            "lightAppearance.Treeview.Heading",
-            borderwidth=0,
-            relief="flat",
-            font=("Roboto", 9, "bold"),
-            background="#b1b1b1",
-            foreground="#202020"
-        )
-
-        self.treeViewStyle.configure(
-            "darkAppearance.Treeview",
-            highlightthickness=0,
-            bd=0,
-            rowheight="20",
-            relief="flat",
-            borderwidth=0,
-            background="#282828",
-            foreground="#d1d1d1"
-        )
-        self.treeViewStyle.configure(
-            "darkAppearance.Treeview.Heading",
-            borderwidth=1,
-            relief="flat",
-            font=("Roboto", 9, "bold"),
-            background="#202020",
-            foreground="#d1d1d1"
-        )
-
-        self.treeViewStyle.layout("lightAppearance.Treeview", [('light Appearance.Treeview.treearea', {'sticky': 'nsew'})])
-        self.treeViewStyle.layout("darkAppearance.Treeview", [('light Appearance.Treeview.treearea', {'sticky': 'nsew'})])
+        self.table = CtmTreeView(self, theme=settings.table_theme_read())
+        self.table.grid(row=0, column=0, rowspan=3, columnspan=4, padx=(10, 10), pady=(10, 5), sticky="nsew")
 
         # create product table
-        self.treeView = ttk.Treeview(self.tableFrame, selectmode='extended', height=100)
-        self.tableStyle()
+        self.treeView = self.table.get_treeview()
         self.treeView["show"] = "headings"
-        self.treeView["columns"] = ("1", "2", "3","4","5","6")
+        self.treeView["columns"] = (1, 2, 3, 4, 5, 6)
         
-        self.treeView.column("1", width=100)
-        self.treeView.column("2", width=70)
-        self.treeView.column("3", width=30)
-        self.treeView.column("4", width=30)
-        self.treeView.column("5", width=30)
-        self.treeView.column("6", width=30)
+        self.treeView.column(1, width=100)
+        self.treeView.column(2, width=70)
+        self.treeView.column(3, width=30)
+        self.treeView.column(4, width=30)
+        self.treeView.column(5, width=30)
+        self.treeView.column(6, width=30)
 
-        self.treeView.heading("1", text="Product Name")
-        self.treeView.heading("2", text="Category")
-        self.treeView.heading("3", text="In-Stock")
-        self.treeView.heading("4", text="Buying Price")
-        self.treeView.heading("5", text="Selling Price")
-        self.treeView.heading("6", text="Date Modified")
-
-        # create scroll on table
-        self.yScroll = CTkScrollbar(self.tableFrame, orientation="vertical")
-        self.yScroll.configure(command=self.treeView.yview)
-        self.yScroll.pack(side='right', fill='y', anchor="w")
-        self.treeView.configure(yscrollcommand=self.yScroll.set)
-        self.treeView.pack(side='right', fill='both', expand=True)
+        self.treeView.heading(1, text="Product Name")
+        self.treeView.heading(2, text="Category")
+        self.treeView.heading(3, text="In-Stock")
+        self.treeView.heading(4, text="Buying Price")
+        self.treeView.heading(5, text="Selling Price")
+        self.treeView.heading(6, text="Date Modified")
 
         # create frame for search items
         self.searchItemFrame = CTkFrame(self)
@@ -184,6 +131,7 @@ class ProductTab(CTkFrame):
         self.modifyItemRemoveFrame = CTkFrame(self.modifyItemTab.tab("Remove"))
         self.modifyItemRemoveFrame.grid(row=0, column=0, sticky="nsew")
 
+
         # modify tab grids
         self.modifyItemModifyFrame.rowconfigure(0, weight=1)
         self.modifyItemModifyFrame.rowconfigure(1, weight=1)
@@ -191,6 +139,8 @@ class ProductTab(CTkFrame):
         self.modifyItemModifyFrame.rowconfigure(3, weight=1)
         self.modifyItemModifyFrame.rowconfigure(4, weight=1)
         self.modifyItemModifyFrame.rowconfigure(5, weight=1)
+        self.modifyItemModifyFrame.rowconfigure(6, weight=1)
+        self.modifyItemModifyFrame.rowconfigure(7, weight=1)
         self.modifyItemModifyFrame.columnconfigure(0, weight=1)
         self.modifyItemModifyFrame.columnconfigure(1, weight=1)
         self.modifyItemModifyFrame.columnconfigure(2, weight=1)
@@ -205,11 +155,11 @@ class ProductTab(CTkFrame):
         self.sellingPriceLabel = CTkLabel(self.modifyItemModifyFrame, text="Selling Price:") 
 
         # modify frame label grids
-        self.productNameLabel.grid(row=0, column=1, sticky="w")
-        self.categoryLabel.grid(row=1, column=1, sticky="w")
-        self.inStockLabel.grid(row=2, column=1, sticky="w")
-        self.buyingPriceLabel.grid(row=3, column=1, sticky="w")
-        self.sellingPriceLabel.grid(row=4, column=1, sticky="w")
+        self.productNameLabel.grid(row=1, column=1, sticky="w")
+        self.categoryLabel.grid(row=2, column=1, sticky="w")
+        self.inStockLabel.grid(row=3, column=1, sticky="w")
+        self.buyingPriceLabel.grid(row=4, column=1, sticky="w")
+        self.sellingPriceLabel.grid(row=5, column=1, sticky="w")
 
         # entry widgets
         self.productNameEntry = CTkEntry(self.modifyItemModifyFrame)
@@ -219,19 +169,19 @@ class ProductTab(CTkFrame):
         self.sellingPriceEntry = CTkEntry(self.modifyItemModifyFrame)
 
         # modify tab entry widgets grids
-        self.productNameEntry.grid(row=0, column=3, sticky="ew")
-        self.categoryEntry.grid(row=1, column=3, sticky="ew")
-        self.inStockEntry.grid(row=2, column=3, sticky="ew")
-        self.buyingPriceEntry.grid(row=3, column=3, sticky="ew")
-        self.sellingPriceEntry.grid(row=4, column=3, sticky="ew")
+        self.productNameEntry.grid(row=1, column=3, sticky="ew")
+        self.categoryEntry.grid(row=2, column=3, sticky="ew")
+        self.inStockEntry.grid(row=3, column=3, sticky="ew")
+        self.buyingPriceEntry.grid(row=4, column=3, sticky="ew")
+        self.sellingPriceEntry.grid(row=5, column=3, sticky="ew")
 
         # modify tab discard button
         self.discardButton = CTkButton(self.modifyItemModifyFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=self.modify_item_discard)
-        self.discardButton.grid(row=5, column=3, sticky="ew")
+        self.discardButton.grid(row=6, column=3, sticky="ew")
 
         # modify tab save button
         self.saveButton = CTkButton(self.modifyItemModifyFrame, text="Save", command=self.modify_item_save)
-        self.saveButton.grid(row=5, column=1, sticky="ew")
+        self.saveButton.grid(row=6, column=1, sticky="ew")
 
 
         # category tab grid
@@ -241,17 +191,103 @@ class ProductTab(CTkFrame):
         self.modifyItemCategoryFrame.columnconfigure(3, weight=1)
         self.modifyItemCategoryFrame.columnconfigure(4, weight=1)
         self.modifyItemCategoryFrame.rowconfigure(0, weight=1)
-        self.modifyItemCategoryFrame.rowconfigure(1, weight=1)
-        self.modifyItemCategoryFrame.rowconfigure(2, weight=1)
+        self.modifyItemCategoryFrame.rowconfigure(1, weight=0)
+        self.modifyItemCategoryFrame.rowconfigure(2, weight=0)
         self.modifyItemCategoryFrame.rowconfigure(3, weight=1)
-        self.modifyItemCategoryFrame.rowconfigure(4, weight=1)
+        self.modifyItemCategoryFrame.rowconfigure(4, weight=0)
+        self.modifyItemCategoryFrame.rowconfigure(5, weight=0)
+        self.modifyItemCategoryFrame.rowconfigure(6, weight=1)
+
+        self.addCategoryLabel = CTkLabel(self.modifyItemCategoryFrame, text="Add Category:")
+        self.addCategoryReplyLabel = CTkLabel(self.modifyItemCategoryFrame, text="")
+        self.addCategoryEntry = CTkEntry(self.modifyItemCategoryFrame)
+        self.addCategoryButton = CTkButton(self.modifyItemCategoryFrame, text="Add Category", command=lambda: print("added category"))
+
+        self.addCategoryLabel.grid(row=1, column=1, pady=(5, 5), sticky="ew")
+        self.addCategoryReplyLabel.grid(row=1, column=2, columnspan=2, pady=(5, 5), sticky="ew")
+        self.addCategoryEntry.grid(row=2, column=1, columnspan=2, padx=(0, 5), pady=(5, 5), sticky="ew")
+        self.addCategoryButton.grid(row=2, column=3, padx=(5, 0), pady=(5, 5), sticky="ew")
+
+        self.removeCategoryLabel = CTkLabel(self.modifyItemCategoryFrame, text="Remove Category:")
+        self.removeCategoryReplyLabel = CTkLabel(self.modifyItemCategoryFrame, text="")
+        self.removeCategoryOptionMenu = CTkOptionMenu(self.modifyItemCategoryFrame)
+        self.removeCategoryButton = CTkButton(self.modifyItemCategoryFrame, text="Remove Category", command=lambda: print("removed category"))
+
+        self.removeCategoryLabel.grid(row=4, column=1, pady=(5, 5), sticky="ew")
+        self.removeCategoryReplyLabel.grid(row=4, column=2, columnspan=2, pady=(5, 5), sticky="ew")
+        self.removeCategoryOptionMenu.grid(row=5, column=1, columnspan=2, padx=(0, 5), pady=(5, 5), sticky="ew")
+        self.removeCategoryButton.grid(row=5, column=3, padx=(5, 0), pady=(5, 5), sticky="ew")
         
 
-    def tableStyle(self):
-        if settings.table_theme_read() == "dark":
-            self.treeView["style"] = "darkAppearance.Treeview"
-        else:
-            self.treeView["style"] = "lightAppearance.Treeview"
+        # add product tab grids
+        self.modifyItemAddFrame.rowconfigure(0, weight=1)
+        self.modifyItemAddFrame.rowconfigure(1, weight=1)
+        self.modifyItemAddFrame.rowconfigure(2, weight=1)
+        self.modifyItemAddFrame.rowconfigure(3, weight=1)
+        self.modifyItemAddFrame.rowconfigure(4, weight=1)
+        self.modifyItemAddFrame.rowconfigure(5, weight=1)
+        self.modifyItemAddFrame.rowconfigure(6, weight=1)
+        self.modifyItemAddFrame.rowconfigure(7, weight=1)
+        self.modifyItemAddFrame.columnconfigure(0, weight=1)
+        self.modifyItemAddFrame.columnconfigure(1, weight=1)
+        self.modifyItemAddFrame.columnconfigure(2, weight=1)
+        self.modifyItemAddFrame.columnconfigure(3, weight=1)
+        self.modifyItemAddFrame.columnconfigure(4, weight=1)
+        
+        # labels
+        self.productNameLabel = CTkLabel(self.modifyItemAddFrame, text="Product Name:") 
+        self.categoryLabel = CTkLabel(self.modifyItemAddFrame, text="Category:") 
+        self.inStockLabel = CTkLabel(self.modifyItemAddFrame, text="Current Stock:") 
+        self.buyingPriceLabel = CTkLabel(self.modifyItemAddFrame, text="Buying Price:") 
+        self.sellingPriceLabel = CTkLabel(self.modifyItemAddFrame, text="Selling Price:") 
+
+        # add product label grids
+        self.productNameLabel.grid(row=1, column=1, sticky="w")
+        self.categoryLabel.grid(row=2, column=1, sticky="w")
+        self.inStockLabel.grid(row=3, column=1, sticky="w")
+        self.buyingPriceLabel.grid(row=4, column=1, sticky="w")
+        self.sellingPriceLabel.grid(row=5, column=1, sticky="w")
+
+        # entry widgets
+        self.productNameEntry = CTkEntry(self.modifyItemAddFrame)
+        self.categoryEntry = CTkOptionMenu(self.modifyItemAddFrame)
+        self.inStockEntry = CTkEntry(self.modifyItemAddFrame)
+        self.buyingPriceEntry = CTkEntry(self.modifyItemAddFrame)
+        self.sellingPriceEntry = CTkEntry(self.modifyItemAddFrame)
+
+        # add product entry widgets grids
+        self.productNameEntry.grid(row=1, column=3, sticky="ew")
+        self.categoryEntry.grid(row=2, column=3, sticky="ew")
+        self.inStockEntry.grid(row=3, column=3, sticky="ew")
+        self.buyingPriceEntry.grid(row=4, column=3, sticky="ew")
+        self.sellingPriceEntry.grid(row=5, column=3, sticky="ew")
+
+        # add product discard button
+        self.discardButton = CTkButton(self.modifyItemAddFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=self.modify_item_discard)
+        self.discardButton.grid(row=6, column=3, sticky="ew")
+
+        # add product save button
+        self.saveButton = CTkButton(self.modifyItemAddFrame, text="Save", command=self.modify_item_save)
+        self.saveButton.grid(row=6, column=1, sticky="ew")
+
+
+        # delete product tab
+        self.modifyItemRemoveFrame.grid_columnconfigure(0, weight=1)
+        self.modifyItemRemoveFrame.grid_columnconfigure(1, weight=1)
+        self.modifyItemRemoveFrame.grid_columnconfigure(2, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(0, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(1, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(2, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(3, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(4, weight=1)
+
+        self.deleteButton = CTkButton(self.modifyItemRemoveFrame, text="Remove Product")
+        self.deleteAllLabel = CTkLabel(self.modifyItemRemoveFrame, text="requires admin privileges")
+        self.deleteAllButton = CTkButton(self.modifyItemRemoveFrame, text="Reset Inventory")
+
+        self.deleteButton.grid(row=1, column=1)
+        self.deleteAllLabel.grid(row=2, column=1)
+        self.deleteAllButton.grid(row=3, column=1)
 
     def modify_item_discard(self):
         print("Discard changes")

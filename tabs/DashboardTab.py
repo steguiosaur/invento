@@ -1,4 +1,6 @@
 from customtkinter import CTkFrame
+from customwidget import CtmTreeView
+from utils import settings
 
 class DashboardTab(CTkFrame):
     def __init__(self, parent):
@@ -34,5 +36,16 @@ class DashboardTab(CTkFrame):
         self.displaySalesGraphFrame.grid(row=0, column=1, rowspan=2, columnspan=3, padx=(5, 10), pady=(10, 5), sticky="nsew")
 
         # create frame for list accounts
-        self.displayAddedProductFrame = CTkFrame(self)
-        self.displayAddedProductFrame.grid(row=2, column=1, rowspan=2, columnspan=3, padx=(5, 10), pady=(5, 10), sticky="nsew")
+        self.displayAddedProductTable = CtmTreeView(self, theme=settings.table_theme_read())
+        self.displayAddedProductTable.grid(row=2, column=1, rowspan=2, columnspan=3, padx=(5, 10), pady=(5, 10), sticky="nsew")
+
+        # create table
+        self.treeviewTable = self.displayAddedProductTable.get_treeview()
+        self.treeviewTable["show"] = "headings"
+        self.treeviewTable["columns"] = (1, 2, 3)
+        self.treeviewTable.column(1, width=100)
+        self.treeviewTable.column(2, width=100)
+        self.treeviewTable.column(3, width=100)
+        self.treeviewTable.heading(1, text="Product")
+        self.treeviewTable.heading(2, text="Date Modified")
+        self.treeviewTable.heading(3, text="User")

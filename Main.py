@@ -44,9 +44,9 @@ set_widget_scaling(settings.int_scale_read())
 
 # start application
 app = Main()
+app.resizable(True, True)
 app.geometry(f"{1024}x{576}")
 app.minsize(1024, 576)
-app.resizable(True, True)
 app.wm_iconphoto(True, PhotoImage(file='assets/logo.png'))
 app.title("Invento")
 app.mainloop()
