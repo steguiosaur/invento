@@ -1,6 +1,6 @@
 from tkinter import Tk, Label, PhotoImage
 from os.path import isfile
-from pathlib import Path
+from utils import Assets
 import subprocess
 
 # required packages
@@ -9,9 +9,6 @@ packages = [
     "pillow"
 ]
 
-# location of assets
-OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path("../assets")
 
 # window for installing dependencies
 def dependency_install_window():
@@ -22,11 +19,11 @@ def dependency_install_window():
         window.geometry("489x301")
         window.resizable(False, False)
         window.title("Invento Dependency Installer")
-        icon = PhotoImage(file=relative_to_assets('logo.png'))
+        icon = PhotoImage(file=Assets.asset_path('logo.png'))
         window.iconphoto(True, icon)
 
         # image for installer
-        bgInstaller = PhotoImage(file=relative_to_assets("dependency_installer.png"))
+        bgInstaller = PhotoImage(file=Assets.asset_path("dependency_installer.png"))
         bgIntallerLabel = Label(window, image=bgInstaller)
         bgIntallerLabel.pack()
 
@@ -48,7 +45,3 @@ def dependency_install_window():
         textLabel["text"] = "Finished Loading\n"
         window.after(2000, window.update())
         window.destroy()
-
-# path of assets
-def relative_to_assets(path: str) -> Path:
-    return ASSETS_PATH / Path(path)

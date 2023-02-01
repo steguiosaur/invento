@@ -1,14 +1,9 @@
 from customtkinter import CTkFrame, CTkButton, CTkLabel, CTkImage, CTkTabview 
-from pathlib import Path
+from utils import Assets, accounts
 from PIL import Image
 from tabs import *
 
 class InventoryPage(CTkFrame):
-
-    # location of assets
-    OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path("../assets")
-
     def __init__(self, parent, controller):
         CTkFrame.__init__(self, parent)
 
@@ -41,19 +36,19 @@ class InventoryPage(CTkFrame):
 
         # application logo
         self.logoImg = CTkImage(
-            light_image=Image.open(self.asset_path("./light_bg_logo.png")),
-            dark_image=Image.open(self.asset_path("./dark_bg_logo.png")),
+            light_image=Image.open(Assets.asset_path("./light_bg_logo.png")),
+            dark_image=Image.open(Assets.asset_path("./dark_bg_logo.png")),
             size=(170, 50))
         self.logoImgLabel=CTkLabel(self.sidebarFrame, image=self.logoImg, text="")
         self.logoImgLabel.grid(row=0, column=0, padx=20, pady=(20, 10))
 
         # sidebar buttons
-        self.dashboardButton = CTkButton(self.sidebarFrame, text="Dashboard", command=lambda: self.tabview.set("Dashboard"))
-        self.inventoryButton = CTkButton(self.sidebarFrame, text="Inventory", command=lambda: self.tabview.set("Inventory"))
-        self.accountMenuButton = CTkButton(self.sidebarFrame, text="Account", command=lambda: self.tabview.set("Account"))
-        self.settingsMenuButton = CTkButton(self.sidebarFrame, text="Settings", command=lambda: self.tabview.set("Settings"))
-        self.aboutMenuButton = CTkButton(self.sidebarFrame, text="About", command=lambda: self.tabview.set("About"))
-        self.logoutButton = CTkButton(self.sidebarFrame, text="Logout", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.logout(controller))
+        self.dashboardButton = CTkButton(self.sidebarFrame, text="DASHBOARD", command=lambda: self.tabview.set("Dashboard"), font=("Arial", 13, "bold"))
+        self.inventoryButton = CTkButton(self.sidebarFrame, text="INVENTORY", command=lambda: self.tabview.set("Inventory"), font=("Arial", 13, "bold"))
+        self.accountMenuButton = CTkButton(self.sidebarFrame, text="ACCOUNT", command=lambda: self.tabview.set("Account"), font=("Arial", 13, "bold"))
+        self.settingsMenuButton = CTkButton(self.sidebarFrame, text="SETTINGS", command=lambda: self.tabview.set("Settings"), font=("Arial", 13, "bold"))
+        self.aboutMenuButton = CTkButton(self.sidebarFrame, text="ABOUT", command=lambda: self.tabview.set("About"), font=("Arial", 13, "bold"))
+        self.logoutButton = CTkButton(self.sidebarFrame, text="LOGOUT", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.logout(controller), font=("Arial", 13, "bold"))
 
         self.dashboardButton.grid(row=4, column=0, padx=20, pady=10)
         self.inventoryButton.grid(row=5, column=0, padx=20, pady=10)
@@ -95,7 +90,5 @@ class InventoryPage(CTkFrame):
 
     # METHODS
     def logout(self, controller):
+        accounts.logout()
         controller.show_frame("LoginPage", controller.id)
-
-    def asset_path(self, path: str) -> Path:
-        return self.ASSETS_PATH / Path(path)

@@ -1,9 +1,9 @@
-from pages import *
-from utils import *
-dependencies.dependency_install_window()
+from utils import accounts, settings, dependencies, Assets
+dependencies.dependency_install_window() # install dependencies
 
 from customtkinter import CTk, CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
 from tkinter import PhotoImage
+from pages import *
 
 class Main(CTk):
     def __init__(self):
@@ -26,12 +26,18 @@ class Main(CTk):
             self.frames[page] = frame
 
         # initialize starting frame
-        self.show_frame("LoginPage")
+        self.get_session()
 
     # display selected page on top
     def show_frame(self, page, id=None):
         self.id = id
         self.frames[page].tkraise()
+
+    def get_session(self):
+        if accounts.get_session() is not None:
+            self.show_frame("InventoryPage")
+        else:
+            self.show_frame("LoginPage")
 
 # create account database and admin account if not exists
 accounts.create_table()
@@ -47,7 +53,7 @@ app = Main()
 app.resizable(True, True)
 app.geometry(f"{1024}x{576}")
 app.minsize(1024, 576)
-app.wm_iconphoto(True, PhotoImage(file='assets/logo.png'))
+app.iconphoto(True, PhotoImage(file=Assets.asset_path('logo.png')))
 app.title("Invento")
 app.mainloop()
 

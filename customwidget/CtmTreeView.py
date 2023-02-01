@@ -53,7 +53,7 @@ class CtmTreeView(CTkFrame):
 
         # create product table
         self.treeView = ttk.Treeview(self, selectmode='extended')
-        self.tableStyle(self.theme)
+        self.table_style(self.theme)
 
         # create scroll on table
         self.yScroll = CTkScrollbar(self, orientation="vertical")
@@ -62,7 +62,7 @@ class CtmTreeView(CTkFrame):
         self.treeView.configure(yscrollcommand=self.yScroll.set)
         self.treeView.pack(side='right', fill='both', expand=True)
 
-    def tableStyle(self, table_theme):
+    def table_style(self, table_theme):
         if table_theme == "dark":
             self.treeView["style"] = "darkAppearance.Treeview"
         if table_theme == "light":

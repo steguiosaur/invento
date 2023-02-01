@@ -1,21 +1,16 @@
 from customtkinter import CENTER, CTkFrame, CTkButton, CTkEntry, CTkLabel, CTkImage, CTkCheckBox
-from pathlib import Path
+from utils import Assets
 from PIL import Image
 from utils import accounts
 
 class RegisterPage(CTkFrame):
-
-    # location of assets
-    OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path("../assets")
-
     def __init__(self, parent, controller):
         CTkFrame.__init__(self, parent)
 
         # background image for register
         self.bgImg = CTkImage(
-            light_image=Image.open(self.asset_path("./light_bg.jpg")),
-            dark_image=Image.open(self.asset_path("./dark_bg.jpg")),
+            light_image=Image.open(Assets.asset_path("./light_bg.jpg")),
+            dark_image=Image.open(Assets.asset_path("./dark_bg.jpg")),
             size=(1920, 1080))
         self.bgImgLabel=CTkLabel(self, image=self.bgImg, text="")
         self.bgImgLabel.pack()
@@ -26,8 +21,8 @@ class RegisterPage(CTkFrame):
 
         # application logo
         self.logoImg = CTkImage(
-            light_image=Image.open(self.asset_path("./light_bg_logo.png")),
-            dark_image=Image.open(self.asset_path("./dark_bg_logo.png")),
+            light_image=Image.open(Assets.asset_path("./light_bg_logo.png")),
+            dark_image=Image.open(Assets.asset_path("./dark_bg_logo.png")),
             size=(264, 75))
         self.logoImgLabel=CTkLabel(self.registerFrame, image=self.logoImg, text="")
         self.logoImgLabel.place(relx=0.28, rely=0.5, anchor=CENTER)
@@ -148,6 +143,3 @@ class RegisterPage(CTkFrame):
         self.confirmPasswordEntry.delete(0, "end")
         self.refresh_unfocused()
         self.reply_label_remove()
-
-    def asset_path(self, path: str) -> Path:
-        return self.ASSETS_PATH / Path(path)
