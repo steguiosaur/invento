@@ -176,11 +176,11 @@ class ProductTab(CTkFrame):
         self.sellingPriceEntry.grid(row=5, column=3, sticky="ew")
 
         # modify tab discard button
-        self.discardButton = CTkButton(self.modifyItemModifyFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=self.modify_item_discard)
+        self.discardButton = CTkButton(self.modifyItemModifyFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.modify_item_discard())
         self.discardButton.grid(row=6, column=3, sticky="ew")
 
         # modify tab save button
-        self.saveButton = CTkButton(self.modifyItemModifyFrame, text="Save", command=self.modify_item_save)
+        self.saveButton = CTkButton(self.modifyItemModifyFrame, text="Save", command=lambda: self.modify_item_save())
         self.saveButton.grid(row=6, column=1, sticky="ew")
 
 
@@ -263,7 +263,7 @@ class ProductTab(CTkFrame):
         self.sellingPriceEntry.grid(row=5, column=3, sticky="ew")
 
         # add product discard button
-        self.discardButton = CTkButton(self.modifyItemAddFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=self.modify_item_discard)
+        self.discardButton = CTkButton(self.modifyItemAddFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.modify_item_discard)
         self.discardButton.grid(row=6, column=3, sticky="ew")
 
         # add product save button

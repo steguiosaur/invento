@@ -63,4 +63,4 @@ class DashboardTab(CTkFrame):
         self.treeviewTable.heading(1, text="Product Name")
         self.treeviewTable.heading(2, text="Date Modified")
         self.treeviewTable.heading(3, text="Account")
-        self.treeviewTable.heading(4, text="Administrator")
+        self.treeviewTable.heading(4, text="Permission")

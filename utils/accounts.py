@@ -43,6 +43,7 @@ def login(username, passwd):
         return 2        # if user account doesn't exist
 
 
+# current logged in account
 def get_session():
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()

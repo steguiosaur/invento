@@ -1,11 +1,11 @@
 from utils import accounts, settings, dependencies, Assets
 dependencies.dependency_install_window() # install dependencies
 
-from customtkinter import CTk, CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
-from tkinter import PhotoImage
+from customtkinter import CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
+from tkinter import PhotoImage, Tk
 from pages import *
 
-class Main(CTk):
+class Main(Tk):
     def __init__(self):
         super().__init__()
 
@@ -15,11 +15,8 @@ class Main(CTk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        # create dictionary 
-        self.frames = {}
-
-        # application pages  
-        for f in {LoginPage, RegisterPage, InventoryPage}:
+        self.frames = {} # create page dictionary
+        for f in [LoginPage, RegisterPage, InventoryPage]:
             page = f.__name__
             frame = f(container, self)
             frame.grid(row=0, column=0, sticky="NSEW")
@@ -33,6 +30,7 @@ class Main(CTk):
         self.id = id
         self.frames[page].tkraise()
 
+    # current logged in account
     def get_session(self):
         if accounts.get_session() is not None:
             self.show_frame("InventoryPage")
@@ -50,9 +48,9 @@ set_widget_scaling(settings.int_scale_read())
 
 # start application
 app = Main()
-app.resizable(True, True)
+app.resizable(False, False)
 app.geometry(f"{1024}x{576}")
-app.minsize(1024, 576)
+#app.minsize(1024, 576)
 app.iconphoto(True, PhotoImage(file=Assets.asset_path('logo.png')))
 app.title("Invento")
 app.mainloop()

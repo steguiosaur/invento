@@ -24,6 +24,6 @@ def generate_box_image(username):
             draw.rectangle([x1, y1, x2, y2], fill=color)
             draw.rectangle([(size[0] - x2), y1, (size[0] - x1), y2], fill=color)
 
-    path = Path("image") / (username + ".png")
+    path = Path("assets/image") / (username + ".png")
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path)
