@@ -43,10 +43,10 @@ class AccountTab(CTkFrame):
         self.profilePictureLabel = CTkLabel(self.accountPicture, image=self.profilePicture, text="")
         self.profilePictureLabel.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-        self.accountNameLabel = CTkLabel(self.accountSettingsFrame, text=str(accounts.get_session()), font=("Arial", 30, "bold"))
+        self.accountNameLabel = CTkLabel(self.accountSettingsFrame, text=self.show_current_session(), font=("Arial", 30, "bold"))
         self.accountNameLabel.grid(row=0, column=2, columnspan=1, padx=(10, 10), pady=(10, 10), sticky="")
 
-        self.permissionLevelLabel = CTkLabel(self.accountSettingsFrame, text="Administrator", font=("Arial", 14, "bold"))
+        self.permissionLevelLabel = CTkLabel(self.accountSettingsFrame, text="Permission level", font=("Arial", 14, "bold"))
         self.permissionLevelLabel.grid(row=1, column=2, columnspan=1, padx=(10, 10), pady=(10, 10), sticky="n")
 
         self.changeProfilePictureButton = CTkButton(self.accountSettingsFrame, text="Change Photo", command=lambda: self.change_profile_picture())
@@ -59,17 +59,22 @@ class AccountTab(CTkFrame):
         self.accountListFrame = CTkFrame(self)
         self.accountListFrame.grid(row=0, column=2, rowspan=4, columnspan=2, padx=(5, 10), pady=(10, 10), sticky="nsew")
 
+
+    def show_current_session(self):
+        return str(accounts.get_session())
+
     def refresh_account(self):
-        self.accountNameLabel.configure(text=str(accounts.get_session()))
+        self.accountNameLabel.configure(text=self.show_current_session())
         self.refresh_picture()
+        self.show_permission_level()
 
     def get_picture(self):
         if accounts.get_session() == None:
             return Path("assets/image/admin.png")
-        return Path("assets/image") / (str(accounts.get_session()) + ".png")
+        return Path("assets/image") / (self.show_current_session() + ".png")
 
     def change_profile_picture(self):
-        randompic.generate_box_image(str(accounts.get_session()))
+        randompic.generate_box_image(self.show_current_session())
         self.refresh_picture()
 
     def refresh_picture(self):
@@ -78,3 +83,9 @@ class AccountTab(CTkFrame):
                 dark_image=Image.open(self.get_picture()),
                 size=(128, 128))
         self.profilePictureLabel.configure(image=self.profilePicture, text="")
+
+    def show_permission_level(self):
+        if accounts.get_permission_level(str(accounts.get_session())):
+            self.permissionLevelLabel.configure(text="Administrator")
+        else:
+            self.permissionLevelLabel.configure(text="User")

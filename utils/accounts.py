@@ -52,6 +52,16 @@ def get_session():
         return result[0] if result else None
 
 
+# if admin(1) or user(0) 
+def get_permission_level(username):
+    with sqlite3.connect(database_file) as con:
+        if username == None:
+            return 0
+        cur = con.cursor()
+        cur.execute("SELECT Admin from accounts WHERE Username=?", (username,))
+        return bool(cur.fetchone()[0])
+
+
 def logout():
     if get_session():
         with sqlite3.connect(database_file) as con:

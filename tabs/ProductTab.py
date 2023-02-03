@@ -263,7 +263,7 @@ class ProductTab(CTkFrame):
         self.sellingPriceEntry.grid(row=5, column=3, sticky="ew")
 
         # add product discard button
-        self.discardButton = CTkButton(self.modifyItemAddFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.modify_item_discard)
+        self.discardButton = CTkButton(self.modifyItemAddFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.modify_item_discard())
         self.discardButton.grid(row=6, column=3, sticky="ew")
 
         # add product save button
