@@ -28,12 +28,12 @@ class RegisterPage(CTkFrame):
         self.logoImgLabel.place(relx=0.28, rely=0.5, anchor=CENTER)
 
         # labels
-        self.registerReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
+        self.registerReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0000", font=("Roboto", 10 * -1))
         self.textLabelCreate = CTkLabel(self.registerFrame, text="Create an Account", font=('Roboto', 22))
         self.orLabel = CTkLabel(self.registerFrame, text="or", font=('Century Gothic',10))
-        self.usernameReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
-        self.passwordReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
-        self.confirmPasswordReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
+        self.usernameReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0000", font=("Roboto", 10 * -1))
+        self.passwordReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0000", font=("Roboto", 10 * -1))
+        self.confirmPasswordReplyLabel = CTkLabel(self.registerFrame, anchor="nw", text="", text_color="#FF0000", font=("Roboto", 10 * -1))
 
         self.registerReplyLabel.place(relx=0.75, y=62, anchor=CENTER)
         self.textLabelCreate.place(relx=0.75, y=35, anchor=CENTER)
@@ -109,7 +109,7 @@ class RegisterPage(CTkFrame):
         # registered account status on database
         match accounts.register(username, passwd, confirm_pass):
             case 0:
-                self.registerReplyLabel.configure(text_color="#0FFF2F", text="Account registered")
+                self.registerReplyLabel.configure(text_color="#00AA00", text="Account registered")
             case 1:
                 self.registerReplyLabel.configure(text="Account already existed")
             case 2:
@@ -134,7 +134,7 @@ class RegisterPage(CTkFrame):
         self.usernameReplyLabel.configure(text="")
         self.passwordReplyLabel.configure(text="")
         self.confirmPasswordReplyLabel.configure(text="")
-        self.registerReplyLabel.configure(text_color="#FF0F2F", text="")
+        self.registerReplyLabel.configure(text_color="#FF0000", text="")
 
     def clear_entry(self):
         # clear existing text on entries

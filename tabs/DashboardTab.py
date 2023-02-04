@@ -47,7 +47,7 @@ class DashboardTab(CTkFrame):
         self.displayAddedProductFrame.grid_rowconfigure(4, weight=1)
 
         self.modifiedItemLabel = CTkLabel(self.displayAddedProductFrame, text="MODIFIED PRODUCTS", font=("Arial", 13, "bold"))
-        self.modifiedItemLabel.grid(row=0, column=0, padx=(5, 0),  sticky="w")
+        self.modifiedItemLabel.grid(row=0, column=0, padx=(5, 0),  sticky="")
 
         self.displayAddedProductTable = CtmTreeView(self.displayAddedProductFrame, theme=settings.table_theme_read())
         self.displayAddedProductTable.grid(row=1, column=0, rowspan=4, sticky="nsew")

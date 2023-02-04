@@ -30,8 +30,8 @@ class LoginPage(CTkFrame):
         # labels
         self.textLabelLogin = CTkLabel(self.loginFrame, text="Log into your Account", font=('Roboto', 22))
         self.orLabel = CTkLabel(self.loginFrame, text="or", font=('Century Gothic',10))
-        self.usernameReplyLabel = CTkLabel(self.loginFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
-        self.passwordReplyLabel = CTkLabel(self.loginFrame, anchor="nw", text="", text_color="#FF0F2F", font=("Roboto", 10 * -1))
+        self.usernameReplyLabel = CTkLabel(self.loginFrame, anchor="nw", text="", text_color="#FF0000", font=("Roboto", 10 * -1))
+        self.passwordReplyLabel = CTkLabel(self.loginFrame, anchor="nw", text="", text_color="#FF0000", font=("Roboto", 10 * -1))
 
         self.textLabelLogin.place(relx=0.75, y=45, anchor=CENTER)
         self.orLabel.place(relx=0.75, y=265, anchor=CENTER)

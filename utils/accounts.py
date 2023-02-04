@@ -62,6 +62,20 @@ def get_permission_level(username):
         return bool(cur.fetchone()[0])
 
 
+def get_all_accounts():
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT Username, Admin from accounts")
+        return cur.fetchall()
+
+
+def delete_user(username):
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("DELETE FROM accounts WHERE Username=?", (username,))
+        con.commit()
+
+
 def logout():
     if get_session():
         with sqlite3.connect(database_file) as con:
