@@ -4,6 +4,7 @@ from utils import accounts, Assets
 
 class LoginPage(CTkFrame):
     def __init__(self, parent, controller):
+        self.controller = controller
         CTkFrame.__init__(self, parent)
 
         # background image for login
@@ -85,6 +86,7 @@ class LoginPage(CTkFrame):
         # confirm if account is in database
         match accounts.login(username, passwd):
             case 0:
+                self.controller.frames["InventoryPage"].accountDisplay.refresh_account()
                 self.go_inventory(controller)
             case 1:
                 self.passwordReplyLabel.configure(text="*Incorrect password")
