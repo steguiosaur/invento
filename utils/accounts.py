@@ -43,6 +43,18 @@ def login(username, passwd):
         return 2        # if user account doesn't exist
 
 
+def change_pass(username, passwd, new_passwd, confirm_passwd):
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT * from accounts WHERE Username=? AND Password=?", (username, hashlib.md5(passwd.encode()).hexdigest()))
+        if not cur.fetchone():
+            return 1    # incorrect password
+        if new_passwd != confirm_passwd:
+            return 2    # password and confirm password don't match
+        cur.execute("UPDATE accounts SET Password=? WHERE Username=?", (hashlib.md5(new_passwd.encode()).hexdigest(), username))
+        con.commit()
+        return 0    # password change successful
+
 # current logged in account
 def get_session():
     with sqlite3.connect(database_file) as con:
@@ -73,6 +85,27 @@ def delete_user(username):
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("DELETE FROM accounts WHERE Username=?", (username,))
+        con.commit()
+
+
+def delete_all_users():
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("DELETE FROM accounts WHERE Admin = 0")
+        con.commit()
+
+
+def grant_admin_privilege(username):
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("UPDATE accounts SET Admin = 1 WHERE Username = ?", (username,))
+        con.commit()
+
+
+def remove_admin_privilege(username):
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("UPDATE accounts SET Admin = 0 WHERE Username = ?", (username,))
         con.commit()
 
 
