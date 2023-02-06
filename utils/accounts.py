@@ -55,6 +55,7 @@ def change_pass(username, passwd, new_passwd, confirm_passwd):
         con.commit()
         return 0    # password change successful
 
+
 # current logged in account
 def get_session():
     with sqlite3.connect(database_file) as con:
@@ -64,14 +65,13 @@ def get_session():
         return result[0] if result else None
 
 
-# if admin(1) or user(0) 
 def get_permission_level(username):
     with sqlite3.connect(database_file) as con:
         if username == None:
             return 0
         cur = con.cursor()
         cur.execute("SELECT Admin from accounts WHERE Username=?", (username,))
-        return bool(cur.fetchone()[0])
+        return bool(cur.fetchone()[0]) # if admin(1) or user(0)
 
 
 def get_all_accounts():

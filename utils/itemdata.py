@@ -16,14 +16,13 @@ def create_inventory_table():
             selling_price REAL NOT NULL,
             date_modified TEXT NOT NULL,
             modified_by TEXT NOT NULL,
-            permission_level TEXT NOT NULL
-        );
+            permission_level TEXT NOT NULL);
         ''')
         cur.execute("CREATE TABLE IF NOT EXISTS categories (category_name TEXT NOT NULL);")
         con.commit()
 
 
-# Function to add product to the database
+# add product to the database
 def add_product(item, category, in_stock, buying_price, selling_price):
     date_modified = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     modified_by = str(accounts.get_session())
@@ -43,11 +42,13 @@ def add_category(category_name):
         cur.execute("INSERT INTO categories (category_name) VALUES (?)", (category_name,))
         con.commit()
 
+
 def get_all_category():
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("SELECT * FROM categories")
         return cur.fetchall()
+
 
 def remove_category(category_name):
     with sqlite3.connect(database_file) as con:
@@ -61,6 +62,7 @@ def delete_product(product):
         cur = con.cursor()
         cur.execute("DELETE FROM products WHERE item=?", (product,))
         con.commit()
+
 
 def edit_product(product):
     with sqlite3.connect(database_file) as con:
@@ -78,14 +80,16 @@ def edit_product(product):
             WHERE id=?
         """, (product))
 
-# Function to view all products
+
+# view all products
 def view_inventory():
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("SELECT item, category, in_stock, buying_price, selling_price, date_modified FROM products")
         return cur.fetchall()
 
-# Function to view updates of a product
+
+# view updates of a product
 def view_modified():
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
