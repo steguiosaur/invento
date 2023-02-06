@@ -1,6 +1,6 @@
-from customtkinter import CTkFrame, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu
+from customtkinter import CTkFrame, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu, StringVar
 from customwidget import IntSpinbox, CtmTreeView
-from utils import settings
+from utils import settings, itemdata
 
 class ProductTab(CTkFrame):
     def __init__(self, parent):
@@ -54,7 +54,7 @@ class ProductTab(CTkFrame):
         self.searchItemFrame.grid_rowconfigure(3, weight=1)
 
         # search item entry
-        self.searchItemEntry = CTkEntry(self.searchItemFrame)
+        self.searchItemEntry = CTkEntry(self.searchItemFrame, placeholder_text="Search Item")
         self.searchItemEntry.grid(row=0, column=0, columnspan=4, padx=(10, 5), pady=(10, 5), sticky="ew")
 
         self.searchItemButton = CTkButton(self.searchItemFrame, text="Search", command=lambda: print("search"))
@@ -73,32 +73,36 @@ class ProductTab(CTkFrame):
         self.salesFrame.grid_columnconfigure(2, weight=1)
         self.salesFrame.grid_columnconfigure(3, weight=1)
         self.salesFrame.grid_columnconfigure(4, weight=1)
-        self.salesFrame.grid_rowconfigure(0, weight=1)
+        self.salesFrame.grid_rowconfigure(0, weight=0)
         self.salesFrame.grid_rowconfigure(1, weight=1)
         self.salesFrame.grid_rowconfigure(2, weight=1)
         self.salesFrame.grid_rowconfigure(3, weight=1)
         self.salesFrame.grid_rowconfigure(4, weight=1)
+        self.salesFrame.grid_rowconfigure(5, weight=1)
+
+        self.currentSalesLabel = CTkLabel(self.salesFrame, text="CURRENT PRODUCT SALES", font=("Arial", 13, "bold"))
+        self.currentSalesLabel.grid(row=0, column=0, columnspan=5, sticky="ew")
 
         self.salesLabel = CTkLabel(self.salesFrame, text="Add Sales")
-        self.salesLabel.grid(row=0, column=1)
+        self.salesLabel.grid(row=1, column=1)
 
         self.salesSpinBox = IntSpinbox(self.salesFrame, min_value=0, max_value=100, step_size=1)
-        self.salesSpinBox.grid(row=1, column=1, sticky="ew")
+        self.salesSpinBox.grid(row=2, column=1, sticky="ew")
 
         self.salesButton = CTkButton(self.salesFrame, text="Add", command=lambda: print("save sales"))
-        self.salesButton.grid(row=2, column=1, sticky="ew")
+        self.salesButton.grid(row=3, column=1, sticky="ew")
 
         self.removeSalesLabel = CTkLabel(self.salesFrame, text="Remove Sales")
-        self.removeSalesLabel.grid(row=0, column=3)
+        self.removeSalesLabel.grid(row=1, column=3)
 
         self.removeSalesSpinBox = IntSpinbox(self.salesFrame, min_value=0, step_size=1)
-        self.removeSalesSpinBox.grid(row=1, column=3, sticky="ew")
+        self.removeSalesSpinBox.grid(row=2, column=3, sticky="ew")
 
         self.removeSalesButton = CTkButton(self.salesFrame, text="Remove", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: print("remove sales"))
-        self.removeSalesButton.grid(row=2, column=3, sticky="ew")
+        self.removeSalesButton.grid(row=3, column=3, sticky="ew")
 
         # create frame for updating items
-        self.modifyItemTab = CTkTabview(self)
+        self.modifyItemTab = CTkTabview(self, command=lambda: print("action"))
         self.modifyItemTab.grid(row=3, column=2, rowspan=1, columnspan=2, padx=(5, 10), pady=(0, 10), sticky="nsew")
         self.modifyItemTab.add("Modify")
         self.modifyItemTab.add("Category")
@@ -162,15 +166,15 @@ class ProductTab(CTkFrame):
         self.sellingPriceLabel.grid(row=5, column=1, sticky="w")
 
         # entry widgets
-        self.productNameEntry = CTkEntry(self.modifyItemModifyFrame)
-        self.categoryEntry = CTkOptionMenu(self.modifyItemModifyFrame)
-        self.inStockEntry = CTkEntry(self.modifyItemModifyFrame)
-        self.buyingPriceEntry = CTkEntry(self.modifyItemModifyFrame)
-        self.sellingPriceEntry = CTkEntry(self.modifyItemModifyFrame)
+        self.productNameEntry = CTkEntry(self.modifyItemModifyFrame, placeholder_text="Enter text")
+        self.categoryModifyOptionMenu = CTkOptionMenu(self.modifyItemModifyFrame, values=self.get_category_list())
+        self.inStockEntry = CTkEntry(self.modifyItemModifyFrame, placeholder_text="Enter integer")
+        self.buyingPriceEntry = CTkEntry(self.modifyItemModifyFrame, placeholder_text="Enter integer")
+        self.sellingPriceEntry = CTkEntry(self.modifyItemModifyFrame, placeholder_text="Enter integer")
 
         # modify tab entry widgets grids
         self.productNameEntry.grid(row=1, column=3, sticky="ew")
-        self.categoryEntry.grid(row=2, column=3, sticky="ew")
+        self.categoryModifyOptionMenu.grid(row=2, column=3, sticky="ew")
         self.inStockEntry.grid(row=3, column=3, sticky="ew")
         self.buyingPriceEntry.grid(row=4, column=3, sticky="ew")
         self.sellingPriceEntry.grid(row=5, column=3, sticky="ew")
@@ -200,21 +204,21 @@ class ProductTab(CTkFrame):
 
         self.addCategoryLabel = CTkLabel(self.modifyItemCategoryFrame, text="Add Category:")
         self.addCategoryReplyLabel = CTkLabel(self.modifyItemCategoryFrame, text="")
-        self.addCategoryEntry = CTkEntry(self.modifyItemCategoryFrame)
-        self.addCategoryButton = CTkButton(self.modifyItemCategoryFrame, text="Add Category", command=lambda: print("added category"))
+        self.addCategoryEntry = CTkEntry(self.modifyItemCategoryFrame, placeholder_text="Enter category")
+        self.addCategoryButton = CTkButton(self.modifyItemCategoryFrame, text="Add Category", command=lambda: self.add_category())
 
         self.addCategoryLabel.grid(row=1, column=1, pady=(5, 5), sticky="ew")
-        self.addCategoryReplyLabel.grid(row=1, column=2, columnspan=2, pady=(5, 5), sticky="ew")
+        self.addCategoryReplyLabel.grid(row=1, column=3, sticky="ew")
         self.addCategoryEntry.grid(row=2, column=1, columnspan=2, padx=(0, 5), pady=(5, 5), sticky="ew")
         self.addCategoryButton.grid(row=2, column=3, padx=(5, 0), pady=(5, 5), sticky="ew")
 
         self.removeCategoryLabel = CTkLabel(self.modifyItemCategoryFrame, text="Remove Category:")
         self.removeCategoryReplyLabel = CTkLabel(self.modifyItemCategoryFrame, text="")
-        self.removeCategoryOptionMenu = CTkOptionMenu(self.modifyItemCategoryFrame)
-        self.removeCategoryButton = CTkButton(self.modifyItemCategoryFrame, text="Remove Category", command=lambda: print("removed category"))
+        self.removeCategoryOptionMenu = CTkOptionMenu(self.modifyItemCategoryFrame, values=self.get_category_list())
+        self.removeCategoryButton = CTkButton(self.modifyItemCategoryFrame, fg_color="#FF0F2F", hover_color="#AF0F2F", text="Remove Category", command=lambda: self.remove_category())
 
-        self.removeCategoryLabel.grid(row=4, column=1, pady=(5, 5), sticky="ew")
-        self.removeCategoryReplyLabel.grid(row=4, column=2, columnspan=2, pady=(5, 5), sticky="ew")
+        self.removeCategoryLabel.grid(row=4, column=1, sticky="ew")
+        self.removeCategoryReplyLabel.grid(row=4, column=3, sticky="ew")
         self.removeCategoryOptionMenu.grid(row=5, column=1, columnspan=2, padx=(0, 5), pady=(5, 5), sticky="ew")
         self.removeCategoryButton.grid(row=5, column=3, padx=(5, 0), pady=(5, 5), sticky="ew")
         
@@ -288,6 +292,35 @@ class ProductTab(CTkFrame):
         self.deleteButton.grid(row=1, column=1)
         self.deleteAllLabel.grid(row=2, column=1)
         self.deleteAllButton.grid(row=3, column=1)
+
+    def get_category_list(self):
+        categories = itemdata.get_all_category()
+        if categories:
+            return [""] + [str(item[0]) for item in categories]
+        return [""]
+
+    def add_category(self):
+        category = self.addCategoryEntry.get()
+        if category == "":
+            self.addCategoryReplyLabel.configure(text="*Category field required", text_color="#FF0000")
+            return
+        itemdata.add_category(category)
+        self.refresh_categories()
+        self.addCategoryReplyLabel.configure(text="*Category added", text_color="#00AA00")
+        self.addCategoryEntry.delete(0, 'end')
+
+    def remove_category(self):
+        remove_category = self.removeCategoryOptionMenu.get()
+        if remove_category == "":
+            self.removeCategoryReplyLabel.configure(text="*Select category", text_color="#FF0000")
+            return
+        itemdata.remove_category(remove_category)
+        self.removeCategoryReplyLabel.configure(text="*Category removed", text_color="#00AA00")
+        self.refresh_categories()
+
+    def refresh_categories(self):
+        self.removeCategoryOptionMenu.configure(variable="", values=self.get_category_list())
+
 
     def modify_item_discard(self):
         print("Discard changes")

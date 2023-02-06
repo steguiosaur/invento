@@ -43,6 +43,18 @@ def add_category(category_name):
         cur.execute("INSERT INTO categories (category_name) VALUES (?)", (category_name,))
         con.commit()
 
+def get_all_category():
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM categories")
+        return cur.fetchall()
+
+def remove_category(category_name):
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("DELETE FROM categories WHERE category_name=?", (category_name,))
+        con.commit()
+
 
 def delete_product(product):
     with sqlite3.connect(database_file) as con:
