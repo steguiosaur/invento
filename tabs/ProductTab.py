@@ -23,21 +23,21 @@ class ProductTab(CTkFrame):
         # create product table
         self.treeView = self.table.get_treeview()
         self.treeView["show"] = "headings"
-        self.treeView["columns"] = (1, 2, 3, 4, 5, 6)
+        self.treeView["columns"] = ("1", "2", "3", "4", "5", "6")
         
-        self.treeView.column(1, width=100)
-        self.treeView.column(2, width=70)
-        self.treeView.column(3, width=30)
-        self.treeView.column(4, width=30)
-        self.treeView.column(5, width=30)
-        self.treeView.column(6, width=30)
+        self.treeView.column("1", width=180)
+        self.treeView.column("2", width=70)
+        self.treeView.column("3", width=20)
+        self.treeView.column("4", width=40)
+        self.treeView.column("5", width=40)
+        self.treeView.column("6", width=100)
 
-        self.treeView.heading(1, text="Product Name")
-        self.treeView.heading(2, text="Category")
-        self.treeView.heading(3, text="In-Stock")
-        self.treeView.heading(4, text="Buying Price")
-        self.treeView.heading(5, text="Selling Price")
-        self.treeView.heading(6, text="Date Modified")
+        self.treeView.heading("1", text="Product Name")
+        self.treeView.heading("2", text="Category")
+        self.treeView.heading("3", text="In-Stock")
+        self.treeView.heading("4", text="Buying Price")
+        self.treeView.heading("5", text="Selling Price")
+        self.treeView.heading("6", text="Date Modified")
 
         # create frame for search items
         self.searchItemFrame = CTkFrame(self)

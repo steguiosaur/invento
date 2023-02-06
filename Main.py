@@ -1,4 +1,4 @@
-from utils import accounts, settings, dependencies, Assets
+from utils import accounts, itemdata, settings, dependencies, Assets
 dependencies.dependency_install_window() # install dependencies
 
 from customtkinter import CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
@@ -37,8 +37,9 @@ class Main(Tk):
         else:
             self.show_frame("LoginPage")
 
-# create account database and admin account if not exists
+# create database and admin account if not exists
 accounts.create_table()
+itemdata.create_inventory_table()
 
 # initialize settings and themes
 settings.initialize_config()
