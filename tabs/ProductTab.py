@@ -1,11 +1,10 @@
-from customtkinter import CTkFrame, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu, StringVar
+from customtkinter import CTkFrame, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu
 from customwidget import IntSpinbox, CtmTreeView
 from utils import settings, itemdata
 
 class ProductTab(CTkFrame):
     def __init__(self, parent):
         CTkFrame.__init__(self, parent)
-
         # inventory tab grid
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -19,19 +18,16 @@ class ProductTab(CTkFrame):
         # create frame for table
         self.table = CtmTreeView(self, theme=settings.table_theme_read())
         self.table.grid(row=0, column=0, rowspan=3, columnspan=4, padx=(10, 10), pady=(10, 5), sticky="nsew")
-
         # create product table
         self.treeView = self.table.get_treeview()
         self.treeView["show"] = "headings"
         self.treeView["columns"] = ("1", "2", "3", "4", "5", "6")
-        
         self.treeView.column("1", width=180)
         self.treeView.column("2", width=70)
         self.treeView.column("3", width=20)
         self.treeView.column("4", width=40)
         self.treeView.column("5", width=40)
         self.treeView.column("6", width=100)
-
         self.treeView.heading("1", text="Product Name")
         self.treeView.heading("2", text="Category")
         self.treeView.heading("3", text="In-Stock")
@@ -42,7 +38,6 @@ class ProductTab(CTkFrame):
         # create frame for search items
         self.searchItemFrame = CTkFrame(self)
         self.searchItemFrame.grid(row=3, column=0, rowspan=1, columnspan=2, padx=(10, 5), pady=(5, 10), sticky="nsew")
-
         self.searchItemFrame.grid_columnconfigure(0, weight=1)
         self.searchItemFrame.grid_columnconfigure(1, weight=1)
         self.searchItemFrame.grid_columnconfigure(2, weight=1)
@@ -61,13 +56,12 @@ class ProductTab(CTkFrame):
         self.searchItemButton.grid(row=0, column=4, padx=(5, 10), pady=(10, 5), sticky="ew")
 
         # status frame
-        self.statusLabel = CTkLabel(self.searchItemFrame, text="")
-        self.statusLabel.grid(row=1, column=0, columnspan=5)
+        self.statusReplyLabel = CTkLabel(self.searchItemFrame, text="")
+        self.statusReplyLabel.grid(row=1, column=0, columnspan=5)
 
         # frame for sales
         self.salesFrame = CTkFrame(self.searchItemFrame)
         self.salesFrame.grid(row=2, column=0, columnspan=5, rowspan=3, padx=(10, 10), pady=(5, 10), sticky="nsew")
-
         self.salesFrame.grid_columnconfigure(0, weight=1)
         self.salesFrame.grid_columnconfigure(1, weight=1)
         self.salesFrame.grid_columnconfigure(2, weight=1)
@@ -125,18 +119,6 @@ class ProductTab(CTkFrame):
         # frames for modifyItemTab
         self.modifyItemModifyFrame = CTkFrame(self.modifyItemTab.tab("Modify"))
         self.modifyItemModifyFrame.grid(row=0, column=0, sticky="nsew")
-
-        self.modifyItemCategoryFrame = CTkFrame(self.modifyItemTab.tab("Category"))
-        self.modifyItemCategoryFrame.grid(row=0, column=0, sticky="nsew")
-
-        self.modifyItemAddFrame = CTkFrame(self.modifyItemTab.tab("Add"))
-        self.modifyItemAddFrame.grid(row=0, column=0, sticky="nsew")
-
-        self.modifyItemRemoveFrame = CTkFrame(self.modifyItemTab.tab("Remove"))
-        self.modifyItemRemoveFrame.grid(row=0, column=0, sticky="nsew")
-
-
-        # modify tab grids
         self.modifyItemModifyFrame.rowconfigure(0, weight=1)
         self.modifyItemModifyFrame.rowconfigure(1, weight=1)
         self.modifyItemModifyFrame.rowconfigure(2, weight=1)
@@ -150,7 +132,51 @@ class ProductTab(CTkFrame):
         self.modifyItemModifyFrame.columnconfigure(2, weight=1)
         self.modifyItemModifyFrame.columnconfigure(3, weight=1)
         self.modifyItemModifyFrame.columnconfigure(4, weight=1)
-        
+
+        self.modifyItemCategoryFrame = CTkFrame(self.modifyItemTab.tab("Category"))
+        self.modifyItemCategoryFrame.grid(row=0, column=0, sticky="nsew")
+        self.modifyItemCategoryFrame.columnconfigure(0, weight=1)
+        self.modifyItemCategoryFrame.columnconfigure(1, weight=1)
+        self.modifyItemCategoryFrame.columnconfigure(2, weight=1)
+        self.modifyItemCategoryFrame.columnconfigure(3, weight=1)
+        self.modifyItemCategoryFrame.columnconfigure(4, weight=1)
+        self.modifyItemCategoryFrame.rowconfigure(0, weight=1)
+        self.modifyItemCategoryFrame.rowconfigure(1, weight=0)
+        self.modifyItemCategoryFrame.rowconfigure(2, weight=0)
+        self.modifyItemCategoryFrame.rowconfigure(3, weight=1)
+        self.modifyItemCategoryFrame.rowconfigure(4, weight=0)
+        self.modifyItemCategoryFrame.rowconfigure(5, weight=0)
+        self.modifyItemCategoryFrame.rowconfigure(6, weight=1)
+
+        self.modifyItemAddFrame = CTkFrame(self.modifyItemTab.tab("Add"))
+        self.modifyItemAddFrame.grid(row=0, column=0, sticky="nsew")
+        self.modifyItemAddFrame.rowconfigure(0, weight=1)
+        self.modifyItemAddFrame.rowconfigure(1, weight=1)
+        self.modifyItemAddFrame.rowconfigure(2, weight=1)
+        self.modifyItemAddFrame.rowconfigure(3, weight=1)
+        self.modifyItemAddFrame.rowconfigure(4, weight=1)
+        self.modifyItemAddFrame.rowconfigure(5, weight=1)
+        self.modifyItemAddFrame.rowconfigure(6, weight=1)
+        self.modifyItemAddFrame.rowconfigure(7, weight=1)
+        self.modifyItemAddFrame.columnconfigure(0, weight=1)
+        self.modifyItemAddFrame.columnconfigure(1, weight=1)
+        self.modifyItemAddFrame.columnconfigure(2, weight=1)
+        self.modifyItemAddFrame.columnconfigure(3, weight=1)
+        self.modifyItemAddFrame.columnconfigure(4, weight=1)
+
+        self.modifyItemRemoveFrame = CTkFrame(self.modifyItemTab.tab("Remove"))
+        self.modifyItemRemoveFrame.grid(row=0, column=0, sticky="nsew")
+        self.modifyItemRemoveFrame.grid_columnconfigure(0, weight=1)
+        self.modifyItemRemoveFrame.grid_columnconfigure(1, weight=1)
+        self.modifyItemRemoveFrame.grid_columnconfigure(2, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(0, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(1, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(2, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(3, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(4, weight=1)
+
+
+        ############################### MODIFY TABLE
         # labels
         self.productNameLabel = CTkLabel(self.modifyItemModifyFrame, text="Product Name:") 
         self.categoryLabel = CTkLabel(self.modifyItemModifyFrame, text="Category:") 
@@ -188,20 +214,7 @@ class ProductTab(CTkFrame):
         self.saveButton.grid(row=6, column=1, sticky="ew")
 
 
-        # category tab grid
-        self.modifyItemCategoryFrame.columnconfigure(0, weight=1)
-        self.modifyItemCategoryFrame.columnconfigure(1, weight=1)
-        self.modifyItemCategoryFrame.columnconfigure(2, weight=1)
-        self.modifyItemCategoryFrame.columnconfigure(3, weight=1)
-        self.modifyItemCategoryFrame.columnconfigure(4, weight=1)
-        self.modifyItemCategoryFrame.rowconfigure(0, weight=1)
-        self.modifyItemCategoryFrame.rowconfigure(1, weight=0)
-        self.modifyItemCategoryFrame.rowconfigure(2, weight=0)
-        self.modifyItemCategoryFrame.rowconfigure(3, weight=1)
-        self.modifyItemCategoryFrame.rowconfigure(4, weight=0)
-        self.modifyItemCategoryFrame.rowconfigure(5, weight=0)
-        self.modifyItemCategoryFrame.rowconfigure(6, weight=1)
-
+        ############################ CATEGORY ADD
         self.addCategoryLabel = CTkLabel(self.modifyItemCategoryFrame, text="Add Category:")
         self.addCategoryReplyLabel = CTkLabel(self.modifyItemCategoryFrame, text="")
         self.addCategoryEntry = CTkEntry(self.modifyItemCategoryFrame, placeholder_text="Enter category")
@@ -223,21 +236,7 @@ class ProductTab(CTkFrame):
         self.removeCategoryButton.grid(row=5, column=3, padx=(5, 0), pady=(5, 5), sticky="ew")
         
 
-        # add product tab grids
-        self.modifyItemAddFrame.rowconfigure(0, weight=1)
-        self.modifyItemAddFrame.rowconfigure(1, weight=1)
-        self.modifyItemAddFrame.rowconfigure(2, weight=1)
-        self.modifyItemAddFrame.rowconfigure(3, weight=1)
-        self.modifyItemAddFrame.rowconfigure(4, weight=1)
-        self.modifyItemAddFrame.rowconfigure(5, weight=1)
-        self.modifyItemAddFrame.rowconfigure(6, weight=1)
-        self.modifyItemAddFrame.rowconfigure(7, weight=1)
-        self.modifyItemAddFrame.columnconfigure(0, weight=1)
-        self.modifyItemAddFrame.columnconfigure(1, weight=1)
-        self.modifyItemAddFrame.columnconfigure(2, weight=1)
-        self.modifyItemAddFrame.columnconfigure(3, weight=1)
-        self.modifyItemAddFrame.columnconfigure(4, weight=1)
-        
+        ############################ ADD ON TABLE
         # labels
         self.productNameLabel = CTkLabel(self.modifyItemAddFrame, text="Product Name:") 
         self.categoryLabel = CTkLabel(self.modifyItemAddFrame, text="Category:") 
@@ -275,16 +274,7 @@ class ProductTab(CTkFrame):
         self.saveButton.grid(row=6, column=1, sticky="ew")
 
 
-        # delete product tab
-        self.modifyItemRemoveFrame.grid_columnconfigure(0, weight=1)
-        self.modifyItemRemoveFrame.grid_columnconfigure(1, weight=1)
-        self.modifyItemRemoveFrame.grid_columnconfigure(2, weight=1)
-        self.modifyItemRemoveFrame.grid_rowconfigure(0, weight=1)
-        self.modifyItemRemoveFrame.grid_rowconfigure(1, weight=1)
-        self.modifyItemRemoveFrame.grid_rowconfigure(2, weight=1)
-        self.modifyItemRemoveFrame.grid_rowconfigure(3, weight=1)
-        self.modifyItemRemoveFrame.grid_rowconfigure(4, weight=1)
-
+        ############################ DELETE PRODUCT
         self.deleteButton = CTkButton(self.modifyItemRemoveFrame, text="Remove Product")
         self.deleteAllLabel = CTkLabel(self.modifyItemRemoveFrame, text="requires admin privileges")
         self.deleteAllButton = CTkButton(self.modifyItemRemoveFrame, text="Reset Inventory")
@@ -292,6 +282,7 @@ class ProductTab(CTkFrame):
         self.deleteButton.grid(row=1, column=1)
         self.deleteAllLabel.grid(row=2, column=1)
         self.deleteAllButton.grid(row=3, column=1)
+
 
     def get_category_list(self):
         categories = itemdata.get_all_category()

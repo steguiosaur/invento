@@ -6,16 +6,9 @@ from tabs import *
 class InventoryPage(CTkFrame):
     def __init__(self, parent, controller):
         CTkFrame.__init__(self, parent)
-
-        # configure grid layout (4x4)
-        self.grid_columnconfigure(0, weight=0)
+        self.grid_columnconfigure((0, 2, 3), weight=0)
         self.grid_columnconfigure(1, weight=1)
-        self.grid_columnconfigure(2, weight=0)
-        self.grid_columnconfigure(3, weight=0)
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=1)
-        self.grid_rowconfigure(2, weight=1)
-        self.grid_rowconfigure(3, weight=1)
+        self.grid_rowconfigure((0, 1, 2, 3), weight=1)
 
         # create tabs
         self.tabview = CTkTabview(self, width=250)
@@ -29,10 +22,7 @@ class InventoryPage(CTkFrame):
         # create sidebar frame with widgets
         self.sidebarFrame = CTkFrame(self, width=160, corner_radius=0)
         self.sidebarFrame.grid(row=0, column=0, rowspan=4, sticky="nsew")
-        self.sidebarFrame.grid_rowconfigure(1, weight=1)
-        self.sidebarFrame.grid_rowconfigure(2, weight=1)
-        self.sidebarFrame.grid_rowconfigure(3, weight=1)
-        self.sidebarFrame.grid_rowconfigure(9, weight=1)
+        self.sidebarFrame.grid_rowconfigure((1, 2, 3, 9), weight=1)
 
         # application logo
         self.logoImg = CTkImage(
@@ -86,9 +76,8 @@ class InventoryPage(CTkFrame):
         self.tabview.tab("Settings").grid_rowconfigure(0, weight=1)
         self.settingsDisplay = SettingsTab(self.tabview.tab("Settings"))
         self.settingsDisplay.grid(row=0, column=0, sticky="nsew")
-        
 
-    # METHODS
+
     def logout(self, controller):
-        accounts.logout()
+        accounts.logout()   # remove account from session
         controller.show_frame("LoginPage", controller.id)
