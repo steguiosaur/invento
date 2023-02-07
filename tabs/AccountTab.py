@@ -71,7 +71,7 @@ class AccountTab(CTkFrame):
         self.accountConfigFrame.grid_rowconfigure(8, weight=1)
         self.accountConfigFrame.grid_rowconfigure(9, weight=1)
 
-        self.accountSettingsLabel = CTkLabel(self.accountConfigFrame, text="Account Settings", font=("Arial", 13, "bold"))
+        self.accountSettingsLabel = CTkLabel(self.accountConfigFrame, text="ACCOUNT SETTINGS", font=("Arial", 13, "bold"))
         self.accountSettingsLabel.grid(row=0, column=0, columnspan=5, padx=(5, 5), sticky="")
 
         self.changePasswordStatusLabel = CTkLabel(self.accountConfigFrame, text="")
@@ -111,7 +111,7 @@ class AccountTab(CTkFrame):
         self.deleteAccountButton = CTkButton(self.sensitiveFrame, text="Delete Account", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.delete_account())
         self.deleteAccountButton.grid(row=0, column=1, pady=5, sticky="ew")
 
-        self.removeAdminButton = CTkButton(self.sensitiveFrame, text="Remove Admin", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.remove_admin_privilege())
+        self.removeAdminButton = CTkButton(self.sensitiveFrame, text="Change to User", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.remove_admin_privilege(accounts.get_session()))
         self.removeAdminButton.grid(row=0, column=3, pady=5, sticky="ew")
 
 
@@ -124,7 +124,7 @@ class AccountTab(CTkFrame):
         self.accountListFrame.grid_rowconfigure(2, weight=0)
         self.accountListFrame.grid_rowconfigure(3, weight=1)
 
-        self.accountList = CTkLabel(self.accountListFrame, text="Account List", font=("Arial", 13, "bold"))
+        self.accountList = CTkLabel(self.accountListFrame, text="ACCOUNT LIST", font=("Arial", 13, "bold"))
         self.accountList.grid(row=0, column=0)
 
         self.accountTable = CtmTreeView(self.accountListFrame, theme=settings.table_theme_read())
@@ -150,8 +150,9 @@ class AccountTab(CTkFrame):
         self.adminSettingsFrame.grid_rowconfigure(3, weight=1)
         self.adminSettingsFrame.grid_rowconfigure(4, weight=1)
         self.adminSettingsFrame.grid_rowconfigure(5, weight=1)
+        self.adminSettingsFrame.grid_rowconfigure(6, weight=1)
 
-        self.adminSettingsLabel = CTkLabel(self.adminSettingsFrame, text="Administrator Settings", font=("Arial", 13, "bold"))
+        self.adminSettingsLabel = CTkLabel(self.adminSettingsFrame, text="ADMINISTRATOR SETTINGS", font=("Arial", 13, "bold"))
         self.adminSettingsLabel.grid(row=0, column=0, columnspan=3, sticky="")
 
         self.adminUserRequiredLabel = CTkLabel(self.adminSettingsFrame, text="")
@@ -160,11 +161,14 @@ class AccountTab(CTkFrame):
         self.grantAdminPrivilegesButton = CTkButton(self.adminSettingsFrame, text="Grant Admin Privileges", command=lambda: self.give_admin())
         self.grantAdminPrivilegesButton.grid(row=2, column=1, sticky="ew")
 
+        self.removeAdminPrivilegesButton = CTkButton(self.adminSettingsFrame, text="Remove Admin Privileges", command=lambda: self.remove_admin_privilege_admin())
+        self.removeAdminPrivilegesButton.grid(row=3, column=1, sticky="ew")
+
         self.removeUserButton = CTkButton(self.adminSettingsFrame, text="Remove Account", command=lambda: self.remove_user())
-        self.removeUserButton.grid(row=3, column=1, sticky="ew")
+        self.removeUserButton.grid(row=4, column=1, sticky="ew")
 
         self.deleteAllUserButton = CTkButton(self.adminSettingsFrame, text="Delete All User", command=lambda: self.delete_all_user())
-        self.deleteAllUserButton.grid(row=4, column=1, sticky="ew")
+        self.deleteAllUserButton.grid(row=5, column=1, sticky="ew")
 
     def verify_new_pass(self):
         current, new_pass, conf_pass = self.currentPasswordEntry.get(), self.newPasswordEntry.get(), self.confirmNewPasswordEntry.get()
@@ -205,6 +209,9 @@ class AccountTab(CTkFrame):
             case _:
                 self.changePasswordStatusLabel.configure(text="*Password not changed", text_color="#FF0000")
 
+    def reload_treeview(self):
+        self.accountTable.change_theme(settings.table_theme_read())
+
     def refresh_unfocused(self):
         # refresh placeholder_text and password show to *
         self.currentPasswordEntry.focus_set()
@@ -232,8 +239,26 @@ class AccountTab(CTkFrame):
         accounts.delete_user(accounts.get_session())
         self.get_all_accounts()
 
-    def remove_admin_privilege(self):
-        accounts.remove_admin_privilege(accounts.get_session())
+    def remove_admin_privilege_admin(self):
+        selected_item = self.accountTreeview.focus()
+        if selected_item == "":
+            self.adminUserRequiredLabel.configure(text="*No account selected.", text_color="#FF0000")
+            return
+        selected_values = self.accountTreeview.item(selected_item)["values"]
+        username = selected_values[0]
+        try:
+            if accounts.get_permission_level(str(accounts.get_session())):
+                accounts.remove_admin_privilege(username)
+                self.accountTreeview.delete(selected_item)
+                self.get_all_accounts()
+                self.adminUserRequiredLabel.configure(text="*Admin privileges removed.", text_color="#00AA00")
+            else:
+                self.adminUserRequiredLabel.configure(text="*Admin permission required.", text_color="#FF0000")
+        except:
+            self.adminUserRequiredLabel.configure(text="*Exception generated.", text_color="#FF0000")
+
+    def remove_admin_privilege(self, username):
+        accounts.remove_admin_privilege(username)
         self.show_permission_level()
         self.get_all_accounts()
 

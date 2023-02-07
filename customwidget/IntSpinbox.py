@@ -19,9 +19,8 @@ class IntSpinbox(CTkFrame):
 
         self.configure(fg_color=("gray78", "gray28"))  # set frame color
 
-        self.grid_columnconfigure(0, weight=0)  # buttons don't expand
+        self.grid_columnconfigure((0, 2), weight=0)  # buttons don't expand
         self.grid_columnconfigure(1, weight=1)  # entry expands
-        self.grid_columnconfigure(2, weight=0)  # buttons don't expand
 
         self.subtract_button = CTkButton(self, text="-", width=height-6, height=height-6, command=self.subtract_button_callback)
         self.subtract_button.grid(row=0, column=0, padx=(3, 0), pady=3)

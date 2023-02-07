@@ -1,6 +1,6 @@
 from customtkinter import CTkFrame, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu
 from customwidget import IntSpinbox, CtmTreeView
-from utils import settings, itemdata
+from utils import settings, itemdata, Icon
 
 class ProductTab(CTkFrame):
     def __init__(self, parent):
@@ -52,8 +52,9 @@ class ProductTab(CTkFrame):
         self.searchItemEntry = CTkEntry(self.searchItemFrame, placeholder_text="Search Item")
         self.searchItemEntry.grid(row=0, column=0, columnspan=4, padx=(10, 5), pady=(10, 5), sticky="ew")
 
-        self.searchItemButton = CTkButton(self.searchItemFrame, text="Search", command=lambda: print("search"))
-        self.searchItemButton.grid(row=0, column=4, padx=(5, 10), pady=(10, 5), sticky="ew")
+        self.icons = Icon()
+        self.searchItemButton = CTkButton(self.searchItemFrame, image=self.icons.get_search(), text="Search", command=lambda: print("search"))
+        self.searchItemButton.grid(row=0, column=4, padx=(0, 10), pady=(10, 5), sticky="")
 
         # status frame
         self.statusReplyLabel = CTkLabel(self.searchItemFrame, text="")
@@ -308,6 +309,9 @@ class ProductTab(CTkFrame):
         itemdata.remove_category(remove_category)
         self.removeCategoryReplyLabel.configure(text="*Category removed", text_color="#00AA00")
         self.refresh_categories()
+
+    def reload_treeview(self):
+        self.table.change_theme(settings.table_theme_read())
 
     def refresh_categories(self):
         self.removeCategoryOptionMenu.configure(variable="", values=self.get_category_list())

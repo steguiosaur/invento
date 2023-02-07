@@ -62,6 +62,11 @@ class CtmTreeView(CTkFrame):
         self.treeView.configure(yscrollcommand=self.yScroll.set)
         self.treeView.pack(side='right', fill='both', expand=True)
 
+
+    def change_theme(self, new_theme):
+        self.theme = new_theme
+        self.table_style(self.theme)
+
     def table_style(self, table_theme):
         if table_theme == "dark":
             self.treeView["style"] = "darkAppearance.Treeview"

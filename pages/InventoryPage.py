@@ -5,6 +5,7 @@ from tabs import *
 
 class InventoryPage(CTkFrame):
     def __init__(self, parent, controller):
+        self.controller = controller
         CTkFrame.__init__(self, parent)
         self.grid_columnconfigure((0, 2, 3), weight=0)
         self.grid_columnconfigure(1, weight=1)
@@ -74,7 +75,7 @@ class InventoryPage(CTkFrame):
         # SETTINGS
         self.tabview.tab("Settings").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Settings").grid_rowconfigure(0, weight=1)
-        self.settingsDisplay = SettingsTab(self.tabview.tab("Settings"))
+        self.settingsDisplay = SettingsTab(self.tabview.tab("Settings"), controller)
         self.settingsDisplay.grid(row=0, column=0, sticky="nsew")
 
 
