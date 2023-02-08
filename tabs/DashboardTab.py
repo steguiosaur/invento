@@ -1,6 +1,6 @@
 from customtkinter import CTkFrame, CTkLabel
 from customwidget import CtmTreeView
-from utils import settings, Icon
+from utils import accounts, settings, Icon
 
 class DashboardTab(CTkFrame):
     def __init__(self, parent):
@@ -26,12 +26,21 @@ class DashboardTab(CTkFrame):
         self.displayUserFrame.grid_rowconfigure(2, weight=0)
         self.displayUserFrame.grid_rowconfigure(3, weight=1)
         self.displayUserFrame.grid_rowconfigure(4, weight=1)
-        self.displayUserIcon = CTkLabel(self.displayUserFrame, image=self.icons.get_user(), text="")
-        self.displayUserIcon.grid(row=1, column=0, rowspan=4, columnspan=1, sticky="nsew")
-        self.userLabel = CTkLabel(self.displayUserFrame, text="Users")
-        self.userLabel.grid(row=1, column=1)
-        self.userNumLabel = CTkLabel(self.displayUserFrame, text="0")
-        self.userNumLabel.grid(row=2, column=1)
+
+        self.displayUserIconFrame = CTkFrame(self.displayUserFrame)
+        self.displayUserIconFrame.grid(row=0, column=0, rowspan=5, columnspan=1, padx=(5, 0), pady=5, sticky="nsew")
+        self.displayUserIconFrame.columnconfigure(0, weight=1)
+        self.displayUserIconFrame.rowconfigure(0, weight=1)
+
+        self.displayUserIcon = CTkLabel(self.displayUserIconFrame, image=self.icons.get_user(), text="")
+        self.displayUserIcon.grid(row=0, column=0, sticky="nsew")
+
+        self.userLabel = CTkLabel(self.displayUserFrame, text="TOTAL USERS", font=("Arial", 13, "bold"))
+        self.userLabel.grid(row=1, column=1, sticky="ew")
+
+        self.userNumLabel = CTkLabel(self.displayUserFrame, font=("Arial", 13, "bold"))
+        self.current_users()
+        self.userNumLabel.grid(row=3, column=1, sticky="ew")
 
         # create frame for list accounts
         self.displayNumCategoryFrame = CTkFrame(self)
@@ -39,11 +48,22 @@ class DashboardTab(CTkFrame):
         self.displayNumCategoryFrame.grid_columnconfigure(0, weight=1)
         self.displayNumCategoryFrame.grid_columnconfigure(1, weight=1)
         self.displayNumCategoryFrame.grid_rowconfigure(0, weight=1)
-        self.displayNumCategoryFrame.grid_rowconfigure(1, weight=1)
-        self.displayNumCategoryFrame.grid_rowconfigure(2, weight=1)
-        self.displayNumCategoryFrame.grid_rowconfigure(3, weight=1)
-        self.displayNumCategoryIcon = CTkLabel(self.displayNumCategoryFrame, image=self.icons.get_categories(), text="")
-        self.displayNumCategoryIcon.grid(row=1, column=0, rowspan=4, columnspan=1, padx=(10, 5), pady=(5, 5))
+        self.displayNumCategoryFrame.grid_rowconfigure(4, weight=1)
+
+        self.displayNumProductsIconFrame = CTkFrame(self.displayNumCategoryFrame)
+        self.displayNumProductsIconFrame.grid(row=0, column=0, rowspan=5, columnspan=1, padx=(5, 0), pady=5, sticky="nsew")
+        self.displayNumProductsIconFrame.columnconfigure(0, weight=1)
+        self.displayNumProductsIconFrame.rowconfigure(0, weight=1)
+
+        self.displayNumProductsIcon = CTkLabel(self.displayNumProductsIconFrame, image=self.icons.get_categories(), text="")
+        self.displayNumProductsIcon.grid(row=0, column=0, sticky="nsew")
+
+        self.categoryLabel = CTkLabel(self.displayNumCategoryFrame, text=" CATEGORIES ", font=("Arial", 13, "bold"))
+        self.categoryLabel.grid(row=1, column=1, sticky="ew")
+
+        self.categoryNumLabel = CTkLabel(self.displayNumCategoryFrame, text="0", font=("Arial", 13, "bold"))
+        self.categoryNumLabel.grid(row=3, column=1, sticky="ew")
+
 
         # create frame for list accounts
         self.displayNumProductsFrame = CTkFrame(self)
@@ -51,11 +71,22 @@ class DashboardTab(CTkFrame):
         self.displayNumProductsFrame.grid_columnconfigure(0, weight=1)
         self.displayNumProductsFrame.grid_columnconfigure(1, weight=1)
         self.displayNumProductsFrame.grid_rowconfigure(0, weight=1)
-        self.displayNumProductsFrame.grid_rowconfigure(1, weight=1)
-        self.displayNumProductsFrame.grid_rowconfigure(2, weight=1)
-        self.displayNumProductsFrame.grid_rowconfigure(3, weight=1)
-        self.displayNumProductsIcon = CTkLabel(self.displayNumProductsFrame, image=self.icons.get_products(), text="")
-        self.displayNumProductsIcon.grid(row=1, column=0, rowspan=4, columnspan=1, padx=(10, 5), pady=(5, 5))
+        self.displayNumProductsFrame.grid_rowconfigure(4, weight=1)
+
+        self.displayNumProductsIconFrame = CTkFrame(self.displayNumProductsFrame)
+        self.displayNumProductsIconFrame.grid(row=0, column=0, rowspan=5, columnspan=1, padx=(5, 0), pady=5, sticky="nsew")
+        self.displayNumProductsIconFrame.columnconfigure(0, weight=1)
+        self.displayNumProductsIconFrame.rowconfigure(0, weight=1)
+
+        self.displayNumProductsIcon = CTkLabel(self.displayNumProductsIconFrame, image=self.icons.get_products(), text="")
+        self.displayNumProductsIcon.grid(row=0, column=0, sticky="nsew")
+
+        self.productLabel = CTkLabel(self.displayNumProductsFrame, text=" PRODUCTS ", font=("Arial", 13, "bold"))
+        self.productLabel.grid(row=1, column=1, sticky="ew")
+
+        self.productNumLabel = CTkLabel(self.displayNumProductsFrame, text="0", font=("Arial", 13, "bold"))
+        self.productNumLabel.grid(row=3, column=1, sticky="ew")
+
 
         # create frame for list accounts
         self.displayNumSalesFrame = CTkFrame(self)
@@ -63,11 +94,21 @@ class DashboardTab(CTkFrame):
         self.displayNumSalesFrame.grid_columnconfigure(0, weight=1)
         self.displayNumSalesFrame.grid_columnconfigure(1, weight=1)
         self.displayNumSalesFrame.grid_rowconfigure(0, weight=1)
-        self.displayNumSalesFrame.grid_rowconfigure(1, weight=1)
-        self.displayNumSalesFrame.grid_rowconfigure(2, weight=1)
-        self.displayNumSalesFrame.grid_rowconfigure(3, weight=1)
-        self.displayNumSalesIcon = CTkLabel(self.displayNumSalesFrame, image=self.icons.get_sales(), text="")
-        self.displayNumSalesIcon.grid(row=1, column=0, rowspan=4, columnspan=1, padx=(10, 5), pady=(5, 5))
+        self.displayNumSalesFrame.grid_rowconfigure(4, weight=1)
+
+        self.displayNumSalesIconFrame = CTkFrame(self.displayNumSalesFrame)
+        self.displayNumSalesIconFrame.grid(row=0, column=0, rowspan=5, columnspan=1, padx=(5, 0), pady=5, sticky="nsew")
+        self.displayNumSalesIconFrame.columnconfigure(0, weight=1)
+        self.displayNumSalesIconFrame.rowconfigure(0, weight=1)
+
+        self.displayNumSalesIcon = CTkLabel(self.displayNumSalesIconFrame, image=self.icons.get_sales(), text="")
+        self.displayNumSalesIcon.grid(row=0, column=0, sticky="nsew")
+
+        self.salesLabel = CTkLabel(self.displayNumSalesFrame, text="TOTAL SALES", font=("Arial", 13, "bold"))
+        self.salesLabel.grid(row=1, column=1, sticky="ew")
+
+        self.salesNumLabel = CTkLabel(self.displayNumSalesFrame, text="0", font=("Arial", 13, "bold"))
+        self.salesNumLabel.grid(row=3, column=1, sticky="ew")
 
         # create frame for list accounts
         self.displaySalesGraphFrame = CTkFrame(self)
@@ -106,3 +147,6 @@ class DashboardTab(CTkFrame):
 
     def reload_treeview(self):
         self.displayAddedProductTable.change_theme(settings.table_theme_read())
+
+    def current_users(self):
+        self.userNumLabel.configure(text=str(accounts.count_non_admin_accounts()))

@@ -6,7 +6,7 @@ class Icon():
     def __init__(self):
 
         self.search = CTkImage(
-            light_image=Image.open(Assets.asset_path("./dark_search.png")),
+            light_image=Image.open(Assets.asset_path("./light_search.png")),
             dark_image=Image.open(Assets.asset_path("./light_search.png")),
             size=(15, 15))
 

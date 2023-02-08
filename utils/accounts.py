@@ -109,6 +109,13 @@ def remove_admin_privilege(username):
         con.commit()
 
 
+def count_non_admin_accounts():
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT COUNT(*) FROM accounts WHERE Admin = 0")
+        return cur.fetchone()[0]
+
+
 def logout():
     if get_session():
         with sqlite3.connect(database_file) as con:
