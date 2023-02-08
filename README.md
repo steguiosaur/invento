@@ -3,18 +3,27 @@
 
 ## :globe_with_meridians: Description
 
-Inventory management system that tracks product performance and inventory changes.
+Inventory management system that tracks sales performance and inventory changes.
+A project for Discrete Structures II.
 
 -----------------------------------------------------------------
 
 ## :abacus: Features
 
 - [x] Login system
-- [x] Create user account
-- [ ] Add, modify, delete inventory items
-- [ ] Evaluate and modify current stock
-- [ ] Calculate incoming expenses for resupplying stock
+- [x] Register user account
+- [x] Administrator account
+- [x] Add, modify, delete inventory items
+- [x] Evaluate and modify current stock
+- [ ] Calculate total sales per day
+- [ ] Show graph of sales per day
 - [ ] Export to Excel functionality
+
+### Extras
+- Generate account photo
+- Theme changes
+- Widget scaling
+
 
 -----------------------------------------------------------------
 
