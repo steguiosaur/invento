@@ -16,24 +16,27 @@ class ProductTab(CTkFrame):
         self.grid_rowconfigure(3, weight=0)
 
         #----------------------- TABLE FRAME -----------------------
+        self.ascending = True
         self.table = CtmTreeView(self, theme=settings.table_theme_read())
         self.table.grid(row=0, column=0, rowspan=3, columnspan=4, padx=(10, 10), pady=(10, 5), sticky="nsew")
         # create product table
         self.treeView = self.table.get_treeview()
         self.treeView["show"] = "headings"
         self.treeView["columns"] = ("1", "2", "3", "4", "5", "6")
-        self.treeView.column("1", width=180)
-        self.treeView.column("2", width=70)
-        self.treeView.column("3", width=20)
-        self.treeView.column("4", width=40)
-        self.treeView.column("5", width=40)
-        self.treeView.column("6", width=100)
-        self.treeView.heading("1", text="Product Name")
-        self.treeView.heading("2", text="Category")
-        self.treeView.heading("3", text="In-Stock")
-        self.treeView.heading("4", text="Buying Price")
-        self.treeView.heading("5", text="Selling Price")
-        self.treeView.heading("6", text="Date Modified")
+        self.treeView.column("1", width=180, anchor="center")
+        self.treeView.column("2", width=70, anchor="center")
+        self.treeView.column("3", width=20, anchor="center")
+        self.treeView.column("4", width=40, anchor="center")
+        self.treeView.column("5", width=40, anchor="center")
+        self.treeView.column("6", width=100, anchor="center")
+        self.treeView.heading("1", text="Product Name", command=lambda: self.sort_by_column("item"))
+        self.treeView.heading("2", text="Category", command=lambda: self.sort_by_column("category"))
+        self.treeView.heading("3", text="In-Stock", command=lambda: self.sort_by_column("in_stock"))
+        self.treeView.heading("4", text="Buying Price", command=lambda: self.sort_by_column("buying_price"))
+        self.treeView.heading("5", text="Selling Price", command=lambda: self.sort_by_column("selling_price"))
+        self.treeView.heading("6", text="Date Modified", command=lambda: self.sort_by_column("date_modified"))
+
+        self.get_all_inventory()
 
         #----------------------- SEARCH FRAME -----------------------
         self.searchItemFrame = CTkFrame(self)
@@ -53,8 +56,8 @@ class ProductTab(CTkFrame):
         self.searchItemEntry.grid(row=0, column=0, columnspan=4, padx=(10, 5), pady=(10, 5), sticky="ew")
 
         self.icons = Icon()
-        self.searchItemButton = CTkButton(self.searchItemFrame, image=self.icons.get_search(), text="Search", command=lambda: print("search"))
-        self.searchItemButton.grid(row=0, column=4, padx=(0, 10), pady=(10, 5), sticky="")
+        self.searchItemButton = CTkButton(self.searchItemFrame, image=self.icons.get_search(), text="Search", command=lambda: self.search())
+        self.searchItemButton.grid(row=0, column=4, padx=(0, 5), pady=(10, 5), sticky="")
 
         # status frame
         self.statusReplyLabel = CTkLabel(self.searchItemFrame, text="")
@@ -172,8 +175,8 @@ class ProductTab(CTkFrame):
         self.modifyItemRemoveFrame.grid_columnconfigure(2, weight=1)
         self.modifyItemRemoveFrame.grid_rowconfigure(0, weight=1)
         self.modifyItemRemoveFrame.grid_rowconfigure(1, weight=1)
-        self.modifyItemRemoveFrame.grid_rowconfigure(2, weight=1)
-        self.modifyItemRemoveFrame.grid_rowconfigure(3, weight=1)
+        self.modifyItemRemoveFrame.grid_rowconfigure(2, weight=0)
+        self.modifyItemRemoveFrame.grid_rowconfigure(3, weight=0)
         self.modifyItemRemoveFrame.grid_rowconfigure(4, weight=1)
 
 
@@ -239,51 +242,115 @@ class ProductTab(CTkFrame):
 
         #------------------------- PRODUCT ADD -----------------------
         # labels
-        self.productNameLabel = CTkLabel(self.modifyItemAddFrame, text="Product Name:") 
-        self.categoryLabel = CTkLabel(self.modifyItemAddFrame, text="Category:") 
-        self.inStockLabel = CTkLabel(self.modifyItemAddFrame, text="Current Stock:") 
-        self.buyingPriceLabel = CTkLabel(self.modifyItemAddFrame, text="Buying Price:") 
-        self.sellingPriceLabel = CTkLabel(self.modifyItemAddFrame, text="Selling Price:") 
+        self.productAddNameLabel = CTkLabel(self.modifyItemAddFrame, text="Product Name:") 
+        self.categoryAddLabel = CTkLabel(self.modifyItemAddFrame, text="Category:") 
+        self.inStockAddLabel = CTkLabel(self.modifyItemAddFrame, text="Current Stock:") 
+        self.buyingAddPriceLabel = CTkLabel(self.modifyItemAddFrame, text="Buying Price:") 
+        self.sellingAddPriceLabel = CTkLabel(self.modifyItemAddFrame, text="Selling Price:") 
 
         # add product label grids
-        self.productNameLabel.grid(row=1, column=1, sticky="w")
-        self.categoryLabel.grid(row=2, column=1, sticky="w")
-        self.inStockLabel.grid(row=3, column=1, sticky="w")
-        self.buyingPriceLabel.grid(row=4, column=1, sticky="w")
-        self.sellingPriceLabel.grid(row=5, column=1, sticky="w")
+        self.productAddNameLabel.grid(row=1, column=1, sticky="w")
+        self.categoryAddLabel.grid(row=2, column=1, sticky="w")
+        self.inStockAddLabel.grid(row=3, column=1, sticky="w")
+        self.buyingAddPriceLabel.grid(row=4, column=1, sticky="w")
+        self.sellingAddPriceLabel.grid(row=5, column=1, sticky="w")
 
         # entry widgets
-        self.productNameEntry = CTkEntry(self.modifyItemAddFrame)
-        self.categoryEntry = CTkOptionMenu(self.modifyItemAddFrame)
-        self.inStockEntry = CTkEntry(self.modifyItemAddFrame)
-        self.buyingPriceEntry = CTkEntry(self.modifyItemAddFrame)
-        self.sellingPriceEntry = CTkEntry(self.modifyItemAddFrame)
+        self.productAddNameEntry = CTkEntry(self.modifyItemAddFrame, placeholder_text="Enter product name")
+        self.categoryAddOptionMenu = CTkOptionMenu(self.modifyItemAddFrame, values=self.get_category_list())
+        self.inStockAddEntry = CTkEntry(self.modifyItemAddFrame, placeholder_text="Enter current stock")
+        self.buyingAddPriceEntry = CTkEntry(self.modifyItemAddFrame, placeholder_text="Enter buying price")
+        self.sellingAddPriceEntry = CTkEntry(self.modifyItemAddFrame, placeholder_text="Enter selling price")
 
         # add product entry widgets grids
-        self.productNameEntry.grid(row=1, column=3, sticky="ew")
-        self.categoryEntry.grid(row=2, column=3, sticky="ew")
-        self.inStockEntry.grid(row=3, column=3, sticky="ew")
-        self.buyingPriceEntry.grid(row=4, column=3, sticky="ew")
-        self.sellingPriceEntry.grid(row=5, column=3, sticky="ew")
+        self.productAddNameEntry.grid(row=1, column=3, sticky="ew")
+        self.categoryAddOptionMenu.grid(row=2, column=3, sticky="ew")
+        self.inStockAddEntry.grid(row=3, column=3, sticky="ew")
+        self.buyingAddPriceEntry.grid(row=4, column=3, sticky="ew")
+        self.sellingAddPriceEntry.grid(row=5, column=3, sticky="ew")
 
         # add product discard button
-        self.discardButton = CTkButton(self.modifyItemAddFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.modify_item_discard())
-        self.discardButton.grid(row=6, column=3, sticky="ew")
+        self.discardProductAddButton = CTkButton(self.modifyItemAddFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.modify_item_discard())
+        self.discardProductAddButton.grid(row=6, column=3, sticky="ew")
 
         # add product save button
-        self.saveButton = CTkButton(self.modifyItemAddFrame, text="Save", command=self.modify_item_save)
-        self.saveButton.grid(row=6, column=1, sticky="ew")
+        self.saveProductAddButton = CTkButton(self.modifyItemAddFrame, text="Save", command=lambda: self.verify_product_add())
+        self.saveProductAddButton.grid(row=6, column=1, sticky="ew")
 
 
         #------------------------- DELETE PRODUCT -------------------------
-        self.deleteButton = CTkButton(self.modifyItemRemoveFrame, text="Remove Product")
-        self.deleteAllLabel = CTkLabel(self.modifyItemRemoveFrame, text="requires admin privileges")
-        self.deleteAllButton = CTkButton(self.modifyItemRemoveFrame, text="Reset Inventory")
+        self.deleteStatusLabel = CTkLabel(self.modifyItemRemoveFrame, text="")
+        self.deleteButton = CTkButton(self.modifyItemRemoveFrame, text="Remove Product", fg_color="#FF0F2F", hover_color="#AF0F2F")
+        self.deleteAllLabel = CTkLabel(self.modifyItemRemoveFrame, text="REQUIRES ADMIN ACCOUNT", font=("Arial", 13, "bold"))
+        self.deleteAllButton = CTkButton(self.modifyItemRemoveFrame, text="Reset Inventory", fg_color="#FF0F2F", hover_color="#AF0F2F")
 
+        self.deleteStatusLabel.grid(row=0, column=1, sticky="ew")
         self.deleteButton.grid(row=1, column=1)
         self.deleteAllLabel.grid(row=2, column=1)
         self.deleteAllButton.grid(row=3, column=1)
 
+    def sort_by_column(self, column):
+        self.treeView.delete(*self.treeView.get_children())
+        for table in itemdata.sort_table(column, self.ascending):
+            self.treeView.insert("", "end", values=table)
+        self.ascending = not self.ascending
+
+    def search(self):
+        if self.searchItemEntry.get() == "":
+            self.get_all_inventory()
+            self.focus_set()
+            return
+        if not itemdata.search_product(self.searchItemEntry.get()):
+            self.treeView.delete(*self.treeView.get_children())
+            self.focus_set()
+            return
+        else:
+            self.treeView.delete(*self.treeView.get_children())
+            for item in itemdata.search_product(self.searchItemEntry.get()):
+                self.treeView.insert("", "end", values=item)
+            self.focus_set()
+
+    def get_all_inventory(self):
+        self.treeView.delete(*self.treeView.get_children())
+        for item in itemdata.view_inventory():
+            self.treeView.insert("", "end", values=item)
+
+    def verify_product_add(self):
+        item = self.productAddNameEntry.get()
+        category = self.categoryAddOptionMenu.get()
+        stock = self.inStockAddEntry.get()
+        buying_price = self.buyingAddPriceEntry.get()
+        selling_price = self.sellingAddPriceEntry.get()
+        if item == "":
+            self.statusReplyLabel.configure(text="*Product name required", text_color="#FF0000")
+            return
+        if stock == "":
+            self.statusReplyLabel.configure(text="*Current stock required", text_color="#FF0000")
+            return
+        if buying_price == "":
+            self.statusReplyLabel.configure(text="*Enter price value", text_color="#FF0000")
+            return
+        if selling_price == "":
+            self.statusReplyLabel.configure(text="*Enter price value", text_color="#FF0000")
+            return
+        self.add_product(item, category, stock, buying_price, selling_price)
+
+    def add_product(self, item, category, stock, buying_price, selling_price):
+        match itemdata.add_product(item, category, stock, buying_price, selling_price):
+            case 0:
+                self.get_all_inventory()
+                self.statusReplyLabel.configure(text="Product added", text_color="#00FF00")
+                self.add_product_labelreset()
+            case 1:
+                self.statusReplyLabel.configure(text="Product not added", text_color="#FF0000")
+                self.add_product_labelreset()
+
+    def add_product_labelreset(self):
+        self.productAddNameEntry.delete(0, 'end')
+        self.inStockAddEntry.delete(0, 'end')
+        self.buyingAddPriceEntry.delete(0, 'end')
+        self.sellingAddPriceEntry.delete(0, 'end')
+        self.focus_set()
 
     def get_category_list(self):
         categories = itemdata.get_all_category()
@@ -296,10 +363,20 @@ class ProductTab(CTkFrame):
         if category == "":
             self.addCategoryReplyLabel.configure(text="*Category field required", text_color="#FF0000")
             return
-        itemdata.add_category(category)
-        self.refresh_categories()
-        self.addCategoryReplyLabel.configure(text="*Category added", text_color="#00AA00")
-        self.addCategoryEntry.delete(0, 'end')
+        match itemdata.add_category(category):
+            case 0:
+                self.refresh_categories()
+                self.addCategoryReplyLabel.configure(text="*Category added", text_color="#00AA00")
+                self.addCategoryEntry.delete(0, 'end')
+                self.focus_set()
+            case 1:
+                self.addCategoryReplyLabel.configure(text="*Category already exists", text_color="#FF0000")
+                self.addCategoryEntry.delete(0, 'end')
+                self.focus_set()
+            case _:
+                self.addCategoryReplyLabel.configure(text="*Unknown error", text_color="#FF0000")
+                self.addCategoryEntry.delete(0, 'end')
+                self.focus_set()
 
     def remove_category(self):
         remove_category = self.removeCategoryOptionMenu.get()
@@ -315,7 +392,8 @@ class ProductTab(CTkFrame):
 
     def refresh_categories(self):
         self.removeCategoryOptionMenu.configure(variable="", values=self.get_category_list())
-
+        self.categoryModifyOptionMenu.configure(variable="", values=self.get_category_list())
+        self.categoryAddOptionMenu.configure(variable="", values=self.get_category_list())
 
     def modify_item_discard(self):
         print("Discard changes")

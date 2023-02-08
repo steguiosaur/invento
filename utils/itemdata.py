@@ -21,6 +21,11 @@ def create_inventory_table():
         cur.execute("CREATE TABLE IF NOT EXISTS categories (category_name TEXT NOT NULL);")
         con.commit()
 
+def search_product(item_name):
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM products WHERE item LIKE ? COLLATE NOCASE", ('%'+item_name+'%',))
+        return cur.fetchall()
 
 # add product to the database
 def add_product(item, category, in_stock, buying_price, selling_price):
@@ -29,18 +34,26 @@ def add_product(item, category, in_stock, buying_price, selling_price):
     permission_level = accounts.get_permission_level(modified_by)
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
-        cur.execute("""
-        INSERT INTO products (item, category, in_stock, buying_price, selling_price, date_modified, modified_by, permission_level)
-        VALUES (?,?,?,?,?,?,?,?)
-        """, (item, category, in_stock, buying_price, selling_price, date_modified, modified_by, permission_level))
-        con.commit()
+        cur.execute("SELECT item FROM products WHERE item = ?", (item,))
+        if cur.fetchone() is None:
+            cur.execute("""
+            INSERT INTO products (item, category, in_stock, buying_price, selling_price, date_modified, modified_by, permission_level)
+            VALUES (?,?,?,?,?,?,?,?)
+            """, (item, category, in_stock, buying_price, selling_price, date_modified, modified_by, permission_level))
+            con.commit()
+            return 0    # product added
+        return 1    # product already exists
 
 
 def add_category(category_name):
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
+        cur.execute("SELECT category_name FROM categories WHERE category_name = ?", (category_name,))
+        if cur.fetchone():
+            return 1    # category already exists
         cur.execute("INSERT INTO categories (category_name) VALUES (?)", (category_name,))
         con.commit()
+        return 0    # category created
 
 
 def get_all_category():
@@ -64,12 +77,15 @@ def delete_product(product):
         con.commit()
 
 
-def edit_product(product):
+def edit_product(product, category, in_stock, buying_price, selling_price):
+    date_modified = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    modified_by = str(accounts.get_session())
+    permission_level = accounts.get_permission_level(modified_by)
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("""
             UPDATE products SET
-                name=?,
+                item=?,
                 category=?,
                 in_stock=?,
                 buying_price=?,
@@ -77,9 +93,21 @@ def edit_product(product):
                 date_modified=?,
                 modified_by=?,
                 permission_level=?
-            WHERE id=?
-        """, (product))
+            WHERE item=?
+        """, (product, category, in_stock, buying_price, selling_price, date_modified, modified_by, permission_level, product))
 
+
+def count_category():
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT COUNT(*) FROM categories")
+        return cur.fetchone()[0]
+
+def count_products():
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT COUNT(*) FROM products")
+        return cur.fetchone()[0]
 
 # view all products
 def view_inventory():
@@ -93,5 +121,12 @@ def view_inventory():
 def view_modified():
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
-        cur.execute("SELECT item, date_modified, modified_by, permission_level FROM products")
+        cur.execute("SELECT item, date_modified, modified_by, permission_level FROM products ORDER BY date_modified DESC")
+        return cur.fetchall()
+
+def sort_table(column, ascending):
+    order = "ASC" if ascending == True else "DESC"
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute(f"SELECT item, category, in_stock, buying_price, selling_price, date_modified FROM products ORDER BY {column} COLLATE NOCASE {order}")
         return cur.fetchall()
