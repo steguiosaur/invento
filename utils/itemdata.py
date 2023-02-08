@@ -77,7 +77,7 @@ def delete_product(product):
         con.commit()
 
 
-def edit_product(product, category, in_stock, buying_price, selling_price):
+def edit_product(product, category, in_stock, buying_price, selling_price, product_focus):
     date_modified = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     modified_by = str(accounts.get_session())
     permission_level = accounts.get_permission_level(modified_by)
@@ -94,7 +94,7 @@ def edit_product(product, category, in_stock, buying_price, selling_price):
                 modified_by=?,
                 permission_level=?
             WHERE item=?
-        """, (product, category, in_stock, buying_price, selling_price, date_modified, modified_by, permission_level, product))
+        """, (product, category, in_stock, buying_price, selling_price, date_modified, modified_by, permission_level, product_focus))
 
 
 def count_category():

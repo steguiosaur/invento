@@ -37,6 +37,7 @@ class ProductTab(CTkFrame):
         self.treeView.heading("6", text="Date Modified", command=lambda: self.sort_by_column("date_modified"))
 
         self.get_all_inventory()
+        self.treeView.bind("<<TreeviewSelect>>", self.on_item_focus)
 
         #----------------------- SEARCH FRAME -----------------------
         self.searchItemFrame = CTkFrame(self)
@@ -289,6 +290,48 @@ class ProductTab(CTkFrame):
         self.deleteAllLabel.grid(row=2, column=1)
         self.deleteAllButton.grid(row=3, column=1)
 
+
+    def on_item_focus(self):
+        selected_item = self.treeView.focus()
+        selected_item_values = self.treeView.item(selected_item)["values"]
+        self.productNameEntry.delete(0, "end")
+        self.productNameEntry.insert(0, selected_item_values[0])
+        self.categoryModifyOptionMenu.set(selected_item_values[1])
+        self.inStockEntry.delete(0, "end")
+        self.inStockEntry.insert(0, selected_item_values[2])
+        self.buyingPriceEntry.delete(0, "end")
+        self.buyingPriceEntry.insert(0, selected_item_values[3])
+        self.sellingPriceEntry.delete(0, "end")
+        self.sellingPriceEntry.insert(0, selected_item_values[4])
+
+    def get_selected_item_value(self):
+        selected_item = self.treeView.focus()
+        self.selected_item_name = self.treeView.item(selected_item)["values"][0]
+        return self.selected_item_name
+
+    def modify_item_save(self):
+        product_name = self.productNameEntry.get()
+        category = self.categoryModifyOptionMenu.get()
+        in_stock = self.inStockEntry.get()
+        buying_price = self.buyingPriceEntry.get()
+        selling_price = self.sellingPriceEntry.get()
+        product_focus = self.get_selected_item_value()
+        if product_name == category == in_stock == buying_price == selling_price == "":
+            self.statusReplyLabel.configure(text_color="#FF0000", text="Select values to modify.")
+            self.focus_set
+        if product_focus == None:
+            self.statusReplyLabel.configure(text_color="#FF0000", text="Select a product to modify.")
+            self.focus_set
+        else:
+            itemdata.edit_product(product_name, category, in_stock, buying_price, selling_price, product_focus)
+            self.get_all_inventory()
+            self.statusReplyLabel.configure(text_color="#00AA00", text="Product updated.")
+            self.focus_set
+
+    def modify_item_discard(self):
+        print("Discard changes")
+
+
     def sort_by_column(self, column):
         self.treeView.delete(*self.treeView.get_children())
         for table in itemdata.sort_table(column, self.ascending):
@@ -339,7 +382,7 @@ class ProductTab(CTkFrame):
         match itemdata.add_product(item, category, stock, buying_price, selling_price):
             case 0:
                 self.get_all_inventory()
-                self.statusReplyLabel.configure(text="Product added", text_color="#00FF00")
+                self.statusReplyLabel.configure(text="Product added", text_color="#00AA00")
                 self.add_product_labelreset()
             case 1:
                 self.statusReplyLabel.configure(text="Product not added", text_color="#FF0000")
@@ -394,10 +437,4 @@ class ProductTab(CTkFrame):
         self.removeCategoryOptionMenu.configure(variable="", values=self.get_category_list())
         self.categoryModifyOptionMenu.configure(variable="", values=self.get_category_list())
         self.categoryAddOptionMenu.configure(variable="", values=self.get_category_list())
-
-    def modify_item_discard(self):
-        print("Discard changes")
-
-    def modify_item_save(self):
-        print("Save Item")
 
