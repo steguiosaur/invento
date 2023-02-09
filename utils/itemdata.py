@@ -76,6 +76,11 @@ def delete_product(product):
         cur.execute("DELETE FROM products WHERE item=?", (product,))
         con.commit()
 
+def delete_all_products():
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("DELETE FROM products")
+        con.commit()
 
 def edit_product(product, category, in_stock, buying_price, selling_price, product_focus):
     date_modified = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

@@ -1,6 +1,6 @@
 from customtkinter import CTkFrame, CTkTabview, CTkLabel, CTkEntry, CTkButton, CTkOptionMenu
 from customwidget import IntSpinbox, CtmTreeView
-from utils import settings, itemdata, Icon
+from utils import settings, itemdata, accounts, Icon
 
 class ProductTab(CTkFrame):
     def __init__(self, parent):
@@ -100,7 +100,7 @@ class ProductTab(CTkFrame):
         self.removeSalesButton.grid(row=3, column=3, sticky="ew")
 
         #----------------------- TAB CREATE FRAME -----------------------
-        self.modifyItemTab = CTkTabview(self, command=lambda: print("action"))
+        self.modifyItemTab = CTkTabview(self, command=lambda: self.focus_set())
         self.modifyItemTab.grid(row=3, column=2, rowspan=1, columnspan=2, padx=(5, 10), pady=(0, 10), sticky="nsew")
         self.modifyItemTab.add("Modify")
         self.modifyItemTab.add("Category")
@@ -282,15 +282,31 @@ class ProductTab(CTkFrame):
 
         #------------------------- DELETE PRODUCT -------------------------
         self.deleteStatusLabel = CTkLabel(self.modifyItemRemoveFrame, text="")
-        self.deleteButton = CTkButton(self.modifyItemRemoveFrame, text="Remove Product", fg_color="#FF0F2F", hover_color="#AF0F2F")
+        self.deleteButton = CTkButton(self.modifyItemRemoveFrame, text="Remove Product", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.delete_item())
         self.deleteAllLabel = CTkLabel(self.modifyItemRemoveFrame, text="REQUIRES ADMIN ACCOUNT", font=("Arial", 13, "bold"))
-        self.deleteAllButton = CTkButton(self.modifyItemRemoveFrame, text="Reset Inventory", fg_color="#FF0F2F", hover_color="#AF0F2F")
+        self.deleteAllButton = CTkButton(self.modifyItemRemoveFrame, text="Reset Inventory", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.delete_all_items())
 
         self.deleteStatusLabel.grid(row=0, column=1, sticky="ew")
         self.deleteButton.grid(row=1, column=1)
         self.deleteAllLabel.grid(row=2, column=1)
         self.deleteAllButton.grid(row=3, column=1)
 
+    def delete_all_items(self):
+        if accounts.get_permission_level(str(accounts.get_session())):
+            itemdata.delete_all_products()
+            self.get_all_inventory()
+            self.deleteStatusLabel.configure(text_color="#00AA00", text="All Products Deleted")
+        else:
+            self.deleteStatusLabel.configure(text_color="#FF0000", text="Admin privileges required")
+
+    def delete_item(self):
+        try:
+            selected_item = self.get_selected_item_value()
+            itemdata.delete_product(selected_item)
+            self.get_all_inventory()
+            self.deleteStatusLabel.configure(text_color="#00AA00", text="Product deleted.")
+        except IndexError:
+            self.deleteStatusLabel.configure(text_color="#FF0000", text="No product deleted.")
 
     def on_item_focus(self, event):
         selected_item = self.treeView.focus()
