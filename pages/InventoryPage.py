@@ -57,7 +57,7 @@ class InventoryPage(CTkFrame):
         # INVENTORY
         self.tabview.tab("Inventory").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Inventory").grid_rowconfigure(0, weight=1)
-        self.inventoryDisplay = ProductTab(self.tabview.tab("Inventory"))
+        self.inventoryDisplay = ProductTab(self.tabview.tab("Inventory"), controller)
         self.inventoryDisplay.grid(row=0, column=0, sticky="nsew")
 
         # ACCOUNT

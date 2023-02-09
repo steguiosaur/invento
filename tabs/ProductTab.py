@@ -3,7 +3,8 @@ from customwidget import IntSpinbox, CtmTreeView
 from utils import settings, itemdata, accounts, Icon
 
 class ProductTab(CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, controller):
+        self.controller = controller
         CTkFrame.__init__(self, parent)
         # inventory tab grid
         self.grid_columnconfigure(0, weight=1)
@@ -272,7 +273,7 @@ class ProductTab(CTkFrame):
         self.sellingAddPriceEntry.grid(row=5, column=3, sticky="ew")
 
         # add product discard button
-        self.discardProductAddButton = CTkButton(self.modifyItemAddFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.modify_item_discard())
+        self.discardProductAddButton = CTkButton(self.modifyItemAddFrame, text="Discard", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.add_item_discard())
         self.discardProductAddButton.grid(row=6, column=3, sticky="ew")
 
         # add product save button
@@ -291,11 +292,15 @@ class ProductTab(CTkFrame):
         self.deleteAllLabel.grid(row=2, column=1)
         self.deleteAllButton.grid(row=3, column=1)
 
+    def refresh_dahboard(self):
+        self.controller.frames["InventoryPage"].dashboardDisplay.reload_all()
+
     def delete_all_items(self):
         if accounts.get_permission_level(str(accounts.get_session())):
             itemdata.delete_all_products()
             self.get_all_inventory()
             self.deleteStatusLabel.configure(text_color="#00AA00", text="All Products Deleted")
+            self.refresh_dahboard()
         else:
             self.deleteStatusLabel.configure(text_color="#FF0000", text="Admin privileges required")
 
@@ -305,6 +310,7 @@ class ProductTab(CTkFrame):
             itemdata.delete_product(selected_item)
             self.get_all_inventory()
             self.deleteStatusLabel.configure(text_color="#00AA00", text="Product deleted.")
+            self.refresh_dahboard()
         except IndexError:
             self.deleteStatusLabel.configure(text_color="#FF0000", text="No product deleted.")
 
@@ -328,26 +334,39 @@ class ProductTab(CTkFrame):
         return self.selected_item_name
 
     def modify_item_save(self):
-        product_name = self.productNameEntry.get()
-        category = self.categoryModifyOptionMenu.get()
-        in_stock = self.inStockEntry.get()
-        buying_price = self.buyingPriceEntry.get()
-        selling_price = self.sellingPriceEntry.get()
-        product_focus = self.get_selected_item_value()
-        if product_name == category == in_stock == buying_price == selling_price == "":
-            self.statusReplyLabel.configure(text_color="#FF0000", text="Select values to modify.")
-            self.focus_set
-        if product_focus == None:
+        try:
+            product_name = self.productNameEntry.get()
+            category = self.categoryModifyOptionMenu.get()
+            in_stock = self.inStockEntry.get()
+            buying_price = self.buyingPriceEntry.get()
+            selling_price = self.sellingPriceEntry.get()
+            product_focus = self.get_selected_item_value()
+            if product_name == category == in_stock == buying_price == selling_price == "":
+                self.statusReplyLabel.configure(text_color="#FF0000", text="Select values to modify.")
+                self.focus_set
+            else:
+                itemdata.edit_product(product_name, category, in_stock, buying_price, selling_price, product_focus)
+                self.get_all_inventory()
+                self.statusReplyLabel.configure(text_color="#00AA00", text="Product updated.")
+                self.refresh_dahboard()
+        except IndexError:
             self.statusReplyLabel.configure(text_color="#FF0000", text="Select a product to modify.")
-            self.focus_set
-        else:
-            itemdata.edit_product(product_name, category, in_stock, buying_price, selling_price, product_focus)
-            self.get_all_inventory()
-            self.statusReplyLabel.configure(text_color="#00AA00", text="Product updated.")
 
     def modify_item_discard(self):
-        print("Discard changes")
+        self.productNameEntry.delete(0, "end")
+        self.categoryModifyOptionMenu.set("")
+        self.inStockEntry.delete(0, "end")
+        self.buyingPriceEntry.delete(0, "end")
+        self.sellingPriceEntry.delete(0, "end")
+        self.focus_set()
 
+    def add_item_discard(self):
+        self.productAddNameEntry.delete(0, "end")
+        self.categoryAddOptionMenu.set("")
+        self.inStockAddEntry.delete(0, "end")
+        self.buyingAddPriceEntry.delete(0, "end")
+        self.sellingAddPriceEntry.delete(0, "end")
+        self.focus_set()
 
     def sort_by_column(self, column):
         self.treeView.delete(*self.treeView.get_children())
@@ -401,6 +420,7 @@ class ProductTab(CTkFrame):
                 self.get_all_inventory()
                 self.statusReplyLabel.configure(text="Product added", text_color="#00AA00")
                 self.add_product_labelreset()
+                self.refresh_dahboard()
             case 1:
                 self.statusReplyLabel.configure(text="Product not added", text_color="#FF0000")
                 self.add_product_labelreset()
@@ -428,6 +448,7 @@ class ProductTab(CTkFrame):
                 self.refresh_categories()
                 self.addCategoryReplyLabel.configure(text="*Category added", text_color="#00AA00")
                 self.addCategoryEntry.delete(0, 'end')
+                self.refresh_dahboard()
                 self.focus_set()
             case 1:
                 self.addCategoryReplyLabel.configure(text="*Category already exists", text_color="#FF0000")
@@ -446,6 +467,7 @@ class ProductTab(CTkFrame):
         itemdata.remove_category(remove_category)
         self.removeCategoryReplyLabel.configure(text="*Category removed", text_color="#00AA00")
         self.refresh_categories()
+        self.refresh_dahboard()
 
     def reload_treeview(self):
         self.table.change_theme(settings.table_theme_read())

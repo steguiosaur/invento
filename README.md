@@ -10,6 +10,7 @@ A project for Discrete Structures II.
 
 ## :abacus: Features
 
+### Core
 - [x] Login system
 - [x] Register user account
 - [x] Administrator account

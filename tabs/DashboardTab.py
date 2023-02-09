@@ -171,6 +171,3 @@ class DashboardTab(CTkFrame):
         self.current_users()
         self.current_category_num()
         self.current_product_num()
-
-    def get_reload(self):
-        return self.reload_all
