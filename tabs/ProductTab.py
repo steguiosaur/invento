@@ -37,7 +37,6 @@ class ProductTab(CTkFrame):
         self.treeView.heading("6", text="Date Modified", command=lambda: self.sort_by_column("date_modified"))
 
         self.get_all_inventory()
-        self.treeView.bind("<<TreeviewSelect>>", self.on_item_focus)
 
         #----------------------- SEARCH FRAME -----------------------
         self.searchItemFrame = CTkFrame(self)
@@ -219,6 +218,8 @@ class ProductTab(CTkFrame):
         self.saveButton.grid(row=6, column=1, sticky="ew")
 
 
+        self.treeView.bind("<<TreeviewSelect>>", lambda event: self.on_item_focus(event))
+
         #------------------------- CATEGORY ADD -----------------------
         self.addCategoryLabel = CTkLabel(self.modifyItemCategoryFrame, text="Add Category:")
         self.addCategoryReplyLabel = CTkLabel(self.modifyItemCategoryFrame, text="")
@@ -291,9 +292,11 @@ class ProductTab(CTkFrame):
         self.deleteAllButton.grid(row=3, column=1)
 
 
-    def on_item_focus(self):
+    def on_item_focus(self, event):
         selected_item = self.treeView.focus()
         selected_item_values = self.treeView.item(selected_item)["values"]
+        if selected_item is None:
+            return
         self.productNameEntry.delete(0, "end")
         self.productNameEntry.insert(0, selected_item_values[0])
         self.categoryModifyOptionMenu.set(selected_item_values[1])
@@ -326,7 +329,6 @@ class ProductTab(CTkFrame):
             itemdata.edit_product(product_name, category, in_stock, buying_price, selling_price, product_focus)
             self.get_all_inventory()
             self.statusReplyLabel.configure(text_color="#00AA00", text="Product updated.")
-            self.focus_set
 
     def modify_item_discard(self):
         print("Discard changes")
