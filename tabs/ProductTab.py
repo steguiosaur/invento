@@ -85,7 +85,7 @@ class ProductTab(CTkFrame):
         self.salesLabel = CTkLabel(self.salesFrame, text="Add Sales")
         self.salesLabel.grid(row=1, column=1)
 
-        self.salesSpinBox = IntSpinbox(self.salesFrame, min_value=0, max_value=100, step_size=1)
+        self.salesSpinBox = IntSpinbox(self.salesFrame, min_value=0, max_value=self.get_in_stock(), step_size=1)
         self.salesSpinBox.grid(row=2, column=1, sticky="ew")
 
         self.salesButton = CTkButton(self.salesFrame, text="Add", command=lambda: print("save sales"))
@@ -292,6 +292,12 @@ class ProductTab(CTkFrame):
         self.deleteAllLabel.grid(row=2, column=1)
         self.deleteAllButton.grid(row=3, column=1)
 
+    def get_in_stock(self):
+        try:
+            return int(itemdata.get_current_in_stock(self.get_selected_item_value()))
+        except IndexError:
+            return int(0)
+
     def refresh_dahboard(self):
         self.controller.frames["InventoryPage"].dashboardDisplay.reload_all()
 
@@ -318,6 +324,9 @@ class ProductTab(CTkFrame):
         selected_item = self.treeView.focus()
         if selected_item:
             selected_item_values = self.treeView.item(selected_item)["values"]
+            self.salesSpinBox.remove_entry_value()
+            self.salesSpinBox.change_max_value(self.get_in_stock())
+            self.removeSalesSpinBox.remove_entry_value()
             self.productNameEntry.delete(0, "end")
             self.productNameEntry.insert(0, selected_item_values[0])
             self.categoryModifyOptionMenu.set(selected_item_values[1])

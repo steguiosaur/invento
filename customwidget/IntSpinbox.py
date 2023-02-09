@@ -73,4 +73,10 @@ class IntSpinbox(CTkFrame):
     def set(self, value: int):
         self.entry.delete(0, "end")
         self.entry.insert(0, str(float(value)))
+        
+    def change_max_value(self, new_max_value: int):
+        self.max_value = new_max_value
 
+    def remove_entry_value(self):
+        self.entry.delete(0, "end")
+        self.entry.insert(0, "0")

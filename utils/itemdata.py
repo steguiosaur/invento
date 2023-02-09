@@ -1,6 +1,7 @@
+from utils import accounts
 from datetime import datetime
 import sqlite3
-from utils import accounts
+import time
 
 database_file = "invento.db"
 
@@ -19,7 +20,58 @@ def create_inventory_table():
             permission_level TEXT NOT NULL);
         ''')
         cur.execute("CREATE TABLE IF NOT EXISTS categories (category_name TEXT NOT NULL);")
+        cur.execute("CREATE TABLE IF NOT EXISTS sales (total_sales REAL NOT NULL, date_sale TEXT NOT NULL);")
         con.commit()
+
+def add_sales(sales_amount):
+    current_date = time.strftime('%Y-%m-%d')
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT total_sales FROM sales WHERE date_sale=?", (current_date,))
+        result = cur.fetchone()
+        if result:
+            updated_sales = result[0] + sales_amount
+            cur.execute("UPDATE sales SET total_sales=? WHERE date_sale=?", (updated_sales, current_date))
+        else:
+            cur.execute("INSERT INTO sales (total_sales, date_sale) VALUES (?,?)", (sales_amount, current_date))
+        con.commit()
+
+
+def reduce_sales(sales_amount):
+    current_date = time.strftime('%Y-%m-%d')
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT total_sales FROM sales WHERE date_sale=?", (current_date,))
+        result = cur.fetchone()
+        if result:
+            updated_sales = result[0] - sales_amount
+            cur.execute("UPDATE sales SET total_sales=? WHERE date_sale=?", (updated_sales, current_date))
+        else:
+            print("No sales data found for the current date.")
+        con.commit()
+
+
+def get_current_date_sales():
+    current_date = time.strftime('%Y-%m-%d')
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT total_sales FROM sales WHERE date_sale=?", (current_date,))
+        result = cur.fetchone()
+        if result:
+            return result[0]
+        else:
+            return 0
+
+
+def get_current_in_stock(item_name):
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT in_stock FROM products WHERE item=?", (item_name,))
+        result = cur.fetchone()
+        if result:
+            return result[0]
+        else:
+            return 0
 
 def search_product(item_name):
     with sqlite3.connect(database_file) as con:
