@@ -106,7 +106,7 @@ class DashboardTab(CTkFrame):
         self.displayNumSalesIcon = CTkLabel(self.displayNumSalesIconFrame, image=self.icons.get_sales(), text="")
         self.displayNumSalesIcon.grid(row=0, column=0, sticky="nsew")
 
-        self.salesLabel = CTkLabel(self.displayNumSalesFrame, text="TODAY'S SALES", font=("Arial", 13, "bold"))
+        self.salesLabel = CTkLabel(self.displayNumSalesFrame, text="TOTAL SOLD", font=("Arial", 13, "bold"))
         self.salesLabel.grid(row=1, column=1, sticky="ew")
 
         self.salesNumLabel = CTkLabel(self.displayNumSalesFrame, text="100000", font=("Arial", 20, "bold"))

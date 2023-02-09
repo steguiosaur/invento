@@ -312,7 +312,7 @@ class ProductTab(CTkFrame):
             self.deleteStatusLabel.configure(text_color="#00AA00", text="Product deleted.")
             self.refresh_dahboard()
         except IndexError:
-            self.deleteStatusLabel.configure(text_color="#FF0000", text="No product deleted.")
+            self.deleteStatusLabel.configure(text_color="#FF0000", text="No product selected.")
 
     def on_item_focus(self, event):
         selected_item = self.treeView.focus()
