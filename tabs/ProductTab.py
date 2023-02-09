@@ -294,18 +294,17 @@ class ProductTab(CTkFrame):
 
     def on_item_focus(self, event):
         selected_item = self.treeView.focus()
-        selected_item_values = self.treeView.item(selected_item)["values"]
-        if selected_item is None:
-            return
-        self.productNameEntry.delete(0, "end")
-        self.productNameEntry.insert(0, selected_item_values[0])
-        self.categoryModifyOptionMenu.set(selected_item_values[1])
-        self.inStockEntry.delete(0, "end")
-        self.inStockEntry.insert(0, selected_item_values[2])
-        self.buyingPriceEntry.delete(0, "end")
-        self.buyingPriceEntry.insert(0, selected_item_values[3])
-        self.sellingPriceEntry.delete(0, "end")
-        self.sellingPriceEntry.insert(0, selected_item_values[4])
+        if selected_item:
+            selected_item_values = self.treeView.item(selected_item)["values"]
+            self.productNameEntry.delete(0, "end")
+            self.productNameEntry.insert(0, selected_item_values[0])
+            self.categoryModifyOptionMenu.set(selected_item_values[1])
+            self.inStockEntry.delete(0, "end")
+            self.inStockEntry.insert(0, selected_item_values[2])
+            self.buyingPriceEntry.delete(0, "end")
+            self.buyingPriceEntry.insert(0, selected_item_values[3])
+            self.sellingPriceEntry.delete(0, "end")
+            self.sellingPriceEntry.insert(0, selected_item_values[4])
 
     def get_selected_item_value(self):
         selected_item = self.treeView.focus()
