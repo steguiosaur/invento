@@ -5,11 +5,11 @@ class CtmTreeView(CTkFrame):
     def __init__(self, parent, theme="light", **kwargs):
         super().__init__(parent, **kwargs)
 
+        # input table style
         self.theme = theme
 
-        # table style
         self.style = ttk.Style()
-
+        # light/default theme
         self.style.configure(
             "lightAppearance.Treeview",
             highlightthickness=0,
@@ -29,6 +29,7 @@ class CtmTreeView(CTkFrame):
             foreground="#202020"
         )
 
+        # dark theme
         self.style.configure(
             "darkAppearance.Treeview",
             highlightthickness=0,
@@ -47,7 +48,6 @@ class CtmTreeView(CTkFrame):
             background="#202020",
             foreground="#d1d1d1"
         )
-
         self.style.layout("lightAppearance.Treeview", [('light Appearance.Treeview.treearea', {'sticky': 'nsew'})])
         self.style.layout("darkAppearance.Treeview", [('light Appearance.Treeview.treearea', {'sticky': 'nsew'})])
 
@@ -67,11 +67,11 @@ class CtmTreeView(CTkFrame):
         self.theme = new_theme
         self.table_style(self.theme)
 
+    def get_treeview(self):
+        return self.treeView
+
     def table_style(self, table_theme):
         if table_theme == "dark":
             self.treeView["style"] = "darkAppearance.Treeview"
         if table_theme == "light":
             self.treeView["style"] = "lightAppearance.Treeview"
-
-    def get_treeview(self):
-        return self.treeView

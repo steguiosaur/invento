@@ -49,7 +49,7 @@ set_widget_scaling(settings.int_scale_read())
 
 # start application
 app = Main()
-app.resizable(False, False)
+app.resizable(True, True)
 app.geometry(f"{1024}x{576}")
 app.minsize(1024, 576)
 app.iconphoto(True, PhotoImage(file=Assets.asset_path('logo.png')))

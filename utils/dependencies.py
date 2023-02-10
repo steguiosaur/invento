@@ -6,7 +6,8 @@ import subprocess
 # required packages
 packages = [
     "customtkinter",
-    "pillow"
+    "pillow",
+    "matplotlib"
 ]
 
 

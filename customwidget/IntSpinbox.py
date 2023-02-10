@@ -34,10 +34,10 @@ class IntSpinbox(CTkFrame):
         # default value
         self.entry.insert(0, "0")
 
+
     def add_button_callback(self):
         if self.command is not None:
             self.command()
-
         try:
             value = int(self.entry.get()) + self.step_size
             if self.min_value is not None and value < self.min_value:
@@ -52,7 +52,6 @@ class IntSpinbox(CTkFrame):
     def subtract_button_callback(self):
         if self.command is not None:
             self.command()
-
         try:
             value = int(self.entry.get()) - self.step_size
             if self.min_value is not None and value < self.min_value:
@@ -70,14 +69,16 @@ class IntSpinbox(CTkFrame):
         except ValueError:
             return None
 
+    # replace entry field
     def set(self, value: int):
         self.entry.delete(0, "end")
         self.entry.insert(0, str(float(value)))
-        
+
+    # reconfigure spinbox max value
     def change_max_value(self, new_max_value: int):
         self.max_value = new_max_value
 
+    # reset entry to int(0)
     def remove_entry_value(self):
         self.entry.delete(0, "end")
         self.entry.insert(0, "0")
-    

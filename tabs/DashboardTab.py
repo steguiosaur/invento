@@ -1,5 +1,5 @@
 from customtkinter import CTkFrame, CTkLabel
-from customwidget import CtmTreeView
+from customwidget import CtmTreeView, SalesGraph
 from utils import accounts, itemdata, settings, Icon
 
 class DashboardTab(CTkFrame):
@@ -114,7 +114,7 @@ class DashboardTab(CTkFrame):
         self.salesNumLabel.grid(row=3, column=1, sticky="ew")
 
         # create frame for list accounts
-        self.displaySalesGraphFrame = CTkFrame(self)
+        self.displaySalesGraphFrame = SalesGraph(self)
         self.displaySalesGraphFrame.grid(row=0, column=1, rowspan=2, columnspan=3, padx=(5, 10), pady=(10, 5), sticky="nsew")
 
         # create frame modified products
@@ -153,6 +153,9 @@ class DashboardTab(CTkFrame):
         self.treeviewTable.delete(*self.treeviewTable.get_children())
         for product in itemdata.view_modified():
             self.treeviewTable.insert("", "end", values=product)
+            
+    def refresh_graph(self):
+        self.displaySalesGraphFrame.refresh_plot()
 
     def reload_treeview(self):
         self.displayAddedProductTable.change_theme(settings.table_theme_read())
@@ -171,6 +174,7 @@ class DashboardTab(CTkFrame):
 
     def reload_all(self):
         self.reload_treeview()
+        self.refresh_graph()
         self.get_modifications()
         self.current_users()
         self.current_category_num()

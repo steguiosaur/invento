@@ -23,6 +23,12 @@ def create_inventory_table():
         cur.execute("CREATE TABLE IF NOT EXISTS sales (total_sales REAL NOT NULL, date_sale TEXT NOT NULL);")
         con.commit()
 
+def get_sales_data():
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT total_sales, strftime('%m-%d', date_sale) as date_sale FROM sales;")
+        return cur.fetchall()
+
 def get_today_sales():
     current_date = time.strftime('%Y-%m-%d')
     with sqlite3.connect(database_file) as con:

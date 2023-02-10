@@ -17,7 +17,7 @@ A project for Discrete Structures II.
 - [x] Add, modify, delete inventory items
 - [x] Evaluate and modify current stock
 - [x] Calculate total sales per day
-- [ ] Show graph of sales per day
+- [x] Show graph of sales per day
 - [ ] Export to Excel functionality
 
 ### Extras
@@ -33,11 +33,11 @@ A project for Discrete Structures II.
 ### Prerequisites
 
 - Requires Python 3.10.x
-- Install `customtkinter` and `pillow` via `pip install`
+- Install `customtkinter`, `pillow`, and `matplotlib` via `pip install`
 
 ### Execution
 
-1. Clone the repository to your machine and `cd` to source files.
+1. Clone the repository to your machine and change directory to cloned project.
 
     ```sh
     git clone https://github.com/steguiosaur/invento.git && cd ./invento
