@@ -16,7 +16,7 @@ class Main(Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {} # create page dictionary
-        for f in [LoginPage, InventoryPage, RegisterPage]:
+        for f in [InventoryPage, LoginPage, RegisterPage]:
             page = f.__name__
             frame = f(container, self)
             frame.grid(row=0, column=0, sticky="NSEW")
