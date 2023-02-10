@@ -16,7 +16,7 @@ A project for Discrete Structures II.
 - [x] Administrator account
 - [x] Add, modify, delete inventory items
 - [x] Evaluate and modify current stock
-- [ ] Calculate total sales per day
+- [x] Calculate total sales per day
 - [ ] Show graph of sales per day
 - [ ] Export to Excel functionality
 
