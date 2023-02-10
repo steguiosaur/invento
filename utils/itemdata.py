@@ -23,31 +23,54 @@ def create_inventory_table():
         cur.execute("CREATE TABLE IF NOT EXISTS sales (total_sales REAL NOT NULL, date_sale TEXT NOT NULL);")
         con.commit()
 
-def add_sales(sales_amount):
+def get_today_sales():
     current_date = time.strftime('%Y-%m-%d')
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("SELECT total_sales FROM sales WHERE date_sale=?", (current_date,))
         result = cur.fetchone()
         if result:
-            updated_sales = result[0] + sales_amount
+            return result[0]
+        return 0
+
+def update_stock(item_name, new_stock):
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("UPDATE products SET in_stock = ? WHERE item = ?", (new_stock, item_name))
+        con.commit()
+
+def get_selling_price(item_name):
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT selling_price FROM products WHERE item=?", (item_name,))
+        return cur.fetchone()[0]
+    
+
+def add_sales(earned):
+    current_date = time.strftime('%Y-%m-%d')
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT total_sales FROM sales WHERE date_sale=?", (current_date,))
+        result = cur.fetchone()
+        if result:
+            updated_sales = result[0] + earned
             cur.execute("UPDATE sales SET total_sales=? WHERE date_sale=?", (updated_sales, current_date))
         else:
-            cur.execute("INSERT INTO sales (total_sales, date_sale) VALUES (?,?)", (sales_amount, current_date))
+            cur.execute("INSERT INTO sales (total_sales, date_sale) VALUES (?,?)", (earned, current_date))
         con.commit()
 
 
-def reduce_sales(sales_amount):
+def reduce_sales(remove_earned):
     current_date = time.strftime('%Y-%m-%d')
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("SELECT total_sales FROM sales WHERE date_sale=?", (current_date,))
         result = cur.fetchone()
         if result:
-            updated_sales = result[0] - sales_amount
+            updated_sales = result[0] - remove_earned
             cur.execute("UPDATE sales SET total_sales=? WHERE date_sale=?", (updated_sales, current_date))
         else:
-            print("No sales data found for the current date.")
+            return 1 # no sales to reduce 
         con.commit()
 
 

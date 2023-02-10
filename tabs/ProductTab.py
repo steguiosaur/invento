@@ -88,7 +88,7 @@ class ProductTab(CTkFrame):
         self.salesSpinBox = IntSpinbox(self.salesFrame, min_value=0, max_value=self.get_in_stock(), step_size=1)
         self.salesSpinBox.grid(row=2, column=1, sticky="ew")
 
-        self.salesButton = CTkButton(self.salesFrame, text="Add", command=lambda: print("save sales"))
+        self.salesButton = CTkButton(self.salesFrame, text="Add", command=lambda: self.add_sales())
         self.salesButton.grid(row=3, column=1, sticky="ew")
 
         self.removeSalesLabel = CTkLabel(self.salesFrame, text="Remove Sales")
@@ -97,7 +97,7 @@ class ProductTab(CTkFrame):
         self.removeSalesSpinBox = IntSpinbox(self.salesFrame, min_value=0, step_size=1)
         self.removeSalesSpinBox.grid(row=2, column=3, sticky="ew")
 
-        self.removeSalesButton = CTkButton(self.salesFrame, text="Remove", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: print("remove sales"))
+        self.removeSalesButton = CTkButton(self.salesFrame, text="Remove", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.remove_sales())
         self.removeSalesButton.grid(row=3, column=3, sticky="ew")
 
         #----------------------- TAB CREATE FRAME -----------------------
@@ -292,12 +292,41 @@ class ProductTab(CTkFrame):
         self.deleteAllLabel.grid(row=2, column=1)
         self.deleteAllButton.grid(row=3, column=1)
 
+    def remove_sales(self):
+        try:
+            remove_sales = self.removeSalesSpinBox.get()
+            if remove_sales != None:
+                remove_earned = float(remove_sales) * float(itemdata.get_selling_price(self.get_selected_item_value()))
+                itemdata.reduce_sales(remove_earned)
+                remove_item_sold =  self.get_in_stock() + remove_sales
+                itemdata.update_stock(self.get_selected_item_value(), remove_item_sold)
+                self.get_all_inventory()
+                self.statusReplyLabel.configure(text_color="#00AA00", text="Product sale removed.")
+                self.controller.frames["InventoryPage"].dashboardDisplay.reload_all()
+        except IndexError:
+            self.statusReplyLabel.configure(text_color="#FF0000", text="Select a product to remove sales.")
+
     def get_in_stock(self):
         try:
             return int(itemdata.get_current_in_stock(self.get_selected_item_value()))
         except IndexError:
             return int(0)
 
+    def add_sales(self):
+        try:
+            add_sales = self.salesSpinBox.get()
+            if add_sales != None:
+                earned = float(add_sales) * float(itemdata.get_selling_price(self.get_selected_item_value()))
+                itemdata.add_sales(earned)
+                remove_item_sold =  self.get_in_stock() - add_sales
+                itemdata.update_stock(self.get_selected_item_value(), remove_item_sold)
+                self.get_all_inventory()
+                self.statusReplyLabel.configure(text_color="#00AA00", text="Product sale registered.")
+                self.controller.frames["InventoryPage"].dashboardDisplay.reload_all()
+        except IndexError:
+            self.statusReplyLabel.configure(text_color="#FF0000", text="Select a product to add sales.")
+        
+            
     def refresh_dahboard(self):
         self.controller.frames["InventoryPage"].dashboardDisplay.reload_all()
 

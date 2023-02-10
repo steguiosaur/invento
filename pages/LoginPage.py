@@ -59,6 +59,7 @@ class LoginPage(LoginBg):
         match accounts.login(username, passwd):
             case 0:     # logged in
                 self.controller.frames["InventoryPage"].accountDisplay.refresh_account()
+                self.controller.frames["InventoryPage"].dashboardDisplay.reload_all()
                 self.go_inventory(controller)
             case 1:     # login fail
                 self.passwordReplyLabel.configure(text="*Incorrect password")

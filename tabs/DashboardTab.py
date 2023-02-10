@@ -109,7 +109,8 @@ class DashboardTab(CTkFrame):
         self.salesLabel = CTkLabel(self.displayNumSalesFrame, text="TOTAL SOLD", font=("Arial", 13, "bold"))
         self.salesLabel.grid(row=1, column=1, sticky="ew")
 
-        self.salesNumLabel = CTkLabel(self.displayNumSalesFrame, text="100000", font=("Arial", 20, "bold"))
+        self.salesNumLabel = CTkLabel(self.displayNumSalesFrame, text="0", font=("Arial", 15, "bold"))
+        self.current_earned_today()
         self.salesNumLabel.grid(row=3, column=1, sticky="ew")
 
         # create frame for list accounts
@@ -165,9 +166,13 @@ class DashboardTab(CTkFrame):
     def current_product_num(self):
         self.productNumLabel.configure(text=str(itemdata.count_products()))
 
+    def current_earned_today(self):
+        self.salesNumLabel.configure(text=str(itemdata.get_today_sales()))
+
     def reload_all(self):
         self.reload_treeview()
         self.get_modifications()
         self.current_users()
         self.current_category_num()
         self.current_product_num()
+        self.current_earned_today()

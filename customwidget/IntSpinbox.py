@@ -80,3 +80,4 @@ class IntSpinbox(CTkFrame):
     def remove_entry_value(self):
         self.entry.delete(0, "end")
         self.entry.insert(0, "0")
+    
