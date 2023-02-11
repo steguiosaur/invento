@@ -54,4 +54,10 @@ A project for Discrete Structures II.
     pip install -r requirements.txt
     ```
 
+    > If failed, try upgrading `pip` and its packages.
+    
+    ```sh
+    pip install --upgrade pip customtkinter Pillow matplotlib
+    ```
+
 ### Build Compilation
