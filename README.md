@@ -18,7 +18,6 @@ A project for Discrete Structures II.
 - [x] Evaluate and modify current stock
 - [x] Calculate total sales per day
 - [x] Show graph of sales per day
-- [ ] Export to Excel functionality
 
 ### Extras
 - Generate account photo
