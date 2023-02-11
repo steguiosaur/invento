@@ -23,11 +23,21 @@ def create_inventory_table():
         cur.execute("CREATE TABLE IF NOT EXISTS sales (total_sales REAL NOT NULL, date_sale TEXT NOT NULL);")
         con.commit()
 
+
+# view all products
+def view_inventory():
+    with sqlite3.connect(database_file) as con:
+        cur = con.cursor()
+        cur.execute("SELECT item, category, in_stock, buying_price, selling_price, date_modified FROM products")
+        return cur.fetchall()
+
+
 def get_sales_data():
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("SELECT total_sales, strftime('%m-%d', date_sale) as date_sale FROM sales;")
         return cur.fetchall()
+
 
 def get_today_sales():
     current_date = time.strftime('%Y-%m-%d')
@@ -39,11 +49,13 @@ def get_today_sales():
             return result[0]
         return 0
 
+
 def update_stock(item_name, new_stock):
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("UPDATE products SET in_stock = ? WHERE item = ?", (new_stock, item_name))
         con.commit()
+
 
 def get_selling_price(item_name):
     with sqlite3.connect(database_file) as con:
@@ -102,11 +114,13 @@ def get_current_in_stock(item_name):
         else:
             return 0
 
+
 def search_product(item_name):
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("SELECT * FROM products WHERE item LIKE ? COLLATE NOCASE", ('%'+item_name+'%',))
         return cur.fetchall()
+
 
 # add product to the database
 def add_product(item, category, in_stock, buying_price, selling_price):
@@ -157,11 +171,13 @@ def delete_product(product):
         cur.execute("DELETE FROM products WHERE item=?", (product,))
         con.commit()
 
+
 def delete_all_products():
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("DELETE FROM products")
         con.commit()
+
 
 def edit_product(product, category, in_stock, buying_price, selling_price, product_focus):
     date_modified = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -189,18 +205,12 @@ def count_category():
         cur.execute("SELECT COUNT(*) FROM categories")
         return cur.fetchone()[0]
 
+
 def count_products():
     with sqlite3.connect(database_file) as con:
         cur = con.cursor()
         cur.execute("SELECT COUNT(*) FROM products")
         return cur.fetchone()[0]
-
-# view all products
-def view_inventory():
-    with sqlite3.connect(database_file) as con:
-        cur = con.cursor()
-        cur.execute("SELECT item, category, in_stock, buying_price, selling_price, date_modified FROM products")
-        return cur.fetchall()
 
 
 # view updates of a product
@@ -209,6 +219,7 @@ def view_modified():
         cur = con.cursor()
         cur.execute("SELECT item, date_modified, modified_by, permission_level FROM products ORDER BY date_modified DESC")
         return cur.fetchall()
+
 
 def sort_table(column, ascending):
     order = "ASC" if ascending == True else "DESC"

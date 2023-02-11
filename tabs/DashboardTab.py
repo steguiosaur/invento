@@ -5,7 +5,6 @@ from utils import accounts, itemdata, settings, Icon
 class DashboardTab(CTkFrame):
     def __init__(self, parent):
         CTkFrame.__init__(self, parent)
-
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
@@ -65,7 +64,6 @@ class DashboardTab(CTkFrame):
         self.current_category_num()
         self.categoryNumLabel.grid(row=3, column=1, sticky="ew")
 
-
         # create frame for list accounts
         self.displayNumProductsFrame = CTkFrame(self)
         self.displayNumProductsFrame.grid(row=2, column=0, rowspan=1, columnspan=1, padx=(10, 5), pady=(5, 5), sticky="nsew")
@@ -88,7 +86,6 @@ class DashboardTab(CTkFrame):
         self.productNumLabel = CTkLabel(self.displayNumProductsFrame, font=("Arial", 30, "bold"))
         self.current_product_num()
         self.productNumLabel.grid(row=3, column=1, sticky="ew")
-
 
         # create frame for list accounts
         self.displayNumSalesFrame = CTkFrame(self)
@@ -113,7 +110,7 @@ class DashboardTab(CTkFrame):
         self.current_earned_today()
         self.salesNumLabel.grid(row=3, column=1, sticky="ew")
 
-        # create frame for list accounts
+        # create line graph for sales
         self.displaySalesGraphFrame = SalesGraph(self)
         self.displaySalesGraphFrame.grid(row=0, column=1, rowspan=2, columnspan=3, padx=(5, 10), pady=(10, 5), sticky="nsew")
 

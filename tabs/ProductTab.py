@@ -4,9 +4,10 @@ from utils import settings, itemdata, accounts, Icon
 
 class ProductTab(CTkFrame):
     def __init__(self, parent, controller):
+
         self.controller = controller
+
         CTkFrame.__init__(self, parent)
-        # inventory tab grid
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
@@ -16,7 +17,7 @@ class ProductTab(CTkFrame):
         self.grid_rowconfigure(2, weight=1)
         self.grid_rowconfigure(3, weight=0)
 
-        #----------------------- TABLE FRAME -----------------------
+        # TABLE FRAME -=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-
         self.ascending = True
         self.table = CtmTreeView(self, theme=settings.table_theme_read())
         self.table.grid(row=0, column=0, rowspan=3, columnspan=4, padx=(10, 10), pady=(10, 5), sticky="nsew")
@@ -39,7 +40,7 @@ class ProductTab(CTkFrame):
 
         self.get_all_inventory()
 
-        #----------------------- SEARCH FRAME -----------------------
+        # SEARCH FRAME -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-
         self.searchItemFrame = CTkFrame(self)
         self.searchItemFrame.grid(row=3, column=0, rowspan=1, columnspan=2, padx=(10, 5), pady=(5, 10), sticky="nsew")
         self.searchItemFrame.grid_columnconfigure(0, weight=1)
@@ -64,7 +65,7 @@ class ProductTab(CTkFrame):
         self.statusReplyLabel = CTkLabel(self.searchItemFrame, text="")
         self.statusReplyLabel.grid(row=1, column=0, columnspan=5)
 
-        #----------------------- ADD SALES FRAME -----------------------
+        # ADD SALES FRAME -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         self.salesFrame = CTkFrame(self.searchItemFrame)
         self.salesFrame.grid(row=2, column=0, columnspan=5, rowspan=3, padx=(10, 10), pady=(5, 10), sticky="nsew")
         self.salesFrame.grid_columnconfigure(0, weight=1)
@@ -100,7 +101,7 @@ class ProductTab(CTkFrame):
         self.removeSalesButton = CTkButton(self.salesFrame, text="Remove", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.remove_sales())
         self.removeSalesButton.grid(row=3, column=3, sticky="ew")
 
-        #----------------------- TAB CREATE FRAME -----------------------
+        # TAB CREATE FRAME -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         self.modifyItemTab = CTkTabview(self, command=lambda: self.focus_set())
         self.modifyItemTab.grid(row=3, column=2, rowspan=1, columnspan=2, padx=(5, 10), pady=(0, 10), sticky="nsew")
         self.modifyItemTab.add("Modify")
@@ -181,7 +182,7 @@ class ProductTab(CTkFrame):
         self.modifyItemRemoveFrame.grid_rowconfigure(4, weight=1)
 
 
-        #----------------------- MODIFY PRODUCT -----------------------
+        # MODIFY PRODUCT -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         # labels
         self.productNameLabel = CTkLabel(self.modifyItemModifyFrame, text="Product Name:") 
         self.categoryLabel = CTkLabel(self.modifyItemModifyFrame, text="Category:") 
@@ -218,10 +219,9 @@ class ProductTab(CTkFrame):
         self.saveButton = CTkButton(self.modifyItemModifyFrame, text="Save", command=lambda: self.modify_item_save())
         self.saveButton.grid(row=6, column=1, sticky="ew")
 
-
         self.treeView.bind("<<TreeviewSelect>>", lambda event: self.on_item_focus(event))
 
-        #------------------------- CATEGORY ADD -----------------------
+        # CATEGORY ADD -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         self.addCategoryLabel = CTkLabel(self.modifyItemCategoryFrame, text="Add Category:")
         self.addCategoryReplyLabel = CTkLabel(self.modifyItemCategoryFrame, text="")
         self.addCategoryEntry = CTkEntry(self.modifyItemCategoryFrame, placeholder_text="Enter category")
@@ -242,8 +242,7 @@ class ProductTab(CTkFrame):
         self.removeCategoryOptionMenu.grid(row=5, column=1, columnspan=2, padx=(0, 5), pady=(5, 5), sticky="ew")
         self.removeCategoryButton.grid(row=5, column=3, padx=(5, 0), pady=(5, 5), sticky="ew")
         
-
-        #------------------------- PRODUCT ADD -----------------------
+        #PROFUCT ADD -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         # labels
         self.productAddNameLabel = CTkLabel(self.modifyItemAddFrame, text="Product Name:") 
         self.categoryAddLabel = CTkLabel(self.modifyItemAddFrame, text="Category:") 
@@ -280,8 +279,7 @@ class ProductTab(CTkFrame):
         self.saveProductAddButton = CTkButton(self.modifyItemAddFrame, text="Save", command=lambda: self.verify_product_add())
         self.saveProductAddButton.grid(row=6, column=1, sticky="ew")
 
-
-        #------------------------- DELETE PRODUCT -------------------------
+        # DELETE PRODUCT -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         self.deleteStatusLabel = CTkLabel(self.modifyItemRemoveFrame, text="")
         self.deleteButton = CTkButton(self.modifyItemRemoveFrame, text="Remove Product", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.delete_item())
         self.deleteAllLabel = CTkLabel(self.modifyItemRemoveFrame, text="REQUIRES ADMIN ACCOUNT", font=("Arial", 13, "bold"))
@@ -291,6 +289,7 @@ class ProductTab(CTkFrame):
         self.deleteButton.grid(row=1, column=1)
         self.deleteAllLabel.grid(row=2, column=1)
         self.deleteAllButton.grid(row=3, column=1)
+
 
     def remove_sales(self):
         try:

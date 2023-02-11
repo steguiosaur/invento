@@ -55,4 +55,3 @@ app.minsize(1024, 576)
 app.iconphoto(True, PhotoImage(file=Assets.asset_path('logo.png')))
 app.title("Invento")
 app.mainloop()
-

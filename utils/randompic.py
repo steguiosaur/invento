@@ -11,8 +11,8 @@ def generate_box_image(username):
     image = Image.new("RGB", size, white)
     draw = ImageDraw.Draw(image)
 
-    for i in range(4):
-        for j in range(8):
+    for i in range(4):      # 4 boxes on x-axis
+        for j in range(8):  # 8 on y-axis
             if random.choice([True, False]):
                 color = random_color
             else:
@@ -24,6 +24,7 @@ def generate_box_image(username):
             draw.rectangle([x1, y1, x2, y2], fill=color)
             draw.rectangle([(size[0] - x2), y1, (size[0] - x1), y2], fill=color)
 
+    # store account photo
     path = Path("assets/image") / (username + ".png")
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path)

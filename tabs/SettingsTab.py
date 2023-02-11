@@ -26,7 +26,7 @@ class SettingsTab(CTkFrame):
         self.tableThemeLabel.grid(row=5, column=1)
         self.scalingLabel.grid(row=7, column=1)
 
-        # change  light or dark mode
+        # change light or dark mode
         self.currentAppearance = StringVar(value=settings.appearance_read())
         self.appearanceModeOptionmenu = CTkOptionMenu(self, values=["Light", "Dark", "System"], command=self.change_appearance_mode_event, variable=self.currentAppearance)
         self.appearanceModeOptionmenu.grid(row=2, column=1, padx=20, pady=(2, 10))

@@ -7,7 +7,6 @@ from pathlib import Path
 class AccountTab(CTkFrame):
     def __init__(self, parent):
         CTkFrame.__init__(self, parent)
-
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
@@ -53,6 +52,7 @@ class AccountTab(CTkFrame):
         self.changeProfilePictureButton = CTkButton(self.accountSettingsFrame, text="Change Photo", command=lambda: self.change_profile_picture())
         self.changeProfilePictureButton.grid(row=4, column=0, columnspan=2, sticky="n")
 
+        # frame for changing CURRENT PASSWORD
         self.accountConfigFrame = CTkFrame(self.accountSettingsFrame)
         self.accountConfigFrame.grid(row=5, column=0, rowspan=2, columnspan=3, padx=10, pady=(10, 5), sticky="nsew")
         self.accountConfigFrame.grid_columnconfigure(0, weight=1)
@@ -86,7 +86,6 @@ class AccountTab(CTkFrame):
         self.newPasswordEntry = CTkEntry(self.accountConfigFrame, show="*", placeholder_text="New Password")
         self.newPasswordEntry.grid(row=3, column=3, pady=5, sticky="ew")
 
-
         self.confirmNewPasswordEntry = CTkEntry(self.accountConfigFrame, show="*", placeholder_text="Confirm New Password")
         self.confirmNewPasswordEntry.grid(row=4, column=3, pady=5, sticky="ew")
 
@@ -99,6 +98,7 @@ class AccountTab(CTkFrame):
         self.cancelNewPasswordButton = CTkButton(self.accountConfigFrame, text="Cancel", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.clear_entry())
         self.cancelNewPasswordButton.grid(row=6, column=3, pady=5, sticky="ew")
 
+        # sensitive account settings
         self.sensitiveFrame = CTkFrame(self.accountSettingsFrame)
         self.sensitiveFrame.grid(row=7, column=0, rowspan=3, columnspan=5, padx=10, pady=(5, 10), sticky="nsew")
         self.sensitiveFrame.grid_columnconfigure(0, weight=1)
@@ -114,8 +114,7 @@ class AccountTab(CTkFrame):
         self.removeAdminButton = CTkButton(self.sensitiveFrame, text="Change to User", fg_color="#FF0F2F", hover_color="#AF0F2F", command=lambda: self.remove_admin_privilege(accounts.get_session()))
         self.removeAdminButton.grid(row=0, column=3, pady=5, sticky="ew")
 
-
-        # create frame for list accounts
+        # frame for listing accounts
         self.accountListFrame = CTkFrame(self)
         self.accountListFrame.grid(row=0, column=2, rowspan=2, columnspan=2, padx=(5, 10), pady=(10, 5), sticky="nsew")
         self.accountListFrame.grid_columnconfigure(0, weight=1)
@@ -138,7 +137,7 @@ class AccountTab(CTkFrame):
         self.accountTreeview.heading("2", text="Administrator")
         self.get_all_accounts()
 
-
+        # all ADMINISTRATOR required actions
         self.adminSettingsFrame = CTkFrame(self)
         self.adminSettingsFrame.grid(row=2, column=2, rowspan=2, columnspan=2, padx=(5, 10), pady=(5, 10), sticky="nsew")
         self.adminSettingsFrame.grid_columnconfigure(0, weight=1)
@@ -169,6 +168,7 @@ class AccountTab(CTkFrame):
 
         self.deleteAllUserButton = CTkButton(self.adminSettingsFrame, text="Delete All User", command=lambda: self.delete_all_user())
         self.deleteAllUserButton.grid(row=5, column=1, sticky="ew")
+
 
     def verify_new_pass(self):
         current, new_pass, conf_pass = self.currentPasswordEntry.get(), self.newPasswordEntry.get(), self.confirmNewPasswordEntry.get()
