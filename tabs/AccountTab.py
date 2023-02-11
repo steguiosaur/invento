@@ -333,9 +333,15 @@ class AccountTab(CTkFrame):
         self.get_all_accounts()
 
     def get_picture(self):
-        if accounts.get_session() == None:
-            return Path("assets/image/admin.png")
-        return Path("assets/image") / (self.show_current_session() + ".png")
+        try:
+            if accounts.get_session() == None:
+                return Path("assets/default.png")
+            image_file = Path("assets/image") / (self.show_current_session() + ".png")
+            if not image_file.is_file():
+                raise FileNotFoundError
+            return image_file
+        except FileNotFoundError:
+            return Path("assets/default.png")
 
     def change_profile_picture(self):
         randompic.generate_box_image(self.show_current_session())

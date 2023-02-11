@@ -3,13 +3,6 @@ from os.path import isfile
 from utils import Assets
 import subprocess
 
-# required packages
-packages = [
-    "customtkinter",
-    "pillow",
-    "matplotlib"
-]
-
 
 # window for installing dependencies
 def dependency_install_window():
@@ -32,6 +25,10 @@ def dependency_install_window():
         textLabel = Label(window, width=600, text="Connecting...", fg="white", bg="#2b2b2b", font=("Calibri", 7))
         textLabel.place(relx=0.5, rely=1, anchor="s")
         window.update()
+
+        # required dependencies
+        with open("requirements.txt") as f:
+            packages = f.read().splitlines()
 
         # import or install required dependencies
         for package in range(0, len(packages)):
