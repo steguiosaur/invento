@@ -1,5 +1,5 @@
 from utils import accounts, itemdata, settings, dependencies, Assets
-dependencies.dependency_install_window() # install dependencies
+dependencies.dependency_installer() # install dependencies
 
 from customtkinter import CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
 from tkinter import PhotoImage, Tk
