@@ -1,4 +1,4 @@
-from customtkinter import CTkFrame, CTkImage, CTkLabel, CTkScrollableFrame, CTkTextbox
+from customtkinter import CTkFrame, CTkImage, CTkLabel
 from utils import Assets
 from PIL import Image
 

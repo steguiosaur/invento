@@ -4,3 +4,9 @@ tests/
 venv/
 *.ini
 *.db
+*.aux
+*.fdb_latexmk
+*.log
+*.gz
+*.toc
+*.fls

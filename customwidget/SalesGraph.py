@@ -1,7 +1,6 @@
 import matplotlib.backends.backend_tkagg
 from matplotlib import pyplot
 from tkinter import Frame, TOP, BOTH
-from customtkinter import CTkFrame
 from utils import itemdata
 
 class SalesGraph(Frame):
