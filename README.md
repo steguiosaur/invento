@@ -61,4 +61,10 @@ A project for Discrete Structures II.
     pip install --upgrade pip customtkinter Pillow matplotlib
     ```
 
-### Build Compilation
+### Screenshots
+![Invento Login](docs/screenshots/lightLogin.png)
+![Invento Register](docs/screenshots/Register.png)
+![Invento Dashboard](docs/screenshots/light.png)
+![Invento Inventory](docs/screenshots/Inventory.png)
+![Invento Accounts](docs/screenshots/Account.png)
+
