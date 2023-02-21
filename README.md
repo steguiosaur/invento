@@ -25,6 +25,13 @@ A project for Discrete Structures II.
 - Theme changes
 - Widget scaling
 
+-----------------------------------------------------------------
+
+## :page_with_curl: Documentation
+
+Click below to download the documentation or view its source code in `./docs/latex/Documentation_Invento.tex`.
+
+![Invento Documentation](https://github.com/steguiosaur/invento/raw/main/docs/latex/Documentation_Invento.pdf)
 
 -----------------------------------------------------------------
 
