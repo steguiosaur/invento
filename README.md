@@ -1,16 +1,26 @@
-![Invento Logo](assets/light_logo_color.svg#gh-dark-mode-only)
-![Invento Logo](assets/dark_logo_color.svg#gh-light-mode-only)
+![Invento Logo](res/light_logo_color.svg#gh-dark-mode-only)
+![Invento Logo](res/dark_logo_color.svg#gh-light-mode-only)
 
 ## :globe_with_meridians: Description
 
 Inventory management system that tracks sales performance and inventory changes.
 A project for Discrete Structures II.
 
------------------------------------------------------------------
+## :camera: Screenshots
 
-## :abacus: Features
+<details>
+  <summary>Screenshots</summary>
+    <img src="doc/screenshots/lightLogin.png" alt="Login Page">
+    <img src="doc/screenshots/Register.png" alt="Registration Page">
+    <img src="doc/screenshots/light.png" alt="Dashboard">
+    <img src="doc/screenshots/Inventory.png" alt="Inventory">
+    <img src="doc/screenshots/Account.png" alt="Accounts">
+</details>
+
+## :gear: Features
 
 ### Core
+
 - [x] Login system
 - [x] Register user account
 - [x] Administrator account
@@ -21,12 +31,10 @@ A project for Discrete Structures II.
 - [x] Show graph of sales per day
 
 ### Extras
+
 - Generate account photo
 - Theme changes
 - Widget scaling
-
-
------------------------------------------------------------------
 
 ## :clipboard: Setup Guide
 
@@ -39,32 +47,18 @@ A project for Discrete Structures II.
 
 1. Clone the repository to your machine and change directory to cloned project.
 
-    ```sh
-    git clone https://github.com/steguiosaur/invento.git && cd ./invento
-    ```
+   ```sh
+   git clone https://github.com/steguiosaur/invento.git && cd ./invento
+   ```
 
-2. Execute `Main.py` to run the application.
+2. Install the required dependencies.
 
-    ```sh
-    python Main.py
-    ```
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-    > In case `dependencies.py` failed to execute, manually install the required dependencies.
+3. Execute `main.py` in `src/` folder to run the application.
 
-    ```sh
-    pip install -r requirements.txt
-    ```
-
-    > If failed, try upgrading `pip` and its packages.
-    
-    ```sh
-    pip install --upgrade pip customtkinter Pillow matplotlib
-    ```
-
-### Screenshots
-![Invento Login](docs/screenshots/lightLogin.png)
-![Invento Register](docs/screenshots/Register.png)
-![Invento Dashboard](docs/screenshots/light.png)
-![Invento Inventory](docs/screenshots/Inventory.png)
-![Invento Accounts](docs/screenshots/Account.png)
-
+   ```sh
+   python main.py
+   ```

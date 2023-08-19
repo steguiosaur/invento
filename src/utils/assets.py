@@ -2,7 +2,7 @@ from pathlib import Path
 
 class Assets:
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path("../assets")
+    ASSETS_PATH = OUTPUT_PATH / Path("../../res/")
 
     @staticmethod
     def asset_path(path: str) -> Path:

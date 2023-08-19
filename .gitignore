@@ -2,6 +2,7 @@ __pycache__/
 image/
 tests/
 venv/
+output/
 *.ini
 *.db
 *.aux

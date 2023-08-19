@@ -1,6 +1,4 @@
-from utils import accounts, itemdata, settings, dependencies, Assets
-dependencies.dependency_installer() # install dependencies
-
+from utils import accounts, itemdata, settings, Assets
 from customtkinter import CTkFrame, set_appearance_mode, set_default_color_theme, set_widget_scaling
 from tkinter import PhotoImage, Tk
 from pages import *
@@ -32,10 +30,9 @@ class Main(Tk):
 
     # current logged in account
     def get_session(self):
-        if accounts.get_session() is not None:
-            self.show_frame("InventoryPage")
-        else:
-            self.show_frame("LoginPage")
+        if accounts.get_session() is None:
+            return self.show_frame("LoginPage")
+        return self.show_frame("InventoryPage")
 
 # create database and admin account if not exists
 accounts.create_table()
